@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Mes Projets\\DEV\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\Commerce.Api.csproj": {}
+    "D:\\DevRepo\\PersonalProjects\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\Commerce.Api.csproj": {}
   },
   "projects": {
-    "C:\\Mes Projets\\DEV\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\Commerce.Api.csproj": {
+    "D:\\DevRepo\\PersonalProjects\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\Commerce.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Mes Projets\\DEV\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\Commerce.Api.csproj",
+        "projectUniqueName": "D:\\DevRepo\\PersonalProjects\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\Commerce.Api.csproj",
         "projectName": "Commerce.Api",
-        "projectPath": "C:\\Mes Projets\\DEV\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\Commerce.Api.csproj",
-        "packagesPath": "C:\\Users\\oaloui\\.nuget\\packages\\",
-        "outputPath": "C:\\Mes Projets\\DEV\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\obj\\",
+        "projectPath": "D:\\DevRepo\\PersonalProjects\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\Commerce.Api.csproj",
+        "packagesPath": "C:\\Users\\selmi\\.nuget\\packages\\",
+        "outputPath": "D:\\DevRepo\\PersonalProjects\\Commerce\\poc\\back\\Commerce\\Commerce.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\oaloui\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\selmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -86,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

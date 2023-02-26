@@ -1,24 +1,66 @@
-<p>login works!</p>
+ <section class="vh-100" style="background-color: #eee;">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+  
+                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Connexion</p>
+  
+                  <form class="mx-1 mx-md-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <label class="form-label" for="form3Example3c"> Entrez votre Email</label>
+                        <input type="email" id="form3Example3c" class="form-control" formControlName="username"  />
+                        <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+                            <div *ngIf="f['username'].errors['required']">Username is required</div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <label class="form-label" for="form3Example4c">Mot de passe</label>
+                        <input type="password" id="form3Example4c" class="form-control" formControlName="password" /> 
+                        <div *ngIf="submitted && f ['password'].errors" class="invalid-feedback">
+                            <div *ngIf="f['password'].errors['required']">Password is required</div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"> 
+                      <button [disabled]="loading" type="submit" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Se connecter
+                      </button>
+                      <!-- <a routerLink='/register'>Créer un compte</a> -->
+                      <button type="button" class="btn btn-primary" routerLink='/register' style="padding-left: 5px;"> 
+                        Créer un compte
+                      </button>
+                    </div>
+  
+                  </form>
+  
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+  
+                    <!-- <picture>
+                        <source srcset="assets/img/capture.jpg" type="image/svg+xml">
+                         
+                      </picture> -->
 
-
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" formControlName="username" class="form-control"  />
-        <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
-            <div *ngIf="f['username'].errors['required']">Username is required</div>
+                      <img src="assets/img/capture.jpg" class="img-fluid img-thumbnail" alt="Login image">
+  
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" formControlName="password" class="form-control"/>
-        <div *ngIf="submitted && f ['password'].errors" class="invalid-feedback">
-            <div *ngIf="f['password'].errors['required']">Password is required</div>
-        </div>
-    </div>
-    <button [disabled]="loading" class="btn btn-primary">
-        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-        Login
-    </button>
-    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-</form>
+  </section>

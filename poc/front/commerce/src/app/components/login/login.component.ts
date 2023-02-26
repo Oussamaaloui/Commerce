@@ -50,6 +50,7 @@ export class LoginComponent {
 
         // stop here if form is invalid
         if (this.loginForm.invalid) {
+            console.log(this.loginForm.errors)
             return;
         }
 
