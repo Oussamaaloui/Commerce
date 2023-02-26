@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "rLkva1oEwCDvd2tlqk1CDSACCizqCdM4qgEFhfrcBvs=",
+  "Source": "Commerce.Api",
+  "BasePath": "_content/Commerce.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
