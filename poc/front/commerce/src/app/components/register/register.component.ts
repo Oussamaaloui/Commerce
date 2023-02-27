@@ -1,22 +1,32 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { MustMatch } from 'src/app/helpers/must-match.validator';
 import { RegisterModel } from 'src/app/models/register.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   public registerForm: FormGroup;
   loading = false;
-    submitted = false;
+  submitted = false;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router){
+    private router: Router
+  ) {
     // this.registerForm = this.formBuilder.group({
     //   firstName: ['', Validators.required],
     //   lastName: ['', Validators.required],
@@ -33,61 +43,53 @@ export class RegisterComponent {
     //   ]]
     // });
 
-    this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: [''],
-      email: [''],
-      password: [''],
-      confirmPassword: ['']
-    });
-  }
-
-  matchValidator(
-    matchTo: string, 
-    reverse?: boolean
-  ): ValidatorFn {
-    return (control: AbstractControl): 
-    ValidationErrors | null => {
-      if (control.parent && reverse) {
-        const c = (control.parent?.controls as any)[matchTo]  as AbstractControl;
-        if (c) {
-          c.updateValueAndValidity();
-        }
-        return null;
+    this.registerForm = this.formBuilder.group(
+      {
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            //Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+            Validators.minLength(6),
+            Validators.maxLength(25),
+          ],
+        ],
+        confirmPassword: [''],
+      },
+      {
+        validator: MustMatch('password', 'confirmPassword'),
       }
-      return !!control.parent &&
-        !!control.parent.value &&
-        control.value === 
-        (control.parent?.controls as any)[matchTo].value
-        ? null
-        : { matching: true };
-    };
+    );
   }
+ 
 
-  get f() { return this.registerForm.controls; }
+  get f() {
+    return this.registerForm.controls;
+  }
 
   onSubmit() {
-    console.log('Submit clicked')
+    console.log('Submit clicked');
     this.submitted = true;
 
-    console.log(this.registerForm)
-      console.log(this.registerForm.invalid)
+    console.log(this.registerForm);
+    console.log(this.registerForm.invalid);
     if (this.registerForm.invalid) {
-      
       return;
     }
 
     let user: RegisterModel = {
-      email: this.f['email'].value ,
+      email: this.f['email'].value,
       firstName: this.f['firstName'].value,
       lastName: this.f['lastName'].value,
-      password: this.f['password'].value
-    }
+      password: this.f['password'].value,
+    };
 
-    this.userService.register(user)
-    .subscribe(
-      data => this.router.navigateByUrl('login'),
-      error => console.log('oops', error)
-    ) 
+    this.userService.register(user).subscribe(
+      (data) => this.router.navigateByUrl('login'),
+      (error) => console.log('oops', error)
+    );
   }
 }

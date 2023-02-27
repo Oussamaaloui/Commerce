@@ -2,11 +2,8 @@
   <div
     class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
   >
-    <!-- <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img class="w-8 h-8 mr-2" src="assets/img/logo1.png" alt="logo">
-        </a> -->
     <div
-      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md   xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
     >
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1
@@ -15,17 +12,18 @@
           Inscription
         </h1>
         <form
-          class="space-y-4 md:space-y-6"
+          class="space-y-2 md:space-y-4"
           action="#"
           [formGroup]="registerForm"
           (ngSubmit)="onSubmit()"
         >
+          <!-- Last name-->
           <div>
-            <label
+            <!-- <label
               for="lastName"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Nom</label
-            >
+            > -->
             <input
               type="text"
               formControlName="lastName"
@@ -33,14 +31,27 @@
               id="lastName"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required=""
+              placeholder="Nom"
             />
+            <p
+              *ngIf="
+                f['lastName'].errors &&
+                f['lastName'].errors['required'] &&
+                submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Nom obligatoire!
+            </p>
           </div>
+
+          <!-- first name-->
           <div>
-            <label
+            <!-- <label
               for="firstName"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Prenom</label
-            >
+            > -->
             <input
               type="text"
               formControlName="firstName"
@@ -48,15 +59,27 @@
               id="firstName"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required=""
+              placeholder="Prénom"
             />
+            <p
+              *ngIf="
+                f['firstName'].errors &&
+                f['firstName'].errors['required'] &&
+                submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Prénom obligatoire!
+            </p>
           </div>
 
+          <!-- Email -->
           <div>
-            <label
+            <!-- <label
               for="email"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Email</label
-            >
+            > -->
             <input
               type="email"
               formControlName="email"
@@ -64,14 +87,33 @@
               id="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required=""
+              placeholder="Email"
             />
+            <p
+              *ngIf="
+                f['email'].errors && f['email'].errors['required'] && submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Email obligatoire!
+            </p>
+            <p
+              *ngIf="
+                f['email'].errors && f['email'].errors['email'] && submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Veuillez entrer un email valid!
+            </p>
           </div>
+
+          <!-- Password -->
           <div>
-            <label
+            <!-- <label
               for="password"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Mot de passe</label
-            >
+            > -->
             <input
               type="password"
               formControlName="password"
@@ -79,14 +121,58 @@
               id="password"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required=""
+              placeholder="Mot de passe"
             />
+            <p
+              *ngIf="
+                f['password'].errors &&
+                f['password'].errors['required'] &&
+                submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Mot de passe obligatoire!
+            </p>
+            <p
+              *ngIf="
+                f['password'].errors &&
+                f['password'].errors['minlength'] &&
+                submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Mot de passe trop court (min 6)
+            </p>
+            <p
+              *ngIf="
+                f['password'].errors &&
+                f['password'].errors['maxlength'] &&
+                submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Mot de passe trop long (max 25)
+            </p>
+            <p
+              *ngIf="
+                f['password'].errors &&
+                f['password'].errors['pattern'] &&
+                submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Le mot de passe doit contenir une majuscule, une minuscule, un
+              chiffre et un charactère spécial
+            </p>
           </div>
+
+          <!-- Confirm Password-->
           <div>
-            <label
+            <!-- <label
               for="confirmPassword"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Confirmer mot de passe</label
-            >
+            > -->
             <input
               type="password"
               formControlName="confirmPassword"
@@ -94,22 +180,47 @@
               id="confirmPassword"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required=""
+              placeholder="Veuillez confirmer votre mot de passe"
             />
-          </div>
-          <button
-            type="submit"
-            class="w-full text-white bg-primary-600 focus:ring-4 focus:outline-none hover:bg-primary-700 dark:hover:bg-primary-700 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:focus:ring-primary-800"
-          >
-            Créer mon compte
-          </button>
-          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-            Vous avez déjà un compte??
-            <a
-              routerLink="/login"
-              class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-              >Connexion</a
+            <p
+              *ngIf="
+                f['confirmPassword'].errors &&
+                f['confirmPassword'].errors['mustMatch'] &&
+                submitted
+              "
+              class="text-red-700 mt-2"
             >
-          </p>
+              Les mots de passe ne correspondent pas!
+            </p>
+            <p
+              *ngIf="
+                f['confirmPassword'].errors &&
+                f['confirmPassword'].errors['required'] &&
+                submitted
+              "
+              class="text-red-700 mt-2"
+            >
+              Veuillez confirmer votre mot de passe!
+            </p>
+          </div>
+
+          <!-- Submit -->
+          <div class="mt-4">
+            <button
+              type="submit"
+              class="w-full text-white bg-primary-600 focus:ring-4 focus:outline-none hover:bg-primary-700 dark:hover:bg-primary-700 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:focus:ring-primary-800"
+            >
+              Créer mon compte
+            </button>
+            <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-2">
+              Vous avez déjà un compte??
+              <a
+                routerLink="/login"
+                class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >Connexion</a
+              >
+            </p>
+          </div>
         </form>
       </div>
     </div>
