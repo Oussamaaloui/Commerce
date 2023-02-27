@@ -26,22 +26,7 @@ export class RegisterComponent {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router
-  ) {
-    // this.registerForm = this.formBuilder.group({
-    //   firstName: ['', Validators.required],
-    //   lastName: ['', Validators.required],
-    //   email: ['', Validators.required],
-    //   password: ['', [
-    //     Validators.required,
-    //     Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-    //     Validators.minLength(6),
-    //     Validators.maxLength(25)
-    //   ]],
-    //   confirmPassword: ['', [
-    //     Validators.required,
-    //     this.matchValidator('password')
-    //   ]]
-    // });
+  ) { 
 
     this.registerForm = this.formBuilder.group(
       {
