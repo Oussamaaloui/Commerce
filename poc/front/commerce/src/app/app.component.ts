@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +11,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'commerce';
+
+  constructor(){
+    registerLocaleData(localeFr);
+  }
 }

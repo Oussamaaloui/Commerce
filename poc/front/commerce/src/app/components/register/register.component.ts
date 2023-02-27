@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, map } from 'rxjs';
 import { MustMatch } from 'src/app/helpers/must-match.validator';
 import { RegisterModel } from 'src/app/models/register.model';
 import { UserService } from 'src/app/services/user.service';
@@ -37,7 +38,7 @@ export class RegisterComponent {
           '',
           [
             Validators.required,
-            //Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$'),
             Validators.minLength(6),
             Validators.maxLength(25),
           ],
@@ -55,12 +56,8 @@ export class RegisterComponent {
     return this.registerForm.controls;
   }
 
-  onSubmit() {
-    console.log('Submit clicked');
-    this.submitted = true;
-
-    console.log(this.registerForm);
-    console.log(this.registerForm.invalid);
+  onSubmit() { 
+    this.submitted = true; 
     if (this.registerForm.invalid) {
       return;
     }
@@ -72,9 +69,15 @@ export class RegisterComponent {
       password: this.f['password'].value,
     };
 
-    this.userService.register(user).subscribe(
-      (data) => this.router.navigateByUrl('login'),
-      (error) => console.log('oops', error)
-    );
+    // this.userService.register(user).subscribe(
+    //   (data) => this.router.navigateByUrl('login'),
+    //   (error) => console.log('oops', error)
+    // );
+
+    this.userService.register(user)
+      .pipe(
+        map( () => this.router.navigateByUrl('login') )
+      )
+      .subscribe();
   }
 }
