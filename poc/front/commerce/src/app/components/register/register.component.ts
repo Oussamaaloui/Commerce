@@ -34,7 +34,7 @@ export class RegisterComponent {
     // });
 
     this.registerForm = this.formBuilder.group({
-      firstName: [''],
+      firstName: ['', Validators.required],
       lastName: [''],
       email: [''],
       password: [''],
@@ -70,6 +70,8 @@ export class RegisterComponent {
     console.log('Submit clicked')
     this.submitted = true;
 
+    console.log(this.registerForm)
+      console.log(this.registerForm.invalid)
     if (this.registerForm.invalid) {
       
       return;

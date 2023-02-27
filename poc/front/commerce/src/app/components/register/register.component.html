@@ -1,82 +1,117 @@
-<section class="vh-100" style="background-color: #eee;">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-lg-12 col-xl-11">
-          <div class="card text-black" style="border-radius: 25px;">
-            <div class="card-body p-md-5">
-              <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-  
-                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Inscription</p>
-  
-                  <form class="mx-1 mx-md-4" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="first_name">Entrez votre prenom</label>
-                        <input type="text" id="first_name" class="form-control" formControlName="firstName" />
-                        <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
-                          <div *ngIf="f['firstName'].errors['required']">Prénom obligatoire</div>
-                      </div>
-                      </div>
-                    </div>
-
-                    <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <label class="form-label" for="last_name">Entrez votre nom</label>
-                          <input type="text" id="last_name" class="form-control" formControlName="lastName"/>
-                        </div>
-                      </div>
-  
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="email">Votre Email</label>
-                        <input type="email" id="email" class="form-control" formControlName="email"/>
-                      </div>
-                    </div>
-  
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="password">Mot de passe</label>
-                        <input type="password" id="password" class="form-control" formControlName="password"/>
-                      </div>
-                    </div>
-  
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="confirm_password">Confirmer votre de mot de passe</label>
-                        <input type="password" id="confirm_password" class="form-control" formControlName="confirmPassword"/>
-                      </div>
-                    </div>
-  
-                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <!-- <button type="button" class="btn btn-primary btn-lg">S'inscrire</button> -->
-                      <button [disabled]="loading" type="submit" class="btn btn-primary btn-lg">
-                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                        S'inscrire
-                    </button>
-                    <button type="button" class="btn btn-primary" routerLink='/login' style="padding-left: 5px;"> 
-                      Se connecter
-                    </button>
-                    </div>
-  
-                  </form>
-  
-                </div>
-                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-  
-                    <img src="assets/img/capture.jpg" class="img-fluid img-thumbnail" alt="img/capture.jpg"> 
-  
-                </div>
-              </div>
-            </div>
+<section class="bg-gray-50 dark:bg-gray-900">
+  <div
+    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+  >
+    <!-- <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <img class="w-8 h-8 mr-2" src="assets/img/logo1.png" alt="logo">
+        </a> -->
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md   xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1
+          class="text-xl font-bold text-center mb-2 leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+        >
+          Inscription
+        </h1>
+        <form
+          class="space-y-4 md:space-y-6"
+          action="#"
+          [formGroup]="registerForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div>
+            <label
+              for="lastName"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Nom</label
+            >
+            <input
+              type="text"
+              formControlName="lastName"
+              name="lastName"
+              id="lastName"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required=""
+            />
           </div>
-        </div>
+          <div>
+            <label
+              for="firstName"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Prenom</label
+            >
+            <input
+              type="text"
+              formControlName="firstName"
+              name="firstName"
+              id="firstName"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required=""
+            />
+          </div>
+
+          <div>
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Email</label
+            >
+            <input
+              type="email"
+              formControlName="email"
+              name="email"
+              id="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required=""
+            />
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Mot de passe</label
+            >
+            <input
+              type="password"
+              formControlName="password"
+              name="password"
+              id="password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required=""
+            />
+          </div>
+          <div>
+            <label
+              for="confirmPassword"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Confirmer mot de passe</label
+            >
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              name="password"
+              id="confirmPassword"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required=""
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full text-white bg-primary-600 focus:ring-4 focus:outline-none hover:bg-primary-700 dark:hover:bg-primary-700 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:focus:ring-primary-800"
+          >
+            Créer mon compte
+          </button>
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+            Vous avez déjà un compte??
+            <a
+              routerLink="/login"
+              class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              >Connexion</a
+            >
+          </p>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
+</section>
