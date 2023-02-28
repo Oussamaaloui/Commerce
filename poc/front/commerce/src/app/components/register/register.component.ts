@@ -38,7 +38,7 @@ export class RegisterComponent {
           '',
           [
             Validators.required,
-            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$'),
+            // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$'),
             Validators.minLength(6),
             Validators.maxLength(25),
           ],
@@ -67,12 +67,7 @@ export class RegisterComponent {
       firstName: this.f['firstName'].value,
       lastName: this.f['lastName'].value,
       password: this.f['password'].value,
-    };
-
-    // this.userService.register(user).subscribe(
-    //   (data) => this.router.navigateByUrl('login'),
-    //   (error) => console.log('oops', error)
-    // );
+    }; 
 
     this.userService.register(user)
       .pipe(

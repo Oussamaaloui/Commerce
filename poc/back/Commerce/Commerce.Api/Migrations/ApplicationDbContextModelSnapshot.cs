@@ -151,15 +151,15 @@ namespace Commerce.Api.Migrations
 
             modelBuilder.Entity("Commerce.Api.Entities.RendezVous", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("EntrepriseId")
                         .HasColumnType("int");
@@ -169,6 +169,9 @@ namespace Commerce.Api.Migrations
 
                     b.Property<int>("Motif")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Titre")
                         .IsRequired()

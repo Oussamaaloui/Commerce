@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Commerce.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230228135510_add-table-rendez-vous")]
-    partial class addtablerendezvous
+    [Migration("20230228164350_init-database")]
+    partial class initdatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -154,11 +154,8 @@ namespace Commerce.Api.Migrations
 
             modelBuilder.Entity("Commerce.Api.Entities.RendezVous", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -180,11 +177,17 @@ namespace Commerce.Api.Migrations
                     b.Property<int>("TypeRendezVous")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EntrepriseId");
 
                     b.HasIndex("InterlocuteurId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RendezVous");
                 });
@@ -336,9 +339,17 @@ namespace Commerce.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Commerce.Api.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Entreprise");
 
                     b.Navigation("Interlocuteur");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
