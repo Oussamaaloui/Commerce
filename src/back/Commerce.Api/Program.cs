@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Newtonsoft;
+using Newtonsoft.Json.Serialization;
 
 namespace Commerce.Api
 {
@@ -17,7 +19,9 @@ namespace Commerce.Api
             // Add services to the container.
             var configuration = builder.Configuration;
             // For Entity Framework
-            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStr")));
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options
+                .UseSqlServer(configuration.GetConnectionString("ConnStr"))
+                .UseLazyLoadingProxies());
 
             // For Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -57,7 +61,12 @@ namespace Commerce.Api
                 });
             });
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson(setup =>
+            {
+                //setup.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                //setup.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                setup.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+            }); ;
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

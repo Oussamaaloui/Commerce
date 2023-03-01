@@ -40,7 +40,7 @@ namespace Commerce.Api.Controllers
                 {
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Name, $"{user.FirstName}, {user.LastName}"),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(ClaimTypes.Sid, user.Id),
                 };
 
                 foreach (var userRole in userRoles)

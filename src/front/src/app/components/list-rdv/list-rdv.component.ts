@@ -15,31 +15,43 @@ import {
   isSameMonth,
   addHours,
 } from 'date-fns';
-import { Subject } from 'rxjs'; 
+import { map, Subject } from 'rxjs'; 
 import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
+  CalendarEventTitleFormatter,
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import { CustomEventTitleFormatter } from '../../helpers/custom-date.formatter';
+import { RendezVous } from 'src/app/models/rendez-vous.model';
+import { RendezVousService } from 'src/app/services/rendez-vous.service';
 
 
 
 @Component({
   selector: 'app-list-rdv',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './list-rdv.component.html',
   styleUrls: ['./list-rdv.component.css'],
+  providers: [
+    {
+      provide: CalendarEventTitleFormatter,
+      useClass: CustomEventTitleFormatter
+     }
+  ]
 })
 export class ListRdvComponent implements OnInit {
   
   userName: string = '';
+  listRendezVous : CalendarEvent[] = []; 
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, private rdvService: RendezVousService) {}
 
   ngOnInit(): void {
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
+    this.loadRendezVous()
   }
 
   // Calendar part!
@@ -86,46 +98,37 @@ export class ListRdvComponent implements OnInit {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...this.colors['red'] },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...this.colors['yellow'] },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...this.colors['blue'] },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      id:'id of event',
-      color: { ...this.colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
+
+  loadRendezVous(){
+
+    this.rdvService.getAll()
+    .pipe(
+      map(data =>{ 
+        this.events = [];
+        data.forEach(element => {
+          let myEvent : CalendarEvent = {
+            start: new Date(element.start),
+            end: new Date(element.end),
+            title: element.titre,
+            color: { ...this.colors['red'] },
+            actions: this.actions,
+            allDay: false,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            },
+            draggable: true,
+            id: element.id
+          }
+
+          this.events.push(myEvent);
+        })
+        this.refresh.next(); 
+      }))
+    .subscribe(); 
+  }
+
+  events: CalendarEvent[] = [ 
   ];
 
   activeDayIsOpen: boolean = true;
@@ -149,7 +152,7 @@ export class ListRdvComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    console.log(event);
+    // console.log(event);
     this.events = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
@@ -166,9 +169,43 @@ export class ListRdvComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     //this.modalData = { event, action };
     //this.modal.open(this.modalContent, { size: 'lg' });
-    console.log(action);
+    
+    if(action === 'Dropped or resized'){
+      this.eventTimeUpdated(event);
+    }else if(action==='Clicked'){
+      this.eventClicked(event);
+    }
+    else if(action === 'Deleted'){
+      this.deleteEvent(event);
+    }else if(action === 'Edited'){
+      this.editEvent(event);
+    }
+    else{
+      console.log(`${action} : Not implemented`)
+    }
+  }
+
+  eventClicked(event: any){
+    console.log('Event clicked:')
     console.log(event)
   }
+
+  eventTimeUpdated(event: any){
+    console.log('Event time changed:')
+    console.log(event)
+    console.log(this.events)
+
+    let changedEvent = this.events.filter(e => e.id === event.id)
+    if(changedEvent.length == 1){
+      if(changedEvent[0].id && changedEvent[0].start && changedEvent[0].end){ 
+        console.log()
+        this.rdvService.updateTiming(changedEvent[0].id.toString(), changedEvent[0].start, changedEvent[0].end)
+        .pipe()
+        .subscribe();
+      } 
+    } 
+  }
+
 
   addEvent(): void {
     this.events = [
@@ -188,7 +225,15 @@ export class ListRdvComponent implements OnInit {
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+    if(eventToDelete && eventToDelete.id){
+      this.rdvService.delete(eventToDelete.id.toString())
+      .pipe(map(() => this.events.filter((event) => event !== eventToDelete)))
+      .subscribe()
+    } 
+  }
+
+  editEvent(event: CalendarEvent){
+    console.log('edited')
   }
 
   setView(view: CalendarView) {

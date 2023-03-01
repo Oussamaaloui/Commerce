@@ -26,8 +26,15 @@ export class RendezVousService {
     return this.http.post<any>(`${API_URL}/${rdv.id}`, rdv)
   }
 
+  updateTiming(id: string, start: Date, end:Date){
+    return this.http.post<any>(`${API_URL}update-timing/${id}`, {
+      start: start,
+      end: end
+    })
+  }
+
   delete(id: string){
-    return this.http.delete<any>(`${API_URL}/${id}`)
+    return this.http.delete<any>(`${API_URL}${id}`)
   }
 
   getAll(): Observable<RendezVous[]>{

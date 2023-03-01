@@ -49,8 +49,7 @@ export class LoginComponent {
         this.submitted = true;
 
         // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            console.log(this.loginForm.errors)
+        if (this.loginForm.invalid) { 
             return;
         }
 
@@ -61,8 +60,7 @@ export class LoginComponent {
                 data => {
                     this.router.navigate([this.returnUrl]);
                 },
-                error => {
-                    console.log(error)
+                error => { 
                     this.error = error;
                     this.loading = false;
                 });

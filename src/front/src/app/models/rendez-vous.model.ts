@@ -16,6 +16,8 @@ export interface RendezVous {
     email: string;
     typeRendezVous: TypeRendezVous;
     motif: MotifRendezVous;
+    start: Date,
+    end: Date
 }
 
 
