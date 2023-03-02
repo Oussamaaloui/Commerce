@@ -15,6 +15,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component';
 import { ModalComponent } from './shared/modal/modal.component';
+import { FlowbiteModule } from 'flowbite-angular';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { ModalComponent } from './shared/modal/modal.component';
     ListRdvComponent,
     LogoutComponent,
     EditRdvComponent,
-    ModalComponent
+    ModalComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,7 @@ import { ModalComponent } from './shared/modal/modal.component';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FlowbiteModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
     
   ],

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component';
 import { ListRdvComponent } from './components/list-rdv/list-rdv.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -23,6 +24,10 @@ const routes: Routes = [
     path:'rdv',
     component: ListRdvComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path:'rdv/create',
+    component: EditRdvComponent
   },
   {
     path:'**',

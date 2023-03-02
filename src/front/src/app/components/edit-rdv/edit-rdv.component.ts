@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RendezVous } from 'src/app/models/rendez-vous.model';
+import { RendezVous } from 'src/app/models/rendez-vous.model';  
 
 @Component({
   selector: 'app-edit-rdv',
@@ -7,7 +7,8 @@ import { RendezVous } from 'src/app/models/rendez-vous.model';
   styleUrls: ['./edit-rdv.component.css']
 })
 export class EditRdvComponent implements OnInit {
-  ngOnInit(): void {
+  ngOnInit(): void {  
+
     console.log(this.user)
 
     if(this.mode == 'create'){
