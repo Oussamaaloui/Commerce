@@ -12,7 +12,9 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { CalendarModule, DateAdapter,  } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component';
+import { ModalComponent } from './shared/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     RegisterComponent,
     ListRdvComponent,
-    LogoutComponent
+    LogoutComponent,
+    EditRdvComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     BrowserAnimationsModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

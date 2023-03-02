@@ -27,6 +27,9 @@ import { EventColor } from 'calendar-utils';
 import { CustomEventTitleFormatter } from '../../helpers/custom-date.formatter';
 import { RendezVous } from 'src/app/models/rendez-vous.model';
 import { RendezVousService } from 'src/app/services/rendez-vous.service';
+import { EditRdvComponent } from '../edit-rdv/edit-rdv.component';
+import { ModalComponent } from 'src/app/shared/modal/modal.component';
+import { ModalService } from 'src/app/shared/modal/modal.service';
 
 
 
@@ -44,10 +47,32 @@ import { RendezVousService } from 'src/app/services/rendez-vous.service';
 })
 export class ListRdvComponent implements OnInit {
   
+  @ViewChild('modalComponent') modal:
+    | ModalComponent<EditRdvComponent>
+    | undefined;
+
+    async showModal(){
+      let modalRef = await this.modalService.open(EditRdvComponent)
+        
+      if(modalRef){
+        modalRef.instance.user = this.events;
+        modalRef.instance.cancel.subscribe(() => {
+          console.log('rdv creation canceled!')
+          this.modalService.close()
+        })
+        modalRef.instance.createdOrUpdated.subscribe(() => {
+          console.log('rdv created!')
+          this.modalService.close()
+        })
+      }
+    }
+
   userName: string = '';
   listRendezVous : CalendarEvent[] = []; 
 
-  constructor(private authService: AuthenticationService, private rdvService: RendezVousService) {}
+  constructor(private authService: AuthenticationService, 
+    private rdvService: RendezVousService,
+    private modalService: ModalService<EditRdvComponent>) {}
 
   ngOnInit(): void {
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
@@ -70,7 +95,7 @@ export class ListRdvComponent implements OnInit {
       secondary: '#FDF1BA',
     },
   }; 
-  view: CalendarView = CalendarView.Month;
+  view: CalendarView = CalendarView.Week;
 
   CalendarView = CalendarView;
 
@@ -163,16 +188,11 @@ export class ListRdvComponent implements OnInit {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    this.eventTimeUpdated(event, newStart, newEnd);
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    //this.modalData = { event, action };
-    //this.modal.open(this.modalContent, { size: 'lg' });
-    
-    if(action === 'Dropped or resized'){
-      this.eventTimeUpdated(event);
-    }else if(action==='Clicked'){
+    if(action==='Clicked'){
       this.eventClicked(event);
     }
     else if(action === 'Deleted'){
@@ -190,7 +210,7 @@ export class ListRdvComponent implements OnInit {
     console.log(event)
   }
 
-  eventTimeUpdated(event: any){
+  eventTimeUpdated(event: any, newStart: Date, newEnd : Date | undefined){
     console.log('Event time changed:')
     console.log(event)
     console.log(this.events)
