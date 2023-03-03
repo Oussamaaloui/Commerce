@@ -13,10 +13,10 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { CalendarModule, DateAdapter,  } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component';
-import { ModalComponent } from './shared/modal/modal.component';
-import { FlowbiteModule } from 'flowbite-angular';
+import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component'; 
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { DarkThemeToggleComponent } from './shared/dark-mode-toggler/dark-mode-toggler.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -27,8 +27,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     ListRdvComponent,
     LogoutComponent,
     EditRdvComponent,
-    ModalComponent,
-    NavBarComponent
+    NavBarComponent,
+    DarkThemeToggleComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +37,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FlowbiteModule,
+    MatDialogModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
     
   ],

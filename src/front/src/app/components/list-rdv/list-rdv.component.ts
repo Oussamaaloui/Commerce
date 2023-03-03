@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, ElementRef } from '@angular/core';
 import { LoginModel } from 'src/app/models/login.model';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -28,8 +28,7 @@ import { CustomEventTitleFormatter } from '../../helpers/custom-date.formatter';
 import { RendezVous } from 'src/app/models/rendez-vous.model';
 import { RendezVousService } from 'src/app/services/rendez-vous.service';
 import { EditRdvComponent } from '../edit-rdv/edit-rdv.component';
-import { ModalComponent } from 'src/app/shared/modal/modal.component';
-import { ModalService } from 'src/app/shared/modal/modal.service';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 
 
@@ -46,37 +45,32 @@ import { ModalService } from 'src/app/shared/modal/modal.service';
   ]
 })
 export class ListRdvComponent implements OnInit {
-  
-  @ViewChild('modalComponent') modal:
-    | ModalComponent<EditRdvComponent>
-    | undefined;
-
-    async showModal(){
-      let modalRef = await this.modalService.open(EditRdvComponent)
-        
-      if(modalRef){
-        modalRef.instance.user = this.events;
-        modalRef.instance.cancel.subscribe(() => {
-          console.log('rdv creation canceled!')
-          this.modalService.close()
-        })
-        modalRef.instance.createdOrUpdated.subscribe(() => {
-          console.log('rdv created!')
-          this.modalService.close()
-        })
-      }
-    }
-
+    @ViewChild("closeButton") modalCloseButton: ElementRef<HTMLElement>;
+    @ViewChild("openModal") openModalButton: ElementRef<HTMLElement>;
   userName: string = '';
   listRendezVous : CalendarEvent[] = []; 
+  modalMode: 'edit'|'create'|'view' = 'create';
+  currentRdv: RendezVous | undefined;
 
-  constructor(private authService: AuthenticationService, 
-    private rdvService: RendezVousService,
-    private modalService: ModalService<EditRdvComponent>) {}
+  constructor(private authService: AuthenticationService,
+    private rdvService: RendezVousService) {}
 
   ngOnInit(): void {
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
     this.loadRendezVous()
+  } 
+
+  setModalMode(mode: 'edit'|'create'|'view'){
+    this.modalMode = mode; 
+    this.openModalButton.nativeElement.click()
+  }
+  cancelCreateOrUpdate(){
+    this.modalCloseButton.nativeElement.click();
+  }
+  createdOrUpdateEvent(){
+    
+    this.modalCloseButton.nativeElement.click();
+    this.loadRendezVous();
   }
 
   // Calendar part!
@@ -172,6 +166,10 @@ export class ListRdvComponent implements OnInit {
     }
   }
 
+  acceptChanges(){
+    console.log(this.modalCloseButton);
+  }
+
   eventTimesChanged({
     event,
     newStart,
@@ -206,8 +204,16 @@ export class ListRdvComponent implements OnInit {
   }
 
   eventClicked(event: any){
-    console.log('Event clicked:')
-    console.log(event)
+    this.edit(event.id);
+  }
+
+  edit(id: string){
+    this.rdvService.getById(id)
+    .pipe()
+    .subscribe(rdv => {
+      this.currentRdv = rdv;
+      this.setModalMode('edit');
+    }) 
   }
 
   eventTimeUpdated(event: any, newStart: Date, newEnd : Date | undefined){
@@ -225,7 +231,6 @@ export class ListRdvComponent implements OnInit {
       } 
     } 
   }
-
 
   addEvent(): void {
     this.events = [
@@ -252,8 +257,8 @@ export class ListRdvComponent implements OnInit {
     } 
   }
 
-  editEvent(event: CalendarEvent){
-    console.log('edited')
+  editEvent(event: any){
+    this.edit(event.id);
   }
 
   setView(view: CalendarView) {

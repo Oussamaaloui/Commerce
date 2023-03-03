@@ -23,7 +23,7 @@ export class RendezVousService {
   }
 
   update(rdv: RendezVous){
-    return this.http.post<any>(`${API_URL}/${rdv.id}`, rdv)
+    return this.http.post<any>(`${API_URL}${rdv.id}`, rdv)
   }
 
   updateTiming(id: string, start: Date, end:Date){
@@ -42,6 +42,6 @@ export class RendezVousService {
   }
 
   getById(id: string): Observable<RendezVous>{
-    return this.http.get<RendezVous>(`${API_URL}/${id}`)
+    return this.http.get<RendezVous>(`${API_URL}${id}`)
   }
 }

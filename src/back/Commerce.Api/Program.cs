@@ -66,6 +66,7 @@ namespace Commerce.Api
                 //setup.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 //setup.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 setup.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+                setup.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
             }); ;
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
