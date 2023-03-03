@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, Ele
 import { LoginModel } from 'src/app/models/login.model';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
+import { initModals } from 'flowbite';
 
  
 import {
@@ -29,6 +29,7 @@ import { RendezVous } from 'src/app/models/rendez-vous.model';
 import { RendezVousService } from 'src/app/services/rendez-vous.service';
 import { EditRdvComponent } from '../edit-rdv/edit-rdv.component';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+// import { initModals } from '../../../assets/js/flow'
 
 
 
@@ -58,6 +59,7 @@ export class ListRdvComponent implements OnInit {
   ngOnInit(): void {
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
     this.loadRendezVous()
+    initModals();
   } 
 
   setModalMode(mode: 'edit'|'create'|'view'){
