@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import frMessages  from "devextreme/localization/messages/fr.json";
+import { locale, loadMessages } from "devextreme/localization";
 
 
 
@@ -14,5 +16,7 @@ export class AppComponent {
 
   constructor(){
     registerLocaleData(localeFr);
+    loadMessages(frMessages);
+        locale('fr');
   }
 }

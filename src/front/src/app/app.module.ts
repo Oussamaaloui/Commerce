@@ -17,6 +17,8 @@ import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { DarkThemeToggleComponent } from './shared/dark-mode-toggler/dark-mode-toggler.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DxDateBoxModule, DxPopupModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule } from 'devextreme-angular';
+import { UnauthorizedInterceptor } from './helpers/unauthorized.interceptor';
 
 
 @NgModule({
@@ -38,11 +40,17 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    DxDateBoxModule,
+    DxPopupModule,
+    DxTextBoxModule,
+    DxTextAreaModule, 
+    DxSelectBoxModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
     
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

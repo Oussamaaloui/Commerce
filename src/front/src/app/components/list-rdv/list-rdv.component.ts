@@ -50,46 +50,67 @@ export class ListRdvComponent implements OnInit {
     @ViewChild("openModal") openModalButton: ElementRef<HTMLElement>;
   userName: string = '';
   listRendezVous : CalendarEvent[] = []; 
-  modalMode: 'edit'|'create'|'view' = 'create';
-  currentRdv: RendezVous | undefined;
+  
 
   constructor(private authService: AuthenticationService,
-    private rdvService: RendezVousService) {}
+    private rdvService: RendezVousService) {
+      this.currentRdv = this.initNewRdv();
+    }
+
+    // Devextrem popup!
+    popupVisible: boolean = false;
+    modalMode: 'edit'|'create'|'view' = 'create';
+    currentRdv: RendezVous;
+
+    initNewRdv(): RendezVous{
+      return {
+        id: '',
+        titre: '',
+        description: '',
+        entreprise: '',
+        addresse: '',
+        ville: '',
+        codePostal: '',
+        typeEntreprise: undefined,
+        interlocuteur: '',
+        numero: '',
+        email: '',
+        typeRendezVous: undefined,
+        motif: undefined,
+        start: new Date(),
+        end:  new Date()
+      }
+    }
 
   ngOnInit(): void {
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
-    this.loadRendezVous()
-    initModals();
+    this.loadRendezVous() 
   } 
 
-  setModalMode(mode: 'edit'|'create'|'view'){
+  openModalInMode(mode: 'edit'|'create'|'view'){
     this.modalMode = mode; 
-    this.openModalButton.nativeElement.click()
-  }
-  cancelCreateOrUpdate(){
-    this.modalCloseButton.nativeElement.click();
-  }
-  createdOrUpdateEvent(){
     
-    this.modalCloseButton.nativeElement.click();
+    if(mode === 'create'){
+      this.currentRdv = this.initNewRdv();
+    }
+
+    this.popupVisible = true; 
+  }
+
+  cancelCreateOrUpdate(){
+    this.popupVisible = false;
+  }
+  createdOrUpdateEvent(){ 
+    this.popupVisible = false;
     this.loadRendezVous();
   }
 
-  // Calendar part!
-
+  // Calendar part! 
   colors: Record<string, EventColor> = {
     red: {
-      primary: '#ad2121',
-      secondary: '#FAE3E3',
-    },
-    blue: {
-      primary: '#1e90ff',
-      secondary: '#D1E8FF',
-    },
-    yellow: {
-      primary: '#e3bc08',
-      secondary: '#FDF1BA',
-    },
+      secondary: '#ea580c',
+      primary: '#ea580c',
+    }
   }; 
   view: CalendarView = CalendarView.Week;
 
@@ -101,14 +122,15 @@ export class ListRdvComponent implements OnInit {
 
   actions: CalendarEventAction[] = [
     {
-      label: '<i class="fas fa-fw fa-pencil-alt">Editer</i> ',
+      label: '<i class="fas fa-fw fa-pencil-alt text-white "></i> ',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
+        console.log('editer clicked!')
         this.handleEvent('Edited', event);
       },
     },
     {
-      label: '<i class="fas fa-fw fa-trash-alt">Supprimer</i>',
+      label: '<i class="fas fa-fw fa-trash-alt text-white "></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter((iEvent) => iEvent !== event);
@@ -166,11 +188,7 @@ export class ListRdvComponent implements OnInit {
       }
       this.viewDate = date;
     }
-  }
-
-  acceptChanges(){
-    console.log(this.modalCloseButton);
-  }
+  } 
 
   eventTimesChanged({
     event,
@@ -214,7 +232,7 @@ export class ListRdvComponent implements OnInit {
     .pipe()
     .subscribe(rdv => {
       this.currentRdv = rdv;
-      this.setModalMode('edit');
+      this.openModalInMode('edit');
     }) 
   }
 
@@ -269,6 +287,10 @@ export class ListRdvComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  debugConsole(input: any){
+    console.log(input)
   }
 
 }

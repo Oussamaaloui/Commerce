@@ -9,15 +9,15 @@ export interface RendezVous {
     entreprise: string;
     addresse: string;
     ville: string;
-    codePostal: number;
-    typeEntreprise: TypeEntreprise;
+    codePostal: string;
+    typeEntreprise: TypeEntreprise | undefined;
     interlocuteur: string;
     numero: string;
     email: string;
-    typeRendezVous: TypeRendezVous;
-    motif: MotifRendezVous;
-    start: Date,
-    end: Date
+    typeRendezVous: TypeRendezVous | undefined;
+    motif: MotifRendezVous | undefined;
+    start: string | number | Date,
+    end: string | number | Date
 }
 
 

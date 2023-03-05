@@ -24,7 +24,8 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
+            "styles": [ 
+              "node_modules/devextreme/dist/css/dx.light.css",
               "node_modules/angular-calendar/css/angular-calendar.css",
               "src/styles.css"
             ],
