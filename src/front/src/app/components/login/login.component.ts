@@ -66,7 +66,12 @@ export class LoginComponent {
                     this.loading = false;
 
                     if(e instanceof HttpErrorResponse){
-                        this.notificationService.showError('Connexion échouée. Email ou mot de passe erroné')
+                        if(e.status == 403){
+                            this.notificationService.showError(e.error)
+                            console.log(e)
+                        }else{
+                            this.notificationService.showError('Connexion échouée. Email ou mot de passe erroné')
+                        } 
                     }else{
                         this.notificationService.showError('Erreur inconnue. Plus de détail dans la console.')
                         console.error(e.error)

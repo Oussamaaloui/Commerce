@@ -68,6 +68,11 @@ namespace Commerce.Api.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
+                if (!user.Active)
+                {
+                    return StatusCode(403, "Votre compte est désactivé!");
+                }
+
                 var userRoles = await _userManager.GetRolesAsync(user);
 
                 var authClaims = new List<Claim>
@@ -144,6 +149,7 @@ namespace Commerce.Api.Controllers
                 UserName = model.Email,
                 FirstName= model.FirstName,
                 LastName= model.LastName,
+                CreatedAt = DateTime.Now
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)

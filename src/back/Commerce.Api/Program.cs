@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Newtonsoft;
 using Newtonsoft.Json.Serialization;
+using System.Security.Claims;
 
 namespace Commerce.Api
 {
@@ -47,8 +48,22 @@ namespace Commerce.Api
                     ValidateAudience = true,
                     ValidAudience = configuration["JWT:ValidAudience"],
                     ValidIssuer = configuration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))                    
                 };
+                options.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = async ctx =>
+                    {
+                        var userManager = ctx.HttpContext.RequestServices.GetService<UserManager<ApplicationUser>>();
+
+                        var user = await userManager.FindByEmailAsync(ctx.Principal.Claims.Where(i => ClaimTypes.Email == i.Type).FirstOrDefault()?.Value);
+
+                        user.LastActivity = DateTime.Now;
+
+                        await userManager.UpdateAsync(user);
+                    }
+                };
+                 
             });
 
             builder.Services.AddCors(options =>

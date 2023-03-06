@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import {
+  DxDataGridModule,
   DxDateBoxModule,
+  DxDrawerModule,
   DxFormModule,
   DxLoadPanelModule,
   DxPopupModule,
@@ -14,6 +16,7 @@ import {
   DxValidatorModule,
 } from 'devextreme-angular';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     DxValidatorModule,
     DxValidationGroupModule,
     DxLoadPanelModule,
-    DxTooltipModule
+    DxTooltipModule,
+    DxDrawerModule,
+    DxDataGridModule,
+    HttpClientModule
   ],
   exports: [
     ChangePasswordComponent,
@@ -40,7 +46,11 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     DxValidatorModule,
     DxValidationGroupModule,
     DxLoadPanelModule,
-    DxTooltipModule
+    DxTooltipModule,
+    DxDrawerModule,
+    DxDataGridModule,
+    HttpClientModule,
+    LoadingSpinnerComponent
   ]
 })
 export class SharedModule { }

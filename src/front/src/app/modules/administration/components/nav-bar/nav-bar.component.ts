@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -11,6 +11,8 @@ export class NavBarComponent  implements OnInit {
   defaultVisible = false;
   changePasswordDialogVisible = false; 
   triggerOpen: Subject<void> = new Subject<void>();
+
+  @Output("toggleDrawer") toggleDrawer: EventEmitter<void> = new EventEmitter<void>();
   
   constructor(public authService: AuthenticationService){}
 
@@ -32,5 +34,9 @@ export class NavBarComponent  implements OnInit {
 
   closeChangePasswordDialog(){
     this.changePasswordDialogVisible = false;
+  }
+
+  notifyToggleDrawer(){
+    this.toggleDrawer.emit();
   }
 }

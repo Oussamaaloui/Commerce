@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChangePasswordComponent } from './modules/shared/change-password/change-password.component';
 import { ListRdvComponent } from './components/list-rdv/list-rdv.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -24,11 +23,7 @@ const routes: Routes = [
     path:'rdv',
     component: ListRdvComponent,
     canActivate: [AuthGuard]
-  },
-  {
-    path:'administration',
-    loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule)
-  },
+  }, 
   { path: 'administration', loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule) },
   {
     path:'**',

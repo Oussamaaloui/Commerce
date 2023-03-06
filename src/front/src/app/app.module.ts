@@ -18,9 +18,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { DarkThemeToggleComponent } from './shared/dark-mode-toggler/dark-mode-toggler.component';
 import { MatDialogModule } from '@angular/material/dialog'; 
 import { UnauthorizedInterceptor } from './helpers/unauthorized.interceptor';
-import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { CustomDateFormatter } from './helpers/custom-date.formatter';
-import { ChangePasswordComponent } from './modules/shared/change-password/change-password.component';
 import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
@@ -32,8 +30,7 @@ import { SharedModule } from './modules/shared/shared.module';
     LogoutComponent,
     EditRdvComponent,
     NavBarComponent,
-    DarkThemeToggleComponent,
-    LoadingSpinnerComponent
+    DarkThemeToggleComponent
   ],
   imports: [
     BrowserModule,

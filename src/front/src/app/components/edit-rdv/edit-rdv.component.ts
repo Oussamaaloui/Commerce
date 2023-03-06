@@ -1,11 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { map, Subject } from 'rxjs';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { map } from 'rxjs';
 import { RendezVous } from 'src/app/models/rendez-vous.model';  
 import { RendezVousService } from 'src/app/services/rendez-vous.service';
 import ArrayStore from 'devextreme/data/array_store';
-import { DxTextBoxComponent, DxValidationGroupComponent } from 'devextreme-angular';
+import { DxValidationGroupComponent } from 'devextreme-angular';
 
 @Component({
   selector: 'app-edit-rdv',
