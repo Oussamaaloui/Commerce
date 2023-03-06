@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {
   DxDateBoxModule,
   DxFormModule,
+  DxLoadPanelModule,
   DxPopupModule,
   DxSelectBoxModule,
   DxTextAreaModule,
@@ -58,6 +59,7 @@ import { CustomDateFormatter } from './helpers/custom-date.formatter';
     DxSelectBoxModule,
     DxValidatorModule,
     DxValidationGroupModule,
+    DxLoadPanelModule,
     CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory,}),
   ],
   providers: [

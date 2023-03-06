@@ -1,22 +1,59 @@
 <header>
   <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-800">
     <div class="flex flex-wrap justify-between items-center">
-      <div class="pl-8">
-        <p class="text-gray-800 dark:text-white">
-          Bienvenu <span>{{ this.userName }}</span>
-        </p>
-      </div>
-      <div class="h-6">
-        <img src="assets/img/Logo1.png" class="h-8" alt="" />
-      </div>
+      <div class="w-full grid grid-cols-3">
+        <div class="pl-8 flex items-center">
+          <p class="text-gray-800 dark:text-white">
+            Bienvenu <span>{{ this.userName }}</span>
+          </p>
+        </div>
+        <div class="flex justify-center items-center">
+          <img src="assets/img/Logo1.png" class="h-8" alt="" />
+        </div>
 
-      <div class="flex items-center gap-4 lg:order-2">
-        <!-- <flowbite-dark-theme-toggle></flowbite-dark-theme-toggle> -->
-        <a
-          routerLink="/logout"
-          class="text-white bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-          >Deconnexion</a
-        >
+        <div class="flex justify-end items-center pr-4 lg:order-2">
+          <!-- <flowbite-dark-theme-toggle></flowbite-dark-theme-toggle> -->
+          
+          <a
+            routerLink="/logout"
+            class="text-white items-center flex gap-2 bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            >
+            <svg
+            viewBox="0 0 1000 1000"
+            data-name="Layer 2"
+            class="h-6 w-6 "
+            id="Layer_2"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <style>
+                .cls-1 {
+                  fill: none;
+                  stroke: #020202;
+                  stroke-linecap: round;
+                  stroke-miterlimit: 10;
+                  stroke-width: 22px;
+                }
+                .cls-2 {
+                  fill: #020202;
+                }
+              </style>
+            </defs>
+            <path
+              class="cls-1"
+              d="M591.61,280.48C693.9,317.86,766.91,416,766.91,531.26c0,147.41-119.5,266.91-266.91,266.91S233.09,678.67,233.09,531.26c0-115.22,73-213.4,175.3-250.78"
+            />
+            <rect
+              class="cls-2"
+              height="160.61"
+              rx="35.92"
+              width="71.84"
+              x="464.08"
+              y="201.83"
+            />
+          </svg><span>Deconnexion</span></a
+          >
+        </div>
       </div>
     </div>
   </nav>

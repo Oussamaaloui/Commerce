@@ -43,6 +43,7 @@ export class ListRdvComponent implements OnInit {
     @ViewChild("openModal") openModalButton: ElementRef<HTMLElement>;
   userName: string = '';
   listRendezVous : CalendarEvent[] = []; 
+  loadingData: boolean= false;
   
 
   constructor(private authService: AuthenticationService,
@@ -76,11 +77,16 @@ export class ListRdvComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.loadingData = true;
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
-    this.loadRendezVous() 
+    this.loadRendezVous()
 
     this.scrollToView();
   } 
+
+  ngAfterViewInit(){
+    
+  }
 
   scrollToView(){
     setTimeout(() => {
@@ -151,6 +157,7 @@ export class ListRdvComponent implements OnInit {
 
 
   loadRendezVous(){
+    this.loadingData = true;
 
     this.rdvService.getAll()
     .pipe(
@@ -176,8 +183,13 @@ export class ListRdvComponent implements OnInit {
           this.events.push(myEvent);
         })
         this.refresh.next(); 
+        this.loadingData = false
       }))
-    .subscribe(); 
+    .subscribe({
+      error: (err) =>{
+        this.loadingData = false;
+      }
+    }); 
   }
 
   events: CalendarEvent[] = [ 
@@ -297,6 +309,8 @@ export class ListRdvComponent implements OnInit {
       this.scrollToView();
     }
   }
+
+  
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;

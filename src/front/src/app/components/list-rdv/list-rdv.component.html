@@ -1,5 +1,5 @@
 <app-nav-bar></app-nav-bar>
-<section class="bg-gray-50 dark:bg-gray-900">
+<section class="bg-gray-200 dark:bg-gray-900">
   <div class="flex flex-col px-6 py-8 mx-auto lg:py-0" id="content">
     <!-- Calendar-->
     <!-- <div class="flex w-full justify-between items-center mb-4 mt-4"> -->
@@ -83,7 +83,7 @@
         </dx-popup>
       </div>
       <div class="flex justify-center">
-        <h3 class="text-white text-4xl">
+        <h3 class="text-gray-700 text-4xl">
           {{ viewDate | calendarDate : view + "ViewTitle" : "fr" | titlecase }}
         </h3>
       </div>
@@ -114,7 +114,7 @@
       </div>
     </div>
 
-    <div [ngSwitch]="view" class="w-full overflow-y-scroll" id="calendar">
+    <div [ngSwitch]="view" class="w-full " id="calendar">
       <mwl-calendar-month-view
         locale="fr"
         *ngSwitchCase="CalendarView.Month"
@@ -155,6 +155,19 @@
     </div>
   </div>
 </section>
+
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#calendar' }"
+  [(visible)]="loadingData"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [hideOnOutsideClick]="false"
+  
+>
+</dx-load-panel>
 
 <!-- <ng-template #customHourSegmentTemlplate let-segment="segment">
   <div (click)="debugConsole(segment)" *ngIf="segment.isStart">hello hours</div>
