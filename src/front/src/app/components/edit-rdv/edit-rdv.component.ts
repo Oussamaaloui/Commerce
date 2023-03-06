@@ -56,6 +56,7 @@ export class EditRdvComponent implements OnInit {
           .subscribe(() => {
             this.loading = false;
             this.createdOrUpdated.emit();
+
           })
         }else if(this.mode == 'edit' && this.currentRdv){
           this.rdvService.update(this.currentRdv)
@@ -66,8 +67,9 @@ export class EditRdvComponent implements OnInit {
           })
         }  
       }else{
-        this.loading = false;
+        this.loading = false; 
       }  
+      
   }
 
   // Select box data sources:
