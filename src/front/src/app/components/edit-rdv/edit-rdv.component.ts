@@ -22,6 +22,8 @@ export class EditRdvComponent implements OnInit {
 
   @ViewChild('rdvGroup', {static: false}) rdvGroup: DxValidationGroupComponent; 
 
+  rules: any;
+
   submitted: boolean = false;
   loading: boolean = false;
   buttonMessage: string = this.mode === 'create'? 'Ajouter' : 'Enregistrer';
