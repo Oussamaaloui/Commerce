@@ -16,21 +16,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { DarkThemeToggleComponent } from './shared/dark-mode-toggler/dark-mode-toggler.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import {
-  DxDateBoxModule,
-  DxFormModule,
-  DxLoadPanelModule,
-  DxPopupModule,
-  DxSelectBoxModule,
-  DxTextAreaModule,
-  DxTextBoxModule,
-  DxValidationGroupModule,
-  DxValidatorModule,
-} from 'devextreme-angular';
+import { MatDialogModule } from '@angular/material/dialog'; 
 import { UnauthorizedInterceptor } from './helpers/unauthorized.interceptor';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { CustomDateFormatter } from './helpers/custom-date.formatter';
+import { ChangePasswordComponent } from './modules/shared/change-password/change-password.component';
+import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -52,14 +43,7 @@ import { CustomDateFormatter } from './helpers/custom-date.formatter';
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    DxDateBoxModule,
-    DxPopupModule,
-    DxTextBoxModule,
-    DxTextAreaModule,
-    DxSelectBoxModule,
-    DxValidatorModule,
-    DxValidationGroupModule,
-    DxLoadPanelModule,
+    SharedModule,
     CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory,}),
   ],
   providers: [

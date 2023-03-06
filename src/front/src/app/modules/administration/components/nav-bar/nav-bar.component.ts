@@ -3,14 +3,15 @@ import { Subject } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
-  selector: 'app-nav-bar',
+  selector: 'admin-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
-export class NavBarComponent implements OnInit{
+export class NavBarComponent  implements OnInit {
   defaultVisible = false;
-  changePasswordDialogVisible = false;
+  changePasswordDialogVisible = false; 
   triggerOpen: Subject<void> = new Subject<void>();
+  
   constructor(public authService: AuthenticationService){}
 
 

@@ -4,4 +4,5 @@ export class User {
     lastName: string = '';
     token?: string;
     expiration? : Date;
+    isAdmin: boolean = false;
 }

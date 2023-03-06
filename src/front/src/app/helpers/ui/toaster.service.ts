@@ -25,7 +25,7 @@ export class ToasterService {
       width: 350,
       minWidth: 150,
       type: type,
-      displayTime: 3500,
+      displayTime: 2500,
       animation: {
         show: {
           type: 'fade', duration: 400, from: 0, to: 1,

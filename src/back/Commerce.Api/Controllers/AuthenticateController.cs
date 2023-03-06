@@ -1,5 +1,6 @@
 ﻿using Commerce.Api.Entities;
 using Commerce.Api.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +28,39 @@ namespace Commerce.Api.Controllers
             _configuration = configuration;
         }
 
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            var response = new Response { Status = "Erreur", Message = "Mise à jour mot de passe échouée" };
+            var currentUserEmail = User.Claims.Where(c => c.Type == ClaimTypes.Email)
+                .First()
+                .Value;
+
+            var user = await _userManager.FindByEmailAsync(currentUserEmail);
+
+            if(user is null)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    response.Errors.Add(error.Description);
+                }
+
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            } 
+        }
+
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -50,6 +84,8 @@ namespace Commerce.Api.Controllers
 
                 var token = GetToken(authClaims);
 
+                var isUserAdmin = await IsUserAdminAsync(user);
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
@@ -57,9 +93,24 @@ namespace Commerce.Api.Controllers
                     email = user.Email,
                     firstName = user.FirstName,
                     lastName = user.LastName,
+                    isAdmin = isUserAdmin
                 });
             }
             return Unauthorized();
+        }
+
+        private async Task<bool> IsUserAdminAsync(ApplicationUser user)
+        {
+            var adminRole = await _roleManager.FindByNameAsync("Administrator");
+
+            if(adminRole is null)
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Administrator"));
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return roles.Any() && roles.Where(r => r.Equals("Administrator")).Any();
         }
 
         [HttpPost]
