@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CalendarEventTitleFormatter, DateFormatterParams } from 'angular-calendar';
+import {  CalendarNativeDateFormatter, DateFormatterParams } from 'angular-calendar';
 
 @Injectable()
-export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
+export class CustomDateFormatter extends CalendarNativeDateFormatter  {
 
-  public dayViewHour({date, locale}: DateFormatterParams): string {
+  public override dayViewHour({date, locale}: DateFormatterParams): string {
     return new Intl.DateTimeFormat(locale, {hour: 'numeric'}).format(date);
   }
 

@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs';
+import { first, map } from 'rxjs';
+import { ToasterService } from 'src/app/helpers/ui/toaster.service';
 import { LoginModel } from 'src/app/models/login.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -22,7 +24,8 @@ export class LoginComponent {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private notificationService: ToasterService
     ) { 
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) { 
@@ -35,9 +38,7 @@ export class LoginComponent {
       });
     }
 
-    ngOnInit() {
-        
-
+    ngOnInit() { 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
@@ -54,15 +55,23 @@ export class LoginComponent {
         }
 
         this.loading = true;
+
         this.authenticationService.login(this.f['username'].value, this.f['password'].value)
-            .pipe(first())
-            .subscribe(
-                data => {
+            .subscribe({
+                next: (d) => {
+                    this.notificationService.showSuccess('Connexion effectuée avec succès!')
                     this.router.navigate([this.returnUrl]);
                 },
-                error => { 
-                    this.error = error;
+                error: (e) =>{
                     this.loading = false;
-                });
+
+                    if(e instanceof HttpErrorResponse){
+                        this.notificationService.showError('Connexion échouée. Email ou mot de passe erroné')
+                    }else{
+                        this.notificationService.showError('Erreur inconnue. Plus de détail dans la console.')
+                        console.error(e.error)
+                    } 
+                }
+            }) 
     }
 }

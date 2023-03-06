@@ -24,7 +24,6 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
-import { CustomEventTitleFormatter } from '../../helpers/custom-date.formatter';
 import { RendezVous } from 'src/app/models/rendez-vous.model';
 import { RendezVousService } from 'src/app/services/rendez-vous.service';
 import { EditRdvComponent } from '../edit-rdv/edit-rdv.component';
@@ -37,13 +36,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
   selector: 'app-list-rdv',
   //changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './list-rdv.component.html',
-  styleUrls: ['./list-rdv.component.css'],
-  providers: [
-    {
-      provide: CalendarEventTitleFormatter,
-      useClass: CustomEventTitleFormatter
-     }
-  ]
+  styleUrls: ['./list-rdv.component.css']
 })
 export class ListRdvComponent implements OnInit {
     @ViewChild("closeButton") modalCloseButton: ElementRef<HTMLElement>;
@@ -85,7 +78,22 @@ export class ListRdvComponent implements OnInit {
   ngOnInit(): void {
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
     this.loadRendezVous() 
+
+    this.scrollToView();
   } 
+
+  scrollToView(){
+    setTimeout(() => {
+      const elements = document.getElementsByClassName("cal-time");
+      for (let i = 0; i < elements.length; i++) {
+          if(elements[i].innerHTML.indexOf('13') > 0){
+            elements[i].scrollIntoView({block: 'center', behavior: 'smooth'});
+            break;
+          }
+          
+        }
+  }, 0);
+  }
 
   openModalInMode(mode: 'edit'|'create'|'view'){
     this.modalMode = mode; 
@@ -161,7 +169,8 @@ export class ListRdvComponent implements OnInit {
               afterEnd: true,
             },
             draggable: true,
-            id: element.id
+            id: element.id,
+            meta: element.description
           }
 
           this.events.push(myEvent);
@@ -283,6 +292,10 @@ export class ListRdvComponent implements OnInit {
 
   setView(view: CalendarView) {
     this.view = view;
+
+    if(view === CalendarView.Day || view === CalendarView.Week){
+      this.scrollToView();
+    }
   }
 
   closeOpenMonthViewDay() {
@@ -291,6 +304,24 @@ export class ListRdvComponent implements OnInit {
 
   debugConsole(input: any){
     console.log(input)
+  }
+
+  hourSegmentClicked(event: any){
+    if(this.popupVisible){
+      return;
+    } 
+
+    console.log(event)
+    
+    const startDate = event.date;
+    let endDate: Date = new Date(startDate);
+    endDate.setHours(endDate.getHours() + 1)
+
+    this.currentRdv = this.initNewRdv();
+    this.currentRdv.start = startDate;
+    this.currentRdv.end = endDate;
+    this.modalMode = 'create';
+    this.popupVisible = true;
   }
 
 }

@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -27,9 +27,9 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
     return next.handle(request).pipe( tap(() => {},
       (err: any) => {
       if (err instanceof HttpErrorResponse) {
-        if (err.status !== 401) {
+        if (err.status !== 401 || request.url.indexOf('/login') > -1 ) {
          return;
-        }
+        } 
         this.router.navigateByUrl('/logout');
       }
     }));

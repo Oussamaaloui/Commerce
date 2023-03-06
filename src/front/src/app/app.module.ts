@@ -10,16 +10,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LogoutComponent } from './components/logout/logout.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
-import { CalendarModule, DateAdapter,  } from 'angular-calendar';
+import { CalendarDateFormatter, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component'; 
+import { EditRdvComponent } from './components/edit-rdv/edit-rdv.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { DarkThemeToggleComponent } from './shared/dark-mode-toggler/dark-mode-toggler.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DxDateBoxModule, DxPopupModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule } from 'devextreme-angular';
+import {
+  DxDateBoxModule,
+  DxFormModule,
+  DxPopupModule,
+  DxSelectBoxModule,
+  DxTextAreaModule,
+  DxTextBoxModule,
+  DxValidationGroupModule,
+  DxValidatorModule,
+} from 'devextreme-angular';
 import { UnauthorizedInterceptor } from './helpers/unauthorized.interceptor';
-
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { CustomDateFormatter } from './helpers/custom-date.formatter';
 
 @NgModule({
   declarations: [
@@ -30,7 +40,8 @@ import { UnauthorizedInterceptor } from './helpers/unauthorized.interceptor';
     LogoutComponent,
     EditRdvComponent,
     NavBarComponent,
-    DarkThemeToggleComponent
+    DarkThemeToggleComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -43,15 +54,21 @@ import { UnauthorizedInterceptor } from './helpers/unauthorized.interceptor';
     DxDateBoxModule,
     DxPopupModule,
     DxTextBoxModule,
-    DxTextAreaModule, 
+    DxTextAreaModule,
     DxSelectBoxModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
-    
+    DxValidatorModule,
+    DxValidationGroupModule,
+    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory,}),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true}
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true,
+    },
+    {provide: CalendarDateFormatter, useClass: CustomDateFormatter}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
