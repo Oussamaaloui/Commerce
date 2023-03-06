@@ -35,8 +35,6 @@ namespace Commerce.Api.Controllers
                 .Where(r => r.UserId == currentUserId)
                 .ToListAsync();
 
-             await Task.Delay(5000);
-
             return Ok(listeRendezVous.ToListViewModel());
         }
 
