@@ -5,7 +5,15 @@ import {  CalendarNativeDateFormatter, DateFormatterParams } from 'angular-calen
 export class CustomDateFormatter extends CalendarNativeDateFormatter  {
 
   public override dayViewHour({date, locale}: DateFormatterParams): string {
-    return new Intl.DateTimeFormat(locale, {hour: 'numeric'}).format(date);
+    let result = new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: 'numeric'}).format(date);
+
+    return result;
+  }
+
+  public override weekViewHour({ date, locale }: DateFormatterParams): string {
+    let result = new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: 'numeric'}).format(date);
+
+    return result;
   }
 
 }

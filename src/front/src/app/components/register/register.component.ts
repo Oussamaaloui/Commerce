@@ -94,6 +94,9 @@ export class RegisterComponent {
           this.router.navigateByUrl('login')
         },
         error: (e) => {
+          e.error.errors.forEach((element: string) => {
+            this.notificationService.showError(element)
+          });
           this.notificationService.showError('Création de compte a échoué. Plus de détail dans la console!')
           console.log(e.error.errors)
           console.log(e)

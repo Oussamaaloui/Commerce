@@ -89,7 +89,7 @@ export class EditRdvComponent implements OnInit {
   motif: any = new ArrayStore({
     data: [
       { value:'Decouverte', display: 'Découverte'},
-      { value:'Negotiation', display: 'Négotiation'},
+      { value:'Negotiation', display: 'Négociation'},
       { value:'Conclusion', display: 'Conclusion'},
       { value:'Courtoisie', display: 'Courtoisie'},
       { value:'VisiteChantier', display: 'Visite Chantier'},
