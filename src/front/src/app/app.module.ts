@@ -37,7 +37,6 @@ import { SharedModule } from './modules/shared/shared.module';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
     SharedModule,

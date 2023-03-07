@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -8,11 +8,18 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit{
-  defaultVisible = false;
-  changePasswordDialogVisible = false;
-  triggerOpen: Subject<void> = new Subject<void>();
+  tootltipVisibility = false;
+  tootltipChangePassVisibility = false;
+  
+  
+  
+  @Output("toggleDrawer") toggelDrawer: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(public authService: AuthenticationService){}
 
+  triggerDrawerToggling(){
+    this.toggelDrawer.emit();
+  }
 
   ngOnInit(): void {
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
@@ -21,15 +28,10 @@ export class NavBarComponent implements OnInit{
   userName: string = '';
 
   toggleDefault() {
-    this.defaultVisible = !this.defaultVisible;
+    this.tootltipVisibility = !this.tootltipVisibility;
   }
 
-  showChangePasswordDialog(){
-    this.triggerOpen.next()
-    this.changePasswordDialogVisible = true;
-  }
-
-  closeChangePasswordDialog(){
-    this.changePasswordDialogVisible = false;
+  toggleTootltipChangePassVisibility() {
+    this.tootltipChangePassVisibility = !this.tootltipChangePassVisibility;
   }
 }

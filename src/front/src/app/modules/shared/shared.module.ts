@@ -17,10 +17,12 @@ import {
 } from 'devextreme-angular';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MenuItemComponent } from './menu-item/menu-item.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
-  declarations: [ChangePasswordComponent, LoadingSpinnerComponent],
+  declarations: [ChangePasswordComponent, LoadingSpinnerComponent, MenuItemComponent],
   imports: [
     CommonModule,
     DxDateBoxModule,
@@ -34,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     DxTooltipModule,
     DxDrawerModule,
     DxDataGridModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   exports: [
     ChangePasswordComponent,
@@ -50,7 +53,8 @@ import { HttpClientModule } from '@angular/common/http';
     DxDrawerModule,
     DxDataGridModule,
     HttpClientModule,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    MenuItemComponent
   ]
 })
 export class SharedModule { }

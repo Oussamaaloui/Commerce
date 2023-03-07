@@ -44,7 +44,17 @@ export class ListRdvComponent implements OnInit {
   userName: string = '';
   listRendezVous : CalendarEvent[] = []; 
   loadingData: boolean= false;
+  selectedOpenMode: boolean = true;
+  isDrawerOpen: boolean = false;
   
+  toggleDrawer(){
+    console.log('toggling drawer')
+    this.isDrawerOpen = !this.isDrawerOpen;
+  }
+
+  debugItem(){
+console.log('item clicked!')
+  }
 
   constructor(private authService: AuthenticationService,
     private rdvService: RendezVousService) {
@@ -338,4 +348,17 @@ export class ListRdvComponent implements OnInit {
     this.popupVisible = true;
   }
 
+  // Password handling
+  changePasswordDialogVisible = false;
+  triggerOpen: Subject<void> = new Subject<void>();
+  
+
+  showChangePasswordDialog(){
+    this.triggerOpen.next()
+    this.changePasswordDialogVisible = true;
+  }
+
+  closeChangePasswordDialog(){
+    this.changePasswordDialogVisible = false;
+  }
 }

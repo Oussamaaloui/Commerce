@@ -1,160 +1,204 @@
-<app-nav-bar></app-nav-bar>
-<section class="bg-gray-200 dark:bg-gray-900">
-  <div class="flex flex-col px-6 py-8 mx-auto lg:py-0" id="content">
-    <!-- Calendar-->
-    <!-- <div class="flex w-full justify-between items-center mb-4 mt-4"> -->
-    <div class="w-full grid grid-cols-3 items-center mb-4 mt-4">
-      <div class="flex gap-2">
-        <div class="inline-flex rounded-md shadow-sm" role="group">
-          <div
-            class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            mwlCalendarPreviousView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="closeOpenMonthViewDay()"
-          >
-            Avant
-          </div>
-          <div
-            class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            mwlCalendarToday
-            [(viewDate)]="viewDate"
-          >
-            Aujourd'hui
-          </div>
-          <div
-            class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            mwlCalendarNextView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="closeOpenMonthViewDay()"
-          >
-            Aprés
-          </div>
-        </div>
-        <div>
-          <button
-            (click)="openModalInMode('create')"
-            class="flex items-center gap-3 bg-orange-500 hover:bg-orange-400 cursor-pointer px-4 py-2 text-sm font-medium text-white border border-gray-200 rounded-md focus:z-10 focus:ring-2 focus:ring-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              class="w-6 h-6 fill-white"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5 12H19"
-                stroke="#323232"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12 5L12 19"
-                stroke="#323232"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+<app-nav-bar
+  (toggleDrawer)="toggleDrawer()"
+></app-nav-bar>
+<dx-drawer
+  openedStateMode="shrink"
+  position="left"
+  revealMode="slide"
+  template="template"
+  [(opened)]="isDrawerOpen"
+  height="calc(100vh - 60px)"
+  [closeOnOutsideClick]="false"
+>
+  <div *dxTemplate="let data of 'template'" style="width: 250px">
+    <div class="h-full  py-4 px-4 overflow-y-auto dark:bg-gray-800">
+      <ul class="space-y-2"> 
+
+        <app-menu-item (itemClicked)="debugItem()" text="Changer mon email">
+          <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="3" y="5" width="18" height="14" rx="2" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+            </svg> 
+        </app-menu-item>
+        <app-menu-item (itemClicked)="showChangePasswordDialog()" text="Changer mon mot de passe">
+          <svg 
+          class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+           viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#494c4e" fill-rule="evenodd"/>
+        </svg> 
+        </app-menu-item>
+        <app-menu-item (itemClicked)="debugItem()" text="Changer mes informations">
+          <svg 
+          class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+            <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"/>
+            <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" stroke="#323232" stroke-width="2"/>
+            <path d="M6.16406 18.5C6.90074 16.5912 8.56373 16 12.0001 16C15.4661 16 17.128 16.5578 17.855 18.5" stroke="#323232" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            Créer rendez-vous
-          </button>
-        </div>
-
-        <dx-popup
-          height="auto"
-          [showTitle]="true"
-          title="Rendez vous"
-          [dragEnabled]="false"
-          [hideOnOutsideClick]="true"
-          [(visible)]="popupVisible"
-        >
-          <div *dxTemplate="let data of 'content'">
-            <div class="popup-property-details">
-              <app-edit-rdv
-                [mode]="modalMode"
-                [currentRdv]="currentRdv"
-                (cancel)="cancelCreateOrUpdate()"
-                (createdOrUpdated)="createdOrUpdateEvent()"
-              ></app-edit-rdv>
-            </div>
-          </div>
-        </dx-popup>
-      </div>
-      <div class="flex justify-center">
-        <h3 class="text-gray-700 text-4xl">
-          {{ viewDate | calendarDate : view + "ViewTitle" : "fr" | titlecase }}
-        </h3>
-      </div>
-      <div class="flex justify-end">
-        <div class="inline-flex rounded-md shadow-sm" role="group">
-          <div
-            class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            (click)="setView(CalendarView.Month)"
-            [class.opacity-70]="view === CalendarView.Month"
-          >
-            Mois
-          </div>
-          <div
-            class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            (click)="setView(CalendarView.Week)"
-            [class.opacity-70]="view === CalendarView.Week"
-          >
-            Semaine
-          </div>
-          <div
-            class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            (click)="setView(CalendarView.Day)"
-            [class.opacity-70]="view === CalendarView.Day"
-          >
-            Jour
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div [ngSwitch]="view" class="w-full " id="calendar">
-      <mwl-calendar-month-view
-        locale="fr"
-        *ngSwitchCase="CalendarView.Month"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
-      >
-      </mwl-calendar-month-view>
-      <mwl-calendar-week-view
-        locale="fr"
-        *ngSwitchCase="CalendarView.Week"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
-        [eventTitleTemplate]="customEventTitleTemplate"
-        (hourSegmentClicked)="hourSegmentClicked($event)" 
-      >
-      </mwl-calendar-week-view>
-      <mwl-calendar-day-view
-        locale="fr"
-        *ngSwitchCase="CalendarView.Day"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
-        [eventTitleTemplate]="customEventTitleTemplate"
-        (hourSegmentClicked)="hourSegmentClicked($event)"
-        
-      >
-      </mwl-calendar-day-view>
+        </app-menu-item> 
+      </ul>
     </div>
   </div>
-</section>
+  <div id="content" class="bg-gray-200 " style="height: 100vh">
+    <section class="bg-gray-200 dark:bg-gray-900">
+      <div class="flex flex-col px-6 py-8 mx-auto lg:py-0" id="content">
+        <!-- Calendar-->
+        <!-- <div class="flex w-full justify-between items-center mb-4 mt-4"> -->
+        <div class="w-full grid grid-cols-3 items-center mb-4 mt-4">
+          <div class="flex gap-2">
+            <div class="inline-flex rounded-md shadow-sm" role="group">
+              <div
+                class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                mwlCalendarPreviousView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()"
+              >
+                Avant
+              </div>
+              <div
+                class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                mwlCalendarToday
+                [(viewDate)]="viewDate"
+              >
+                Aujourd'hui
+              </div>
+              <div
+                class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                mwlCalendarNextView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()"
+              >
+                Aprés
+              </div>
+            </div>
+            <div>
+              <button
+                (click)="openModalInMode('create')"
+                class="flex items-center gap-3 bg-orange-500 hover:bg-orange-400 cursor-pointer px-4 py-2 text-sm font-medium text-white border border-gray-200 rounded-md focus:z-10 focus:ring-2 focus:ring-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="w-6 h-6 fill-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 12H19"
+                    stroke="#323232"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 5L12 19"
+                    stroke="#323232"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Créer rendez-vous
+              </button>
+            </div>
+
+            <dx-popup
+              height="auto"
+              [showTitle]="true"
+              title="Rendez vous"
+              [dragEnabled]="false"
+              [hideOnOutsideClick]="true"
+              [(visible)]="popupVisible"
+            >
+              <div *dxTemplate="let data of 'content'">
+                <div class="popup-property-details">
+                  <app-edit-rdv
+                    [mode]="modalMode"
+                    [currentRdv]="currentRdv"
+                    (cancel)="cancelCreateOrUpdate()"
+                    (createdOrUpdated)="createdOrUpdateEvent()"
+                  ></app-edit-rdv>
+                </div>
+              </div>
+            </dx-popup>
+          </div>
+          <div class="flex justify-center">
+            <h3 class="text-gray-700 text-4xl">
+              {{
+                viewDate | calendarDate : view + "ViewTitle" : "fr" | titlecase
+              }}
+            </h3>
+          </div>
+          <div class="flex justify-end">
+            <div class="inline-flex rounded-md shadow-sm" role="group">
+              <div
+                class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                (click)="setView(CalendarView.Month)"
+                [class.opacity-70]="view === CalendarView.Month"
+              >
+                Mois
+              </div>
+              <div
+                class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                (click)="setView(CalendarView.Week)"
+                [class.opacity-70]="view === CalendarView.Week"
+              >
+                Semaine
+              </div>
+              <div
+                class="cursor-pointer px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                (click)="setView(CalendarView.Day)"
+                [class.opacity-70]="view === CalendarView.Day"
+              >
+                Jour
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div [ngSwitch]="view" class="w-full" id="calendar">
+          <mwl-calendar-month-view
+            locale="fr"
+            *ngSwitchCase="CalendarView.Month"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+          >
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view
+            locale="fr"
+            *ngSwitchCase="CalendarView.Week"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+            [eventTitleTemplate]="customEventTitleTemplate"
+            (hourSegmentClicked)="hourSegmentClicked($event)"
+          >
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view
+            locale="fr"
+            *ngSwitchCase="CalendarView.Day"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+            [eventTitleTemplate]="customEventTitleTemplate"
+            (hourSegmentClicked)="hourSegmentClicked($event)"
+          >
+          </mwl-calendar-day-view>
+        </div>
+      </div>
+    </section>
+  </div>
+</dx-drawer>
 
 <dx-load-panel
   #loadPanel
@@ -165,7 +209,6 @@
   [showPane]="true"
   [shading]="true"
   [hideOnOutsideClick]="false"
-  
 >
 </dx-load-panel>
 
@@ -179,3 +222,24 @@
     {{ event.meta }}
   </p>
 </ng-template>
+
+
+
+<dx-popup
+  height="auto"
+  width="500px"
+  [showTitle]="true"
+  title="Changer mon mot de passe"
+  [dragEnabled]="false"
+  [hideOnOutsideClick]="true"
+  [(visible)]="changePasswordDialogVisible"
+>
+  <div *dxTemplate="let data of 'content'">
+    <div class="popup-property-details">
+      <app-change-password
+        [openTrigger]="triggerOpen.asObservable()"
+        (cancel)="closeChangePasswordDialog()"
+      ></app-change-password>
+    </div>
+  </div>
+</dx-popup>
