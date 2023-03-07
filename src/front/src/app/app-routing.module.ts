@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListRdvComponent } from './components/list-rdv/list-rdv.component';
-import { LoginComponent } from './components/login/login.component';
-import { LogoutComponent } from './components/logout/logout.component';
-import { RegisterComponent } from './components/register/register.component';
+import { ListRdvComponent } from './modules/rendez-vous/components/list-rdv/list-rdv.component';
+import { LoginComponent } from './pages/login/login.component';
+import { LogoutComponent } from './pages/logout/logout.component';
+import { RegisterComponent } from './pages/register/register.component';
 import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
@@ -19,11 +19,7 @@ const routes: Routes = [
     path:'logout',
     component: LogoutComponent
   },
-  {
-    path:'rdv',
-    component: ListRdvComponent,
-    canActivate: [AuthGuard]
-  }, 
+  { path: 'rdv', loadChildren: () => import('./modules/rendez-vous/rendez-vous.module').then(m => m.RendezVousModule), canActivate: [AuthGuard] },
   { path: 'administration', loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule) },
   {
     path:'**',

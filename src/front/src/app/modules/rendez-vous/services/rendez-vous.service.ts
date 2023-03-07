@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Globals } from '../helpers/globals';
+import { Globals } from '../../../helpers/globals';
 import { RendezVous } from '../models/rendez-vous.model';
 
 const API_URL = `${Globals.BASE_URL}/api/rendez-vous/`

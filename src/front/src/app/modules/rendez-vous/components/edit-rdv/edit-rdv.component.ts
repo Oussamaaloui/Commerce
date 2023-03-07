@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { map } from 'rxjs';
-import { RendezVous } from 'src/app/models/rendez-vous.model';  
-import { RendezVousService } from 'src/app/services/rendez-vous.service';
+import { RendezVous } from 'src/app/modules/rendez-vous/models/rendez-vous.model';
+import { RendezVousService } from 'src/app/modules/rendez-vous/services/rendez-vous.service';
 import ArrayStore from 'devextreme/data/array_store';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 
@@ -16,9 +16,9 @@ export class EditRdvComponent implements OnInit {
   @Input() currentRdv: RendezVous;
   @Input() mode : 'edit'|'create'|'view' = 'create';
   @Output() cancel : EventEmitter<any> = new EventEmitter();
-  @Output() createdOrUpdated : EventEmitter<any> = new EventEmitter();  
+  @Output() createdOrUpdated : EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('rdvGroup', {static: false}) rdvGroup: DxValidationGroupComponent; 
+  @ViewChild('rdvGroup', {static: false}) rdvGroup: DxValidationGroupComponent;
 
   rules: any;
 
@@ -32,20 +32,20 @@ export class EditRdvComponent implements OnInit {
     return 'Enregistrer';
   }
 
-  constructor(private rdvService: RendezVousService){ 
-  }  
-  
+  constructor(private rdvService: RendezVousService){
+  }
+
   ngOnInit(): void {
-    console.log('editor init!') 
+    console.log('editor init!')
   }
 
   close(){
-    this.cancel.emit(); 
-  } 
-      
+    this.cancel.emit();
+  }
+
   onSubmit(){
       this.submitted = true;
-      this.loading = true; 
+      this.loading = true;
 
       if(this.rdvGroup.instance.validate().isValid){
         if(this.mode == 'create' && this.currentRdv){
@@ -63,11 +63,11 @@ export class EditRdvComponent implements OnInit {
             this.loading = false;
             this.createdOrUpdated.emit();
           })
-        }  
+        }
       }else{
-        this.loading = false; 
-      }  
-      
+        this.loading = false;
+      }
+
   }
 
   // Select box data sources:
@@ -99,5 +99,5 @@ export class EditRdvComponent implements OnInit {
     ],
     key: 'value'
   })
- 
+
 }

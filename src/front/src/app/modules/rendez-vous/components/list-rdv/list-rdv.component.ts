@@ -4,7 +4,7 @@ import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { initModals } from 'flowbite';
 
- 
+
 import {
   startOfDay,
   endOfDay,
@@ -15,7 +15,7 @@ import {
   isSameMonth,
   addHours,
 } from 'date-fns';
-import { map, Subject } from 'rxjs'; 
+import { map, Subject } from 'rxjs';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -24,8 +24,8 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
-import { RendezVous } from 'src/app/models/rendez-vous.model';
-import { RendezVousService } from 'src/app/services/rendez-vous.service';
+import { RendezVous } from 'src/app/modules/rendez-vous/models/rendez-vous.model';
+import { RendezVousService } from 'src/app/modules/rendez-vous/services/rendez-vous.service';
 import { EditRdvComponent } from '../edit-rdv/edit-rdv.component';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 // import { initModals } from '../../../assets/js/flow'
@@ -42,11 +42,11 @@ export class ListRdvComponent implements OnInit {
     @ViewChild("closeButton") modalCloseButton: ElementRef<HTMLElement>;
     @ViewChild("openModal") openModalButton: ElementRef<HTMLElement>;
   userName: string = '';
-  listRendezVous : CalendarEvent[] = []; 
+  listRendezVous : CalendarEvent[] = [];
   loadingData: boolean= false;
   selectedOpenMode: boolean = true;
   isDrawerOpen: boolean = false;
-  
+
   toggleDrawer(){
     console.log('toggling drawer')
     this.isDrawerOpen = !this.isDrawerOpen;
@@ -92,10 +92,10 @@ console.log('item clicked!')
     this.loadRendezVous()
 
     this.scrollToView();
-  } 
+  }
 
   ngAfterViewInit(){
-    
+
   }
 
   scrollToView(){
@@ -106,43 +106,43 @@ console.log('item clicked!')
             elements[i].scrollIntoView({block: 'center', behavior: 'smooth'});
             break;
           }
-          
+
         }
   }, 0);
   }
 
   openModalInMode(mode: 'edit'|'create'|'view'){
-    this.modalMode = mode; 
-    
+    this.modalMode = mode;
+
     if(mode === 'create'){
       this.currentRdv = this.initNewRdv();
     }
 
-    this.popupVisible = true; 
+    this.popupVisible = true;
   }
 
   cancelCreateOrUpdate(){
     this.popupVisible = false;
   }
-  createdOrUpdateEvent(){ 
+  createdOrUpdateEvent(){
     this.popupVisible = false;
     this.loadRendezVous();
   }
 
-  // Calendar part! 
+  // Calendar part!
   colors: Record<string, EventColor> = {
     red: {
       secondary: '#ea580c',
       primary: '#ea580c',
     }
-  }; 
+  };
   view: CalendarView = CalendarView.Week;
 
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
 
-   
+
 
   actions: CalendarEventAction[] = [
     {
@@ -171,7 +171,7 @@ console.log('item clicked!')
 
     this.rdvService.getAll()
     .pipe(
-      map(data =>{ 
+      map(data =>{
         this.events = [];
         data.forEach(element => {
           let myEvent : CalendarEvent = {
@@ -192,17 +192,17 @@ console.log('item clicked!')
 
           this.events.push(myEvent);
         })
-        this.refresh.next(); 
+        this.refresh.next();
         this.loadingData = false
       }))
     .subscribe({
       error: (err) =>{
         this.loadingData = false;
       }
-    }); 
+    });
   }
 
-  events: CalendarEvent[] = [ 
+  events: CalendarEvent[] = [
   ];
 
   activeDayIsOpen: boolean = true;
@@ -219,7 +219,7 @@ console.log('item clicked!')
       }
       this.viewDate = date;
     }
-  } 
+  }
 
   eventTimesChanged({
     event,
@@ -265,7 +265,7 @@ console.log('item clicked!')
       this.currentRdv = rdv;
       console.log(this.currentRdv);
       this.openModalInMode('edit');
-    }) 
+    })
   }
 
   eventTimeUpdated(event: any, newStart: Date, newEnd : Date | undefined){
@@ -275,13 +275,13 @@ console.log('item clicked!')
 
     let changedEvent = this.events.filter(e => e.id === event.id)
     if(changedEvent.length == 1){
-      if(changedEvent[0].id && changedEvent[0].start && changedEvent[0].end){ 
+      if(changedEvent[0].id && changedEvent[0].start && changedEvent[0].end){
         console.log()
         this.rdvService.updateTiming(changedEvent[0].id.toString(), changedEvent[0].start, changedEvent[0].end)
         .pipe()
         .subscribe();
-      } 
-    } 
+      }
+    }
   }
 
   addEvent(): void {
@@ -306,7 +306,7 @@ console.log('item clicked!')
       this.rdvService.delete(eventToDelete.id.toString())
       .pipe(map(() => this.events.filter((event) => event !== eventToDelete)))
       .subscribe()
-    } 
+    }
   }
 
   editEvent(event: any){
@@ -321,7 +321,7 @@ console.log('item clicked!')
     }
   }
 
-  
+
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
@@ -334,7 +334,7 @@ console.log('item clicked!')
   hourSegmentClicked(event: any){
     if(this.popupVisible){
       return;
-    }   
+    }
     const startDate = event.date;
     let endDate: Date = new Date(startDate);
     endDate.setHours(endDate.getHours() + 1)
@@ -349,7 +349,7 @@ console.log('item clicked!')
   // Password handling
   changePasswordDialogVisible = false;
   triggerOpen: Subject<void> = new Subject<void>();
-  
+
 
   showChangePasswordDialog(){
     this.triggerOpen.next()
@@ -364,7 +364,7 @@ console.log('item clicked!')
   changeInfoDialogVisible = false;
 
   triggerChangeInfoOpen: Subject<void> = new Subject<void>();
-  
+
 
   showChangeInfoDialog(){
     this.triggerChangeInfoOpen.next()
@@ -379,7 +379,7 @@ console.log('item clicked!')
   changeEmailDialogVisible = false;
 
   triggerChangeEmailOpen: Subject<void> = new Subject<void>();
-  
+
 
   showChangeEmailDialog(){
     this.triggerChangeEmailOpen.next()

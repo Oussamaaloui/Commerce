@@ -22,4 +22,8 @@ export class UserService {
       return this.httpClient.post<any>(`${Globals.BASE_URL}/api/users/deactivate/${id}`, null);
     }
   }
+
+  deleteUser(id: string){
+    return this.httpClient.delete<any>(`${Globals.BASE_URL}/api/users/${id}`);
+  }
 }

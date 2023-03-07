@@ -6,9 +6,7 @@ import notify from 'devextreme/ui/notify';
   providedIn: 'root'
 })
 export class ToasterService {
-
   constructor() { }
-
 
   showError(message: string){
     this.show(message, 'error')
@@ -18,7 +16,7 @@ export class ToasterService {
     this.show(message, 'success')
   }
 
-  show(message: string, type:'error'|'info' | 'success'| 'warning'){
+  private show(message: string, type:'error'|'info' | 'success'| 'warning'){
     notify({
       message: message,
       height: 45,
@@ -33,8 +31,8 @@ export class ToasterService {
         hide: { type: 'fade', duration: 40, to: 0 },
       },
     },
-    { 
-      position: 'top right', 
+    {
+      position: 'top right',
       direction : 'down-push'
     });
   }

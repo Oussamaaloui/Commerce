@@ -118,6 +118,21 @@ namespace Commerce.Api.Controllers
             return Ok();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var userToBeDeleted = await _userManager.FindByIdAsync(id);
+
+            if (userToBeDeleted is null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.DeleteAsync(userToBeDeleted);
+
+            return Ok();
+        }
+
         private async Task<bool> IsUserAdminAsync(ApplicationUser user)
         {
             var adminRole = await _roleManager.FindByNameAsync("Administrator");
