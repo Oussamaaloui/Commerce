@@ -35,7 +35,8 @@ export class AuthenticationService {
     return this.http.post<any>(`${Globals.BASE_URL}/api/Authenticate/login`, { email, password })
         .pipe(map(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            //localStorage.setItem('currentUser', JSON.stringify(user));
+            this.localStorageUser = user
             this.currentUserSubject.next(user);
             return user;
         }));
@@ -43,8 +44,52 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    //localStorage.removeItem('currentUser');
+    this.localStorageUser = null;
     this.currentUserSubject.next(null);
     this.router.navigateByUrl('login');
   }
+
+  updateUserEmail(email: string){
+    let user = this.localStorageUser;
+    if(user){
+      user.email = email;
+      this.localStorageUser = user;
+      this.currentUserSubject.next(this.localStorageUser);
+    }
+  }
+
+  updateUsernames(firstname: string, lastname: string){
+    let user = this.localStorageUser;
+
+    if(user){
+      user.firstName = firstname;
+      user.lastName = lastname;
+      this.localStorageUser = user;
+      this.currentUserSubject.next(this.localStorageUser);
+    } 
+  }
+
+  
+
+  set localStorageUser(user: User | null){
+    if(user){
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }else{
+      localStorage.removeItem('currentUser');
+    } 
+  }
+
+  get localStorageUser(): User | null{
+    let userJson = localStorage.getItem('currentUser'); 
+
+    if(userJson ){
+      let user:User = JSON.parse(userJson)
+      return user;
+    }
+
+    return null;
+  }
+
+
 }

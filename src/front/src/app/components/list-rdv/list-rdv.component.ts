@@ -263,6 +263,7 @@ console.log('item clicked!')
     .pipe()
     .subscribe(rdv => {
       this.currentRdv = rdv;
+      console.log(this.currentRdv);
       this.openModalInMode('edit');
     }) 
   }
@@ -333,10 +334,7 @@ console.log('item clicked!')
   hourSegmentClicked(event: any){
     if(this.popupVisible){
       return;
-    } 
-
-    console.log(event)
-    
+    }   
     const startDate = event.date;
     let endDate: Date = new Date(startDate);
     endDate.setHours(endDate.getHours() + 1)
@@ -360,5 +358,35 @@ console.log('item clicked!')
 
   closeChangePasswordDialog(){
     this.changePasswordDialogVisible = false;
+  }
+
+  // change info handling
+  changeInfoDialogVisible = false;
+
+  triggerChangeInfoOpen: Subject<void> = new Subject<void>();
+  
+
+  showChangeInfoDialog(){
+    this.triggerChangeInfoOpen.next()
+    this.changeInfoDialogVisible = true;
+  }
+
+  closeChangeInfoDialog(){
+    this.changeInfoDialogVisible = false;
+  }
+
+  // change Email handling
+  changeEmailDialogVisible = false;
+
+  triggerChangeEmailOpen: Subject<void> = new Subject<void>();
+  
+
+  showChangeEmailDialog(){
+    this.triggerChangeEmailOpen.next()
+    this.changeEmailDialogVisible = true;
+  }
+
+  closeChangeEmailDialog(){
+    this.changeEmailDialogVisible = false;
   }
 }

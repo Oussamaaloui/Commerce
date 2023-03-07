@@ -10,7 +10,10 @@ SELECT
 	WHEN dbo.RendezVous.Motif = 1 THEN 'Négociation' 
 	WHEN dbo.RendezVous.Motif = 2 THEN 'Conclusion' 
 	WHEN dbo.RendezVous.Motif = 3 THEN 'Courtoisie' 
-	ELSE 'Visite Chantier' END as Motif, 
+	WHEN dbo.RendezVous.Motif = 4 THEN 'Visite Chantier' 
+	WHEN dbo.RendezVous.Motif = 5 THEN 'JPO' 
+	WHEN dbo.RendezVous.Motif = 6 THEN 'Accompagnement Client' 
+	ELSE 'Bureau d''études / Architechte' END as Objet, 
   dbo.RendezVous.UserId, 
   dbo.RendezVous.[End], 
   dbo.RendezVous.Start, 

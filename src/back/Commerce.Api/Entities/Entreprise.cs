@@ -1,4 +1,5 @@
 ﻿using Commerce.Api.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Commerce.Api.Entities
 {
@@ -8,7 +9,8 @@ namespace Commerce.Api.Entities
         public string Nom { get; set; } = string.Empty;
         public string Addresse { get; set; } = string.Empty;
         public string Ville { get; set; } = string.Empty;
-        public int CodePostal { get; set; }
+        [MaxLength(5)]
+        public string CodePostal { get; set; } = string.Empty;
         public TypeEntreprise TypeEntreprise { get; set; }
     }
 }

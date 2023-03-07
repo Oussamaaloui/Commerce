@@ -11,7 +11,7 @@ namespace Commerce.Api.Models
         public string Entreprise { get; set; } = string.Empty;
         public string Addresse { get; set; } = string.Empty;
         public string Ville { get; set; } = string.Empty;
-        public int CodePostal { get; set; }
+        public string CodePostal { get; set; } = string.Empty;
         public TypeEntreprise TypeEntreprise { get; set; }
         public string Interlocuteur { get; set; } = string.Empty;
         public string Numero { get; set; } = string.Empty;

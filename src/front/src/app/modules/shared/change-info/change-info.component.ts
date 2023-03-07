@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+ import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
   EventEmitter,
@@ -6,50 +6,51 @@ import {
   OnInit,
   Output,
   ViewChild,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+} from '@angular/core'; 
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { Observable, Subject } from 'rxjs';
-import { MustMatch } from 'src/app/helpers/must-match.validator';
+import { Observable, Subject } from 'rxjs'; 
 import { ToasterService } from 'src/app/helpers/ui/toaster.service';
-import { ChangePasswordModel } from 'src/app/models/change-password.model';
+import { ChangeInfoModel } from 'src/app/models/change-password.model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.css'],
+  selector: 'app-change-info',
+  templateUrl: './change-info.component.html',
+  styleUrls: ['./change-info.component.css']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangeInfoComponent {
   @ViewChild('validationGroup', { static: false }) validationGroup: DxValidationGroupComponent;
 
   @Input('openTrigger') openTrigger: Observable<void>; // = new Observable<void>();
   @Output() cancel: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
-  currentRequest: ChangePasswordModel;
+  currentRequest: ChangeInfoModel;
   confirmPassword: string;
 
   constructor( 
     private userService: UserService,
-    private notificationService: ToasterService
+    private notificationService: ToasterService,
+    private authService: AuthenticationService
   ) {
     this.resetCurrentModel();
   }
 
-  passwordComparison = () => this.currentRequest.newPassword;
 
   ngOnInit(): void {
     this.openTrigger.subscribe({
       next: () => { 
         this.validationGroup.instance.reset();
+        this.resetCurrentModel();
       },
     });
   }
 
   resetCurrentModel() {
+    
     this.currentRequest = {
-      oldPassword: '',
-      newPassword: ''
+      firstName: this.authService.currentUserValue?.firstName?? '',
+      lastName: this.authService.currentUserValue?.lastName?? ''
     };
     this.confirmPassword = '';
   }
@@ -58,11 +59,12 @@ export class ChangePasswordComponent implements OnInit {
     this.loading = true;
     console.log(this.validationGroup.instance.validate())
     if (this.validationGroup.instance.validate().isValid) {
-      this.userService.changePassword(this.currentRequest).subscribe({
+      this.userService.changeInfo(this.currentRequest).subscribe({
         next: () => {
           this.notificationService.showSuccess(
-            'Mot de passe changé avec succès!'
+            'Informations mises à jour avec succès!'
           );
+          this.authService.updateUsernames(this.currentRequest.firstName, this.currentRequest.lastName);
           this.loading = false;
           this.cancel.emit();
         },

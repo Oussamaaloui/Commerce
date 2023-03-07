@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import {
+  DxCheckBoxModule,
   DxDataGridModule,
   DxDateBoxModule,
   DxDrawerModule,
@@ -16,13 +17,17 @@ import {
   DxValidatorModule,
 } from 'devextreme-angular';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { RouterModule } from '@angular/router';
+import { ChangeInfoComponent } from './change-info/change-info.component';
+import { ChangeEmailComponent } from './change-email/change-email.component';
+import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
+import { UnauthorizedInterceptor } from 'src/app/helpers/unauthorized.interceptor';
 
 
 @NgModule({
-  declarations: [ChangePasswordComponent, LoadingSpinnerComponent, MenuItemComponent],
+  declarations: [ChangePasswordComponent, LoadingSpinnerComponent, MenuItemComponent, ChangeInfoComponent, ChangeEmailComponent],
   imports: [
     CommonModule,
     DxDateBoxModule,
@@ -37,6 +42,7 @@ import { RouterModule } from '@angular/router';
     DxDrawerModule,
     DxDataGridModule,
     HttpClientModule,
+    DxCheckBoxModule,
     RouterModule
   ],
   exports: [
@@ -54,7 +60,14 @@ import { RouterModule } from '@angular/router';
     DxDataGridModule,
     HttpClientModule,
     LoadingSpinnerComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    ChangeEmailComponent,
+    DxCheckBoxModule,
+    ChangeInfoComponent
+  ],
+  providers:[
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true }
   ]
 })
 export class SharedModule { }

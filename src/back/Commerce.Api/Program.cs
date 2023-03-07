@@ -58,6 +58,13 @@ namespace Commerce.Api
 
                         var user = await userManager.FindByEmailAsync(ctx.Principal.Claims.Where(i => ClaimTypes.Email == i.Type).FirstOrDefault()?.Value);
 
+                        if(user is null || !user.Active)
+                        {
+                            // user was deleted or deactivated! 
+
+                            ctx.Fail("401 unauthorized");
+                        }
+
                         user.LastActivity = DateTime.Now;
 
                         await userManager.UpdateAsync(user);

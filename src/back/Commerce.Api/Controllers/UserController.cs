@@ -102,6 +102,22 @@ namespace Commerce.Api.Controllers
             return Ok();
         }
 
+        [HttpPost("deactivate/{id}")]
+        public async Task<IActionResult> DeActivateUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            user.Active = false;
+            await _userManager.UpdateAsync(user);
+
+            return Ok();
+        }
+
         private async Task<bool> IsUserAdminAsync(ApplicationUser user)
         {
             var adminRole = await _roleManager.FindByNameAsync("Administrator");

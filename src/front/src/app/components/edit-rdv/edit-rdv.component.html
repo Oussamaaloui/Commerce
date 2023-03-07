@@ -62,7 +62,7 @@
           >Motif</label
         >  -->
           <dx-select-box
-            label="Motif"
+            label="Objet"
             labelMode="floating"
             [dataSource]="motif"
             displayExpr="display"
@@ -248,8 +248,8 @@
             label="Code postal"
             labelMode="floating"
             placeholder="Code Postal"
-            mask="00000" [maskRules]="rules"
-            maskInvalidMessage="Code postal invalid! (4 ou 5 chiffres)"
+            mask="00000"
+            maskInvalidMessage="Code postal invalid! (5 chiffres)"
             [(value)]="currentRdv.codePostal"
           >
           <dx-validator>

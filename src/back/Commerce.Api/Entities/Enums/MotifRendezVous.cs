@@ -6,6 +6,9 @@
         Negotiation,
         Conclusion,
         Courtoisie,
-        VisiteChantier
+        VisiteChantier,
+        JPO, 
+        AccompagnementClient,
+        BureauEtudeArchitechte
     }
 }

@@ -12,6 +12,6 @@ export class MenuItemComponent {
   @Output('itemClicked') itemClicked: EventEmitter<void> = new EventEmitter<void>();
 
   itemClickedEvent(){
-
+    this.itemClicked.emit()
   }
 }

@@ -93,6 +93,9 @@ export class EditRdvComponent implements OnInit {
       { value:'Conclusion', display: 'Conclusion'},
       { value:'Courtoisie', display: 'Courtoisie'},
       { value:'VisiteChantier', display: 'Visite Chantier'},
+      { value:'JPO', display: 'JPO'},
+      { value:'AccompagnementClient', display: 'Accompagnement Client'},
+      { value:'BureauEtudeArchitechte', display: "Bureau d'études / Architechte"},
     ],
     key: 'value'
   })

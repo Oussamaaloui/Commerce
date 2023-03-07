@@ -4,4 +4,5 @@ export interface User{
     email: string,
     lastName: string,
     isAdmin: boolean,
+    isActive: boolean
 }

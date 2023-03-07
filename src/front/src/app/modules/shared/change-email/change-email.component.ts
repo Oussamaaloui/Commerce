@@ -1,69 +1,49 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { Observable, Subject } from 'rxjs';
-import { MustMatch } from 'src/app/helpers/must-match.validator';
+import { Observable } from 'rxjs';
 import { ToasterService } from 'src/app/helpers/ui/toaster.service';
-import { ChangePasswordModel } from 'src/app/models/change-password.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.css'],
+  selector: 'app-change-email',
+  templateUrl: './change-email.component.html',
+  styleUrls: ['./change-email.component.css']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangeEmailComponent implements OnInit {
   @ViewChild('validationGroup', { static: false }) validationGroup: DxValidationGroupComponent;
-
-  @Input('openTrigger') openTrigger: Observable<void>; // = new Observable<void>();
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
-  currentRequest: ChangePasswordModel;
-  confirmPassword: string;
+  email: string = '';
+  @Input('openTrigger') openTrigger: Observable<void>;
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
 
-  constructor( 
-    private userService: UserService,
-    private notificationService: ToasterService
-  ) {
-    this.resetCurrentModel();
+  constructor(private userService: UserService,
+    private notificationService: ToasterService,
+    private router: Router){ 
   }
-
-  passwordComparison = () => this.currentRequest.newPassword;
 
   ngOnInit(): void {
     this.openTrigger.subscribe({
-      next: () => { 
+      next: () => {
+        console.log('Displayed');
         this.validationGroup.instance.reset();
       },
     });
   }
 
-  resetCurrentModel() {
-    this.currentRequest = {
-      oldPassword: '',
-      newPassword: ''
-    };
-    this.confirmPassword = '';
-  }
-
   onSubmit() {
     this.loading = true;
-    console.log(this.validationGroup.instance.validate())
+    console.log(event)
+
     if (this.validationGroup.instance.validate().isValid) {
-      this.userService.changePassword(this.currentRequest).subscribe({
+      this.userService.changeEmail({email: this.email}).subscribe({
         next: () => {
           this.notificationService.showSuccess(
             'Mot de passe changé avec succès!'
           );
           this.loading = false;
+          this.router.navigateByUrl('/logout')
           this.cancel.emit();
         },
         error: (e) => {

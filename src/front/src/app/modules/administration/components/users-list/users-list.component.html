@@ -31,6 +31,7 @@ class="w-full pr-6 mt-4"
   caption="Actif"
   [width]="150"
   dataField="isActive"
+  cellTemplate="isActiveTemplate"
 ></dxi-column>
   <dxi-column
     caption="Administrateur"
@@ -56,5 +57,11 @@ class="w-full pr-6 mt-4"
     caption="Action"
   ></dxi-column>
 
+  <div *dxTemplate="let data of 'isActiveTemplate'"> 
+    <div class="w-full flex justify-center">
+      <app-loading-spinner *ngIf="getColumnActiveLoadingVisibility(data.data.id)"></app-loading-spinner>
+    </div>
+    <dx-check-box *ngIf="!getColumnActiveLoadingVisibility(data.data.id)" [(value)]="data.data.isActive" (onValueChanged)="changeIsActive(data.data.id, $event.value,$event)"></dx-check-box>
+  </div>
   </dx-data-grid> 
 </div>

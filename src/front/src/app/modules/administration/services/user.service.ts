@@ -14,4 +14,12 @@ export class UserService {
   getAll(): Observable<User[]>{
     return this.httpClient.get<User[]>(`${Globals.BASE_URL}/api/users`);
   }
+
+  toggleUserActivity(id: string, isActive: boolean){
+    if(isActive){
+      return this.httpClient.post<any>(`${Globals.BASE_URL}/api/users/activate/${id}`, null);
+    }else{
+      return this.httpClient.post<any>(`${Globals.BASE_URL}/api/users/deactivate/${id}`, null);
+    }
+  }
 }

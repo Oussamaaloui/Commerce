@@ -22,7 +22,16 @@ export class NavBarComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
+    this.authService.currentUser.subscribe({
+      next: (user) =>{
+        if(user)
+          this.userName = `${user.firstName}, ${user.lastName}`;
+        else
+          this.userName = '';
+      }
+    })
+
+    
   }
 
   userName: string = '';
