@@ -65,9 +65,10 @@ namespace Commerce.Api
                             ctx.Fail("401 unauthorized");
                         }
 
-                        user.LastActivity = DateTime.Now;
+                        await userManager.Users
+                            .Where(u => u.Id == user.Id)
+                            .ExecuteUpdateAsync(u => u.SetProperty(u => u.LastActivity, DateTime.Now));
 
-                        await userManager.UpdateAsync(user);
                     }
                 };
                  

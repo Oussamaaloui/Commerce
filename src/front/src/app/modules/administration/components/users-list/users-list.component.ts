@@ -67,7 +67,7 @@ export class UsersListComponent implements OnInit {
     console.log('valueChanged')
     this.isSettingActive = true;
     this.workingOnActiveColumn[id] = true;
-    console.log(event);
+
     if(value) {
 
       // user confirmed the action

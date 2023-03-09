@@ -17,9 +17,11 @@ export interface RendezVous {
     typeRendezVous: TypeRendezVous | undefined;
     motif: MotifRendezVous | undefined;
     start: string | number | Date,
-    end: string | number | Date
+    end: string | number | Date,
+
+    user: string,
+  userId: string
 }
 
 
 
- 

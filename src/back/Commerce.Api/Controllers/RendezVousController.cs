@@ -31,32 +31,38 @@ namespace Commerce.Api.Controllers
                 .First()
                 .Value;
 
-            var listeRendezVous = await _context.RendezVous
-                .Where(r => r.UserId == currentUserId)
-                .ToListAsync();
+            var isUserAdmin = User.Claims
+                .Where(c => c.Type == ClaimTypes.Role && c.Value == "Administrator")
+                .Any();
 
-            return Ok(listeRendezVous.ToListViewModel());
+            if (!isUserAdmin)
+            {
+                return Ok((await _context.RendezVous
+                .Where(r => r.UserId == currentUserId)
+                .ToListAsync()).ToListViewModel());
+            }
+            else
+            {
+                return Ok((await _context.RendezVous.ToListAsync()).ToListViewModel());
+
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var currentUserId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                .First()
-                .Value;
 
-            var rendezVous = await _context.RendezVous
-                .Where(r => r.UserId == currentUserId)
-                .Where(r => r.Id == id)
-                .FirstOrDefaultAsync();
+            RendezVous? result = await GetRendezVousByIdAsync(id);
 
-            if (rendezVous is null)
+            if (result is null)
             {
                 return NotFound();
             }
 
-            return Ok(rendezVous.ToViewModel());
+            return Ok(result.ToViewModel());
         }
+
+
 
         [HttpPut]
         public async Task<IActionResult> Create(CreateRendezVousRequest input)
@@ -99,15 +105,8 @@ namespace Commerce.Api.Controllers
 
         [HttpPost("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody] UpdateRendezVousRequest input)
-        {
-            var currentUserId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                .First()
-                .Value;
-
-            var rendezVous = await _context.RendezVous
-                .Where(r => r.UserId == currentUserId)
-                .Where(r => r.Id == id)
-                .FirstOrDefaultAsync();
+        { 
+            RendezVous? rendezVous = await GetRendezVousByIdAsync(id);
 
             if (rendezVous is null)
             {
@@ -138,14 +137,7 @@ namespace Commerce.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var currentUserId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                .First()
-                .Value;
-
-            var rendezVous = await _context.RendezVous
-                .Where(r => r.UserId == currentUserId)
-                .Where(r => r.Id == id)
-                .FirstOrDefaultAsync();
+            RendezVous? rendezVous = await GetRendezVousByIdAsync(id);
 
             if (rendezVous is null)
             {
@@ -160,27 +152,50 @@ namespace Commerce.Api.Controllers
         [HttpPost("update-timing/{id}")]
         public async Task<IActionResult> UpdateTiming(string id, [FromBody] UpdateTimingRequest request)
         {
-            var currentUserId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                .First()
-                .Value;
-
-            var rendezVous = await _context.RendezVous
-                .Where(r => r.UserId == currentUserId)
-                .Where(r => r.Id == id)
-                .FirstOrDefaultAsync();
+            RendezVous? rendezVous = await GetRendezVousByIdAsync(id);
 
             if (rendezVous is null)
             {
                 return NotFound();
             }
 
-            rendezVous.Start = request.Start;
-            rendezVous.End = request.End;
+            await _context.RendezVous
+                .Where(r => r.Id == id)
+                .ExecuteUpdateAsync(r =>
 
-            _context.RendezVous.Update(rendezVous);
-            var result = await _context.SaveChangesAsync();
+                    r.SetProperty(rdv => rdv.Start, request.Start)
+                    .SetProperty(rdv => rdv.End, request.End)
+                );
+
+            //rendezVous.Start = request.Start;
+            //rendezVous.End = request.End;
+
+            //_context.RendezVous.Update(rendezVous);
+            //var result = await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        private async Task<RendezVous?> GetRendezVousByIdAsync(string id)
+        {
+            var currentUserId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                .First()
+                .Value;
+
+            var isUserAdmin = User.Claims
+                            .Where(c => c.Type == ClaimTypes.Role && c.Value == "Administrator")
+                            .Any();
+
+
+            var rendezVous = _context.RendezVous
+                .Where(r => r.Id == id);
+
+            if (!isUserAdmin)
+            {
+                rendezVous = rendezVous.Where(r => r.UserId == currentUserId);
+            }
+
+            return await rendezVous.FirstOrDefaultAsync();
         }
     }
 }

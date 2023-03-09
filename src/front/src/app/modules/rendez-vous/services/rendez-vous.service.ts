@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Globals } from '../../../helpers/globals';
+// import { Globals } from '../../../helpers/globals';
 import { RendezVous } from '../models/rendez-vous.model';
+import {environment} from "src/environments/environment";
 
-const API_URL = `${Globals.BASE_URL}/api/rendez-vous/`
+const API_URL = `${environment.apiUrl}/api/rendez-vous/`
 
 
 @Injectable({
@@ -13,10 +14,6 @@ const API_URL = `${Globals.BASE_URL}/api/rendez-vous/`
 export class RendezVousService {
 
   constructor(private http: HttpClient) { }
-
-  test(){
-    return Globals.BASE_URL
-  }
 
   create(rdv: RendezVous){
     return this.http.put<any>(API_URL, rdv);

@@ -20,5 +20,7 @@ namespace Commerce.Api.Models
         public MotifRendezVous Motif { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+        public string User { get; set; }
+        public string UserId { get; set; }
     }
 }

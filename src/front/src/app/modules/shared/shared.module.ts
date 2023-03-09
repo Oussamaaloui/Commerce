@@ -6,7 +6,7 @@ import {
   DxDataGridModule,
   DxDateBoxModule,
   DxDrawerModule,
-  DxFormModule,
+  DxFormModule, DxListModule,
   DxLoadPanelModule,
   DxPopupModule,
   DxSelectBoxModule,
@@ -43,6 +43,7 @@ import { UnauthorizedInterceptor } from 'src/app/helpers/unauthorized.intercepto
     DxDataGridModule,
     HttpClientModule,
     DxCheckBoxModule,
+    DxListModule,
     RouterModule
   ],
   exports: [
@@ -63,6 +64,7 @@ import { UnauthorizedInterceptor } from 'src/app/helpers/unauthorized.intercepto
     MenuItemComponent,
     ChangeEmailComponent,
     DxCheckBoxModule,
+    DxListModule,
     ChangeInfoComponent
   ],
   providers:[

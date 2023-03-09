@@ -11,6 +11,6 @@ export class ConfirmDialogService {
   askUser(message: string): Promise<boolean>{
     return confirm(`
       ${message}
-    `, "Confirm changes");
+    `, "Confirmation");
   }
 }

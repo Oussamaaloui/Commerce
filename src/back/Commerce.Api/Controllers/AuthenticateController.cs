@@ -89,8 +89,6 @@ namespace Commerce.Api.Controllers
 
                 var token = GetToken(authClaims);
 
-                var isUserAdmin = await IsUserAdminAsync(user);
-
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
@@ -98,25 +96,25 @@ namespace Commerce.Api.Controllers
                     email = user.Email,
                     firstName = user.FirstName,
                     lastName = user.LastName,
-                    isAdmin = isUserAdmin
+                    isAdmin = userRoles?.Contains("Administrator") ?? false
                 });
             }
             return Unauthorized();
         }
 
-        private async Task<bool> IsUserAdminAsync(ApplicationUser user)
-        {
-            var adminRole = await _roleManager.FindByNameAsync("Administrator");
+        //private async Task<bool> IsUserAdminAsync(ApplicationUser user)
+        //{
+        //    var adminRole = await _roleManager.FindByNameAsync("Administrator");
 
-            if(adminRole is null)
-            {
-                await _roleManager.CreateAsync(new IdentityRole("Administrator"));
-            }
+        //    if(adminRole is null)
+        //    {
+        //        await _roleManager.CreateAsync(new IdentityRole("Administrator"));
+        //    }
 
-            var roles = await _userManager.GetRolesAsync(user);
+        //    var roles = await _userManager.GetRolesAsync(user);
 
-            return roles.Any() && roles.Where(r => r.Equals("Administrator")).Any();
-        }
+        //    return roles.Any() && roles.Where(r => r.Equals("Administrator")).Any();
+        //}
 
         [HttpPost]
         [Route("register")]

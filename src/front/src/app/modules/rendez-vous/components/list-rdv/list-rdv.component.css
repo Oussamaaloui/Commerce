@@ -6,13 +6,13 @@
 }
 
 /* #calendar{
-    max-height: calc(100vh - 120px); 
+    max-height: calc(100vh - 120px);
 } */
-  
 
-  
-  :host ::ng-deep  .cal-week-view 
-  
+
+
+  :host ::ng-deep  .cal-week-view
+
   .cal-time-events {
     max-height: calc(100vh - 200px);
     overflow-y: auto;
@@ -27,10 +27,14 @@
   }
 
   :host ::ng-deep  .cal-day-columns .cal-day-column{
-    height: 100%;
+    height: fit-content;
   }
+
+:host ::ng-deep  .cal-day-columns{
+  height: fit-content !important;
+}
 
   :host ::ng-deep .cal-hour-odd{
     background-color: #f1f5f9;
-    
+
   }

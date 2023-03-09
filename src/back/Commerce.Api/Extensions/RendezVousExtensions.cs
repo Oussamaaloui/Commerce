@@ -25,6 +25,8 @@ namespace Commerce.Api.Extensions
                 TypeRendezVous = input.TypeRendezVous,
                 Start = input.Start,
                 End= input.End,
+                User = $"{input.User.FirstName}, {input.User.LastName}",
+                UserId = input.UserId
             };
         }
 
