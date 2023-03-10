@@ -7,6 +7,7 @@
             label="Titre"
             labelMode="floating"
             [(value)]="currentRdv.titre"
+            [maxLength]="100"
           >
             <dx-validator>
               <dxi-validation-rule
@@ -23,6 +24,7 @@
             labelMode="floating"
             [height]="90"
             [(value)]="currentRdv.description"
+            [maxLength]="250"
           >
           <dx-validator>
             <dxi-validation-rule
@@ -34,11 +36,6 @@
           </dx-text-area>
         </div>
         <div class="sm:col-span-2">
-          <!-- <label
-          for="typeRdv"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Type</label
-        >  -->
           <dx-select-box
             label="Type"
             labelMode="floating"
@@ -56,11 +53,6 @@
           </dx-validator></dx-select-box>
         </div>
         <div class="sm:col-span-2">
-          <!-- <label
-          for="motif"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Motif</label
-        >  -->
           <dx-select-box
             label="Objet"
             labelMode="floating"
@@ -78,11 +70,6 @@
           </dx-validator></dx-select-box>
         </div>
         <div class="sm:col-span-4">
-          <!-- <label
-          for="startDate"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Fin</label
-        > -->
           <div class="relative">
             <dx-date-box
               label="Début"
@@ -103,11 +90,6 @@
         </div>
 
         <div class="sm:col-span-4">
-          <!-- <label
-          for="endDate"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Fin</label
-        > -->
           <div class="relative">
             <dx-date-box
               class="w-full"
@@ -148,6 +130,7 @@
             labelMode="floating"
             placeholder="Nom"
             [(value)]="currentRdv.entreprise"
+            [maxLength]="50"
           >
           <dx-validator>
             <dxi-validation-rule
@@ -181,6 +164,7 @@
             label="Nom"
             labelMode="floating"
             [(value)]="currentRdv.interlocuteur"
+            [maxLength]="50"
           >
           <dx-validator>
             <dxi-validation-rule
@@ -196,6 +180,7 @@
             label="Addresse"
             labelMode="floating"
             [(value)]="currentRdv.addresse"
+            [maxLength]="200"
           >
           <dx-validator>
             <dxi-validation-rule
@@ -211,7 +196,7 @@
             label="Email"
             labelMode="floating"
             placeholder="Email"
-
+            [maxLength]="75"
             [(value)]="currentRdv.email"
           >
           <dx-validator>
@@ -233,6 +218,7 @@
             labelMode="floating"
             placeholder="Ville"
             [(value)]="currentRdv.ville"
+            [maxLength]="50"
           >
           <dx-validator>
             <dxi-validation-rule

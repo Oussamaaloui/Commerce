@@ -1,0 +1,31 @@
+version: "3.2"
+
+services:
+  sql_server:
+    container_name: sql-server-db
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Nb5ZhdtEJX7nERbMS7kq3XuAA98LTFYy"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sql_server_data:/var/opt/mssql/data
+  commerce-api:
+    container_name: commerce-api
+    image: adzo/commerce-api:1.0
+    ports:
+      - "4015:80"
+    depends_on:
+      - sql_server
+  commerce-angular:
+    container_name: commerce-angular
+    image: adzo/commerce-angular:1.0
+    depends_on:
+      - commerce-api
+    ports:
+    - "8080:80"
+
+volumes:
+  sql_server_data:
+    external: true

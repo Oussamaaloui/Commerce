@@ -30,6 +30,11 @@ namespace Commerce.Api.Controllers
 
             var users = _userManager.Users.ToList();
 
+            if(users is null)
+            {
+                return NotFound();
+            }
+
             foreach (var applicationUser in users)
             {
                 var userModel = new User

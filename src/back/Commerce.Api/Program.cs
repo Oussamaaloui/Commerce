@@ -48,7 +48,7 @@ namespace Commerce.Api
                     ValidateAudience = true,
                     ValidAudience = configuration["JWT:ValidAudience"],
                     ValidIssuer = configuration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))                    
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
                 };
                 options.Events = new JwtBearerEvents
                 {
@@ -58,7 +58,7 @@ namespace Commerce.Api
 
                         var user = await userManager.FindByEmailAsync(ctx.Principal.Claims.Where(i => ClaimTypes.Email == i.Type).FirstOrDefault()?.Value);
 
-                        if(user is null || !user.Active)
+                        if (user is null || !user.Active)
                         {
                             // user was deleted or deactivated! 
 
@@ -71,7 +71,7 @@ namespace Commerce.Api
 
                     }
                 };
-                 
+
             });
 
             builder.Services.AddCors(options =>
@@ -97,6 +97,50 @@ namespace Commerce.Api
 
             var app = builder.Build();
 
+            // ensuring the db is created
+            using (var scope = app.Services.CreateScope())
+            {
+                using (var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
+                {
+                    dbContext.Database.Migrate();
+
+                    // creating a default admin user.
+                    var adminEmail = "admin@finsecure.com";
+                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                    var adminUser = userManager.FindByEmailAsync(adminEmail)
+                        .GetAwaiter()
+                        .GetResult();
+                    if (adminUser is null)
+                    {
+                        var defaultAdminUser = new ApplicationUser
+                        {
+                            FirstName = "Admin",
+                            LastName = "Admin",
+                            Email = adminEmail,
+                            UserName = adminEmail,
+                            CreatedAt = DateTime.Now,
+                            Id = Guid.NewGuid().ToString(),
+                            Active= true
+                        };
+
+                        userManager.CreateAsync(defaultAdminUser, "P@ssword1")
+                            .Wait();
+
+                        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                        roleManager.CreateAsync(new()
+                        {
+                            Name = "Administrator",
+                            Id = Guid.NewGuid().ToString(),
+                            ConcurrencyStamp = Guid.NewGuid().ToString()
+                        })
+                            .Wait();
+
+                        userManager.AddToRoleAsync(defaultAdminUser, "Administrator")
+                            .Wait();
+                    }
+                }
+            }
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -104,13 +148,13 @@ namespace Commerce.Api
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseCors("EnableCORS");
 
             // Authentication & Authorization
             app.UseAuthentication();
-            app.UseAuthorization(); 
+            app.UseAuthorization();
 
             app.MapControllers();
 
