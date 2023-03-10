@@ -4,6 +4,8 @@ using Commerce.Api.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Commerce.Api.Controllers
 {
@@ -133,6 +135,11 @@ namespace Commerce.Api.Controllers
                 return NotFound();
             }
 
+            // deleting rdvs of this user:
+            await _context.RendezVous
+                .Where(r => r.UserId == id)
+                .ExecuteDeleteAsync();
+
             await _userManager.DeleteAsync(userToBeDeleted);
 
             return Ok();
@@ -150,6 +157,54 @@ namespace Commerce.Api.Controllers
             var roles = await _userManager.GetRolesAsync(user);
 
             return roles.Any() && roles.Where(r => r.Equals("Administrator")).Any();
+        }
+
+        [HttpPost("set-admin/{id}")]
+        public async Task<IActionResult> SetAdminRole(string id)
+        {
+            var currentUserId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                .First()
+                .Value;
+
+            if(id == currentUserId)
+            {
+                return BadRequest(new Response { Status = "Erreur", Message = "Vous ne pouvez pas modifier votre role" });
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.AddToRoleAsync(user, "Administrator");
+
+            return Ok();
+        }
+
+        [HttpPost("remove-admin/{id}")]
+        public async Task<IActionResult> RemoveAdminRole(string id)
+        {
+            var currentUserId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                .First()
+                .Value;
+
+            if (id == currentUserId)
+            {
+                return BadRequest(new Response { Status = "Erreur", Message = "Vous ne pouvez pas modifier votre role" });
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.RemoveFromRoleAsync(user, "Administrator");
+
+            return Ok();
         }
     }
 }

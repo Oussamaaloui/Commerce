@@ -24,6 +24,14 @@ export class UserService {
     }
   }
 
+  toggleUserAdmin(id: string, isActive: boolean){
+    if(isActive){
+      return this.httpClient.post<any>(`${environment.apiUrl}/api/users/set-admin/${id}`, null);
+    }else{
+      return this.httpClient.post<any>(`${environment.apiUrl}/api/users/remove-admin/${id}`, null);
+    }
+  }
+
   deleteUser(id: string){
     return this.httpClient.delete<any>(`${environment.apiUrl}/api/users/${id}`);
   }

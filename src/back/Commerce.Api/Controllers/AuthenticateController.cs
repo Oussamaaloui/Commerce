@@ -91,6 +91,7 @@ namespace Commerce.Api.Controllers
 
                 return Ok(new
                 {
+                    id = user.Id,
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
                     email = user.Email,
