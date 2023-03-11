@@ -1,1 +1,84 @@
-<p>home works!</p>
+<section class="pr-6">
+<!--  <div class="flex p-3 bg-white text-gray-900 rounded-lg justify-between items-center mb-4">-->
+<!--    <h2 class="text-xl ">Tableau de bord</h2>-->
+<!--    <h2 class="text-xl ">Tableau de bord</h2>-->
+
+<!--  </div>-->
+
+  <div class="w-full grid grid-cols-12 gap-2" id="dashboard-content">
+    <div class="col-span-3 rounded-xl bg-white p-2">
+      <app-pie-chart-wrapper
+        [datasource]="perTypeDatasource"
+        title="Par Type"
+      ></app-pie-chart-wrapper>
+    </div>
+    <div class="col-span-6 rounded-xl bg-white p-2">
+      <app-pie-chart-wrapper
+        [datasource]="perMotifDatasource"
+        title="Par Object"
+      ></app-pie-chart-wrapper>
+    </div>
+    <div class="col-span-3 rounded-xl bg-white p-2">
+      <app-pie-chart-wrapper
+        [datasource]="perTypeEntrepriseDatasource"
+        title="Par Type Entreprise"
+      ></app-pie-chart-wrapper>
+    </div>
+<div class="col-span-6 rounded-xl bg-white p-2">
+  <dx-chart id="chart-by-day-of-the-week" [dataSource]="perDayOfWeekDatasource">
+    <dxo-title text="Tendance par jour">
+    </dxo-title>
+    <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+    </dxo-legend>
+    <dxo-size
+      [height]="300">
+    </dxo-size>
+    <dxi-series
+      argumentField="key"
+      valueField="val"
+      name="Tendance par jour"
+      type="bar"
+      color="#ea580c"
+    >
+    </dxi-series>
+    <dxo-common-series-settings
+      [barPadding]="0.4"
+    ></dxo-common-series-settings>
+    <dxo-tooltip
+      [enabled]="true"
+    >
+    </dxo-tooltip>
+  </dx-chart>
+</div>
+    <div class="col-span-6 rounded-xl bg-white p-2">
+      <dx-chart id="chart-by-month"
+                [dataSource]="perMonthDatasource"
+      >
+        <dxo-title text="Tendance par Mois">
+        </dxo-title>
+        <dxo-common-series-settings
+          [barPadding]="0.4"
+        ></dxo-common-series-settings>
+        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+        </dxo-legend>
+        <dxo-size
+          [height]="300">
+        </dxo-size>
+        <dxi-series
+          argumentField="key"
+          valueField="val"
+          name="Tendance par Mois"
+          type="bar"
+          color="#ea580c"
+        >
+        </dxi-series>
+        <dxo-tooltip
+          [enabled]="true"
+        >
+        </dxo-tooltip>
+      </dx-chart>
+    </div>
+
+  </div>
+</section>
+

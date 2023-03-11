@@ -5,10 +5,11 @@ import { AdministrationRoutingModule } from './administration-routing.module';
 import { AdministrationComponent } from './administration.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { DxPopupModule } from 'devextreme-angular';
 import { SharedModule } from '../shared/shared.module';
 import { UsersListComponent } from './components/users-list/users-list.component';
 import { HomeComponent } from './components/home/home.component';
+import {DxChartModule, DxPieChartModule} from "devextreme-angular";
+import { PieChartWrapperComponent } from './components/home/components/pie-chart-wrapper/pie-chart-wrapper.component';
 
 
 @NgModule({
@@ -17,12 +18,15 @@ import { HomeComponent } from './components/home/home.component';
     WelcomeComponent,
     NavBarComponent,
     UsersListComponent,
-    HomeComponent
+    HomeComponent,
+    PieChartWrapperComponent
   ],
   imports: [
     CommonModule,
     AdministrationRoutingModule,
-    SharedModule
+    SharedModule,
+    DxPieChartModule,
+    DxChartModule
   ]
 })
 export class AdministrationModule { }
