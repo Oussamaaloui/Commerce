@@ -105,7 +105,7 @@ namespace Commerce.Api
                     dbContext.Database.Migrate();
 
                     // creating a default admin user.
-                    var adminEmail = "admin@finsecure.com";
+                    var adminEmail = "admin@finsecur.com";
                     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                     var adminUser = userManager.FindByEmailAsync(adminEmail)
                         .GetAwaiter()

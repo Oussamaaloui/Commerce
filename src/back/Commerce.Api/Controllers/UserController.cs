@@ -9,6 +9,8 @@ using System.Security.Claims;
 
 namespace Commerce.Api.Controllers
 {
+
+
     [Authorize(Roles = "Administrator")]
     [ApiController]
     [Route("api/users")]
