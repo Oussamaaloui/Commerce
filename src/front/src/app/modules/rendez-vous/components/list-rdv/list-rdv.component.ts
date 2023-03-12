@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef,  OnInit,  ViewChild} from '@angular/core';
 import {AuthenticationService} from 'src/app/services/authentication.service';
 import {isSameDay, isSameMonth} from 'date-fns';
 import {map, Subject} from 'rxjs';
@@ -6,7 +6,6 @@ import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, Cale
 import {EventColor} from 'calendar-utils';
 import {RendezVous} from 'src/app/modules/rendez-vous/models/rendez-vous.model';
 import {RendezVousService} from 'src/app/modules/rendez-vous/services/rendez-vous.service';
-
 
 
 @Component({
@@ -40,6 +39,7 @@ export class ListRdvComponent implements OnInit {
       return this.randomColors[indexOfUser % this.randomColors.length];
     }
   }
+
 
   randomColors : EventColor[] = [
     {
@@ -191,7 +191,6 @@ export class ListRdvComponent implements OnInit {
 
   loadRendezVous() {
     this.loadingData = true;
-
     this.rdvService.getAll()
       .pipe(
         map(data => {
@@ -230,6 +229,7 @@ export class ListRdvComponent implements OnInit {
   }
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
+    console.log('day clicked!')
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -320,7 +320,7 @@ export class ListRdvComponent implements OnInit {
     }
   }
 
-  closeOpenMonthViewDay() {
+  closeOpenMonthViewDay(event: any) {
     this.activeDayIsOpen = false;
   }
 

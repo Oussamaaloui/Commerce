@@ -3,6 +3,7 @@ import {SeriesData} from "../models/series-data.model";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "src/environments/environment";
+import {Stats} from "../models/stats.model";
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class ReportingService {
 
   getRendezVousStatByMonth(): Observable<SeriesData[]>{
     return this.httpClient.get<any>(`${environment.apiUrl}/api/reporting/by-month`);
+  }
+
+  getSummary(): Observable<Stats>{
+    return this.httpClient.get<Stats>(`${environment.apiUrl}/api/reporting/summary`)
   }
 }

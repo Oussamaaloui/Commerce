@@ -110,7 +110,10 @@ namespace Commerce.Api
                     var adminUser = userManager.FindByEmailAsync(adminEmail)
                         .GetAwaiter()
                         .GetResult();
-                    if (adminUser is null)
+
+                    var users = dbContext.Users.Count();
+
+                    if (adminUser is null && users == 0)
                     {
                         var defaultAdminUser = new ApplicationUser
                         {

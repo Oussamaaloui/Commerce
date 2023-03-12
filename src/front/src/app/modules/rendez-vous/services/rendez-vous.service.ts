@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { RendezVous } from '../models/rendez-vous.model';
 import {environment} from "src/environments/environment";
 
-const API_URL = `${environment.apiUrl}/api/rendez-vous/`
+const API_URL = `${environment.apiUrl}/api/rendez-vous`
 
 
 @Injectable({
@@ -20,25 +20,25 @@ export class RendezVousService {
   }
 
   update(rdv: RendezVous){
-    return this.http.post<any>(`${API_URL}${rdv.id}`, rdv)
+    return this.http.post<any>(`${API_URL}/${rdv.id}`, rdv)
   }
 
   updateTiming(id: string, start: Date, end:Date){
-    return this.http.post<any>(`${API_URL}update-timing/${id}`, {
+    return this.http.post<any>(`${API_URL}/update-timing/${id}`, {
       start: start,
       end: end
     })
   }
 
   delete(id: string){
-    return this.http.delete<any>(`${API_URL}${id}`)
+    return this.http.delete<any>(`${API_URL}/${id}`)
   }
 
   getAll(): Observable<RendezVous[]>{
-    return this.http.get<RendezVous[]>(API_URL)
+     return this.http.get<RendezVous[]>(API_URL)
   }
 
   getById(id: string): Observable<RendezVous>{
-    return this.http.get<RendezVous>(`${API_URL}${id}`)
+    return this.http.get<RendezVous>(`${API_URL}/${id}`)
   }
 }

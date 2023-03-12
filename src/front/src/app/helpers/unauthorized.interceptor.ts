@@ -15,14 +15,12 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('Unauthorized Interceptor!')
     return next.handle(request).pipe( tap(() => {},
       (err: any) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status !== 401 || request.url.indexOf('/login') > -1 ) {
          return;
-        } 
-        console.log('redirect to login from UnauthorizedInterceptor')
+        }
         this.router.navigateByUrl('/logout');
       }
     }));

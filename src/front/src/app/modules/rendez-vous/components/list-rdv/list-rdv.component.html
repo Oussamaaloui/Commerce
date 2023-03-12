@@ -53,7 +53,7 @@
                 mwlCalendarPreviousView
                 [view]="view"
                 [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()"
+                (viewDateChange)="closeOpenMonthViewDay($event)"
               >
                 Avant
               </div>
@@ -69,7 +69,7 @@
                 mwlCalendarNextView
                 [view]="view"
                 [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()"
+                (viewDateChange)="closeOpenMonthViewDay($event)"
               >
                 Aprés
               </div>
@@ -174,7 +174,7 @@
           </mwl-calendar-month-view>
           <mwl-calendar-week-view
             locale="fr"
-            [weekStartsOn]="1"
+            [weekStartsOn]="0"
             *ngSwitchCase="CalendarView.Week"
             [viewDate]="viewDate"
             [events]="events"
@@ -195,7 +195,7 @@
             (eventClicked)="handleEvent('Clicked', $event.event)"
             (eventTimesChanged)="eventTimesChanged($event)"
             [eventTitleTemplate]="customEventTitleTemplate"
-            (hourSegmentClicked)="hourSegmentClicked($event)",
+            (hourSegmentClicked)="hourSegmentClicked($event)"
             [tooltipTemplate] = "tooltipTemplate"
           >
           </mwl-calendar-day-view>

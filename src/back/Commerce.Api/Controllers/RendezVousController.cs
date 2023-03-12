@@ -6,6 +6,7 @@ using Commerce.Api.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography.Xml;
@@ -35,17 +36,15 @@ namespace Commerce.Api.Controllers
                 .Where(c => c.Type == ClaimTypes.Role && c.Value == "Administrator")
                 .Any();
 
-            if (!isUserAdmin)
-            {
-                return Ok((await _context.RendezVous
-                .Where(r => r.UserId == currentUserId)
-                .ToListAsync()).ToListViewModel());
-            }
-            else
-            {
-                return Ok((await _context.RendezVous.ToListAsync()).ToListViewModel());
+            var queryable = _context.RendezVous.AsQueryable();
 
-            }
+            if(!isUserAdmin)
+            {
+                queryable = queryable
+                    .Where(r => r.UserId == currentUserId);
+            }  
+
+           return Ok((await queryable.ToListAsync()).ToListViewModel());
         }
 
         [HttpGet("{id}")]

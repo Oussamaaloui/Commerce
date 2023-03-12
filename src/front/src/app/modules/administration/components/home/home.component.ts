@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ReportingService} from "./services/reporting.service";
 import {SeriesData} from "./models/series-data.model";
+import {Stats} from "./models/stats.model";
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,12 @@ export class HomeComponent implements OnInit {
   perTypeEntrepriseDatasource: SeriesData[]
   perDayOfWeekDatasource: SeriesData[]
   perMonthDatasource: SeriesData[]
+  statsDatasource:Stats = {
+    day: 0,
+    total: 0,
+    week: 0,
+    month: 0
+  }
   motifDictionary: any = {
     Decouverte: 'Découverte',
     Negotiation: 'Négociation',
@@ -56,6 +63,7 @@ export class HomeComponent implements OnInit {
     this.loadPerTypeEntrepriseReportData();
     this.loadPerMonthsReportData();
     this.loadPerDayOfTheWeekReportData();
+    this.loadSummaryData();
   }
 
   loadPerTypeReportData() {
@@ -105,6 +113,15 @@ export class HomeComponent implements OnInit {
             return {val: item.val, key: this.monthsDictionary[item.key]}
           })
         }
+      })
+  }
+
+  loadSummaryData(){
+    this.service.getSummary()
+      .subscribe({
+        next: (d) => {
+          this.statsDatasource = d;
+          }
       })
   }
 }

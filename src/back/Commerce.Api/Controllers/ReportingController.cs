@@ -74,5 +74,37 @@ namespace Commerce.Api.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummary()
+        {
+            var total = _context.RendezVous.Count();
+            var todaysDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+            var thisMonthStartDate = new DateTime(todaysDate.Year, todaysDate.Month, 1);
+            var thisMonthEndDate = thisMonthStartDate.AddMonths(1);
+            var thisMonth = _context.RendezVous
+                .Where(r => r.Start >= thisMonthStartDate && r.Start <= thisMonthEndDate)
+                .Count();
+
+            var thisWeekStartDate = todaysDate.AddDays(-(int)todaysDate.DayOfWeek);
+            var thisWeekEndDate = thisWeekStartDate.AddDays(7);
+
+            var thisWeek = _context.RendezVous
+                .Where(r => r.Start >= thisWeekStartDate && r.Start <= thisWeekEndDate)
+                .Count();
+
+            var today = _context.RendezVous
+                .Where(r => r.Start >= todaysDate && r.Start <= todaysDate.AddDays(1).AddSeconds(-1))
+                .Count();
+
+            return Ok(new
+            {
+                total = total,
+                month = thisMonth,
+                week = thisWeek,
+                day = today
+            });
+        }
     }
 }

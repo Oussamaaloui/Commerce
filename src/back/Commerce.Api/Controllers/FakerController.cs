@@ -62,7 +62,7 @@ namespace Commerce.Api.Controllers
                 .RuleFor(u => u.Interlocuteur, fakerInterlocuteur.Generate())
                 .RuleFor(u => u.TypeRendezVous, f => f.PickRandom<TypeRendezVous>())
                 .RuleFor(u => u.Motif, f => f.PickRandom<MotifRendezVous>())
-                .RuleFor(u => u.Start, f => f.Date.Between(new DateTime(2023, 1, 1), new DateTime(2023, 12, 31)))
+                .RuleFor(u => u.Start, f => f.Date.Between(new DateTime(2021, 1, 1), new DateTime(2024, 12, 31)))
                 // End date will be set when going through the records. adding randomly 1 to 4 hours
                 .RuleFor(u => u.Entreprise, fakerEntreprise.Generate())
                 .RuleFor(u => u.Interlocuteur, fakerInterlocuteur.Generate());
@@ -89,9 +89,10 @@ namespace Commerce.Api.Controllers
                 .RuleFor(u => u.LastName, f => f.Person.LastName)
                 .RuleFor(u => u.Email, f => f.Person.Email)
                 .RuleFor(u => u.SecurityStamp, Guid.NewGuid().ToString())
-                .RuleFor(u => u.UserName, f => f.Person.UserName);
+                .RuleFor(u => u.UserName, f => f.Person.UserName)
+                .RuleFor(u => u.Active, true);
 
-            var users = faker.Generate(10);
+            var users = faker.Generate(15);
 
             foreach (var user in users)
             {
