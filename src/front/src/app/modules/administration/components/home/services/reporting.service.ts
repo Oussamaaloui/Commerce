@@ -12,27 +12,35 @@ export class ReportingService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getRendezVousStatByType(): Observable<SeriesData[]>{
-    return this.httpClient.get<any>(`${environment.apiUrl}/api/reporting/by-type`);
+  getRendezVousStatByType(id: string): Observable<SeriesData[]>{
+    return this.httpClient.get<any>(this.buildRequestUrlWithOptionalParamId(`${environment.apiUrl}/api/reporting/by-type`, id));
   }
 
-  getRendezVousStatByMotif(): Observable<SeriesData[]>{
-    return this.httpClient.get<any>(`${environment.apiUrl}/api/reporting/by-motif`);
+  getRendezVousStatByMotif(id: string): Observable<SeriesData[]>{
+    return this.httpClient.get<any>(this.buildRequestUrlWithOptionalParamId(`${environment.apiUrl}/api/reporting/by-motif`, id));
   }
 
-  getRendezVousStatByTypeEntreprise(): Observable<SeriesData[]>{
-    return this.httpClient.get<any>(`${environment.apiUrl}/api/reporting/by-type-entreprise`);
+  getRendezVousStatByTypeEntreprise(id: string): Observable<SeriesData[]>{
+    return this.httpClient.get<any>(this.buildRequestUrlWithOptionalParamId(`${environment.apiUrl}/api/reporting/by-type-entreprise`, id));
   }
 
-  getRendezVousStatByDayOfWeek(): Observable<SeriesData[]>{
-    return this.httpClient.get<any>(`${environment.apiUrl}/api/reporting/by-day-of-week`);
+  getRendezVousStatByDayOfWeek(id: string): Observable<SeriesData[]>{
+    return this.httpClient.get<any>(this.buildRequestUrlWithOptionalParamId(`${environment.apiUrl}/api/reporting/by-day-of-week`, id));
   }
 
-  getRendezVousStatByMonth(): Observable<SeriesData[]>{
-    return this.httpClient.get<any>(`${environment.apiUrl}/api/reporting/by-month`);
+  getRendezVousStatByMonth(id: string): Observable<SeriesData[]>{
+    return this.httpClient.get<any>(this.buildRequestUrlWithOptionalParamId(`${environment.apiUrl}/api/reporting/by-month`, id));
   }
 
-  getSummary(): Observable<Stats>{
-    return this.httpClient.get<Stats>(`${environment.apiUrl}/api/reporting/summary`)
+  getSummary(id: string): Observable<Stats>{
+    return this.httpClient.get<Stats>(this.buildRequestUrlWithOptionalParamId(`${environment.apiUrl}/api/reporting/summary`, id))
+  }
+
+  private buildRequestUrlWithOptionalParamId(url: string, id: string): string{
+    if(id && id !== ""){
+      return  `${url}?userId=${id}`;
+    }else{
+      return url;
+    }
   }
 }

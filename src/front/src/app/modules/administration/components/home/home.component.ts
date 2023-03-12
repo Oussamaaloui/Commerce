@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ReportingService} from "./services/reporting.service";
 import {SeriesData} from "./models/series-data.model";
 import {Stats} from "./models/stats.model";
+import {User} from "../../models/user.model";
+import {UserService} from "../../services/user.service";
+import {AuthenticationService} from "../../../../services/authentication.service";
+import ArrayStore from "devextreme/data/array_store";
 
 @Component({
   selector: 'app-home',
@@ -21,6 +25,7 @@ export class HomeComponent implements OnInit {
     week: 0,
     month: 0
   }
+  usersDatasource: any;
   motifDictionary: any = {
     Decouverte: 'Découverte',
     Negotiation: 'Négociation',
@@ -54,20 +59,51 @@ export class HomeComponent implements OnInit {
     11: 'Novembre',
     12: 'Décembre'
   }
-  constructor(private service: ReportingService) {
+  constructor(private service: ReportingService,
+              private userService: UserService,
+              private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
-    this.loadPerTypeReportData();
-    this.loadPerMotifReportData();
-    this.loadPerTypeEntrepriseReportData();
-    this.loadPerMonthsReportData();
-    this.loadPerDayOfTheWeekReportData();
-    this.loadSummaryData();
+    this.loadUsers();
+    this.loadDashboard("");
   }
 
-  loadPerTypeReportData() {
-    this.service.getRendezVousStatByType()
+  loadUsers(){
+    this.userService.getAll()
+      .subscribe({
+        next: (data) =>{
+          let dataForamatted: any[] = [];
+
+          data.forEach(element => {
+            let userInfo = {
+              id: element.id,
+              description: `${element.firstName}, ${element.lastName}`
+            }
+            dataForamatted.push(userInfo)
+          })
+
+          // dataForamatted.sort((a,b) => (a.description > b.description)? 1: (a.description == b.description) ? 0 : -1)
+
+          this.usersDatasource = new ArrayStore({
+            data: dataForamatted.sort((a,b) => (a.description > b.description)? 1: (a.description == b.description) ? 0 : -1),
+            key: 'id',
+          });
+        }
+      })
+  }
+
+  loadDashboard(id: string){
+    this.loadPerTypeReportData(id);
+    this.loadPerMotifReportData(id);
+    this.loadPerTypeEntrepriseReportData(id);
+    this.loadPerMonthsReportData(id);
+    this.loadPerDayOfTheWeekReportData(id);
+    this.loadSummaryData(id);
+  }
+
+  loadPerTypeReportData(id: string) {
+    this.service.getRendezVousStatByType(id)
       .subscribe({
         next: (d) => {
           this.perTypeDatasource = d;
@@ -75,8 +111,8 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  loadPerMotifReportData() {
-    this.service.getRendezVousStatByMotif()
+  loadPerMotifReportData(id: string) {
+    this.service.getRendezVousStatByMotif(id)
       .subscribe({
         next: (d) => {
           this.perMotifDatasource = d.map(item => {
@@ -86,8 +122,8 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  loadPerTypeEntrepriseReportData() {
-    this.service.getRendezVousStatByTypeEntreprise()
+  loadPerTypeEntrepriseReportData(id: string) {
+    this.service.getRendezVousStatByTypeEntreprise(id)
       .subscribe({
         next: (d) => {
           this.perTypeEntrepriseDatasource = d;
@@ -95,8 +131,8 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  loadPerDayOfTheWeekReportData() {
-    this.service.getRendezVousStatByDayOfWeek()
+  loadPerDayOfTheWeekReportData(id: string) {
+    this.service.getRendezVousStatByDayOfWeek(id)
       .subscribe({
         next: (d) => {
           this.perDayOfWeekDatasource = d.map(item => {
@@ -105,8 +141,8 @@ export class HomeComponent implements OnInit {
         }
       })
   }
-  loadPerMonthsReportData() {
-    this.service.getRendezVousStatByMonth()
+  loadPerMonthsReportData(id: string) {
+    this.service.getRendezVousStatByMonth(id)
       .subscribe({
         next: (d) => {
           this.perMonthDatasource = d.map(item => {
@@ -116,12 +152,16 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  loadSummaryData(){
-    this.service.getSummary()
+  loadSummaryData(id: string){
+    this.service.getSummary(id)
       .subscribe({
         next: (d) => {
           this.statsDatasource = d;
           }
       })
+  }
+
+  selectedUserChanged(event: any){
+    this.loadDashboard(event.value);
   }
 }

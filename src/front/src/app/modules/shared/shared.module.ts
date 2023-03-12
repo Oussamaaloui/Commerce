@@ -6,7 +6,7 @@ import {
   DxDataGridModule,
   DxDateBoxModule,
   DxDrawerModule,
-  DxFormModule, DxListModule,
+  DxListModule,
   DxLoadPanelModule,
   DxPopupModule,
   DxSelectBoxModule,
