@@ -43,4 +43,12 @@ export class ReportingService {
       return url;
     }
   }
+
+  getByAgent() {
+    return this.httpClient.get<any>(`${environment.apiUrl}/api/reporting/by-agent`)
+  }
+
+  getByAgentThisMonth() {
+    return this.httpClient.get<any>(`${environment.apiUrl}/api/reporting/by-agent-this-month`)
+  }
 }
