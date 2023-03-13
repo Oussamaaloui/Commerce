@@ -13,14 +13,14 @@ services:
       - sql_server_data:/var/opt/mssql/data
   commerce-api:
     container_name: commerce-api
-    image: adzo/commerce-api:2.1
+    image: adzo/commerce-api:1.0
     ports:
       - "4015:80"
     depends_on:
       - sql_server
   commerce-angular:
     container_name: commerce-angular
-    image: adzo/commerce-angular:2.1
+    image: adzo/commerce-angular:1.0
     depends_on:
       - commerce-api
     ports:

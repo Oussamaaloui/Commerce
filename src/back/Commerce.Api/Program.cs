@@ -63,6 +63,8 @@ namespace Commerce.Api
                             // user was deleted or deactivated! 
 
                             ctx.Fail("401 unauthorized");
+
+                            return;
                         }
 
                         await userManager.Users
