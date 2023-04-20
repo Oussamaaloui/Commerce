@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace Commerce.Api.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     [ApiController]
     [Route("api/faker")]
     public class FakerController: ControllerBase

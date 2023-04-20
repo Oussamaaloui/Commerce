@@ -2,6 +2,7 @@
 
 namespace Commerce.Api.Models.Requests
 {
+
     public class UpdateRendezVousRequest
     {
         public string Titre { get; set; } = string.Empty;

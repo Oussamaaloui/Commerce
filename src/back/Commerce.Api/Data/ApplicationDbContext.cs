@@ -8,6 +8,8 @@ namespace Commerce.Api.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<RendezVous> RendezVous  { get; set; }
+        public DbSet<Entreprise> Entreprises { get; set; }
+        public DbSet<Interlocuteur> Interlocuteurs { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
