@@ -153,6 +153,7 @@
     "schematicCollections": [
       "@cypress/schematic",
       "@schematics/angular"
-    ]
+    ],
+    "analytics": "d5967496-d4d8-4bb9-89ee-355b343fc12f"
   }
 }
