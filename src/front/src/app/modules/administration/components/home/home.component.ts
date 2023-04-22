@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
         pdf.addImage(logo, 'png', 1350, 35, 270, 60);
 
         // adding agent name:
-        if(this.selectedAgentId !== ''){
+        if(this.selectedAgentId){
           let userDescription = this.userData.filter((e: any) => e.id === this.selectedAgentId)[0].description;
           pdf.text(`Agent: ${userDescription}`, 25, 155);
         }

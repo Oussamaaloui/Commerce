@@ -112,7 +112,7 @@
           valueField="val"
           name="Tendance par jour"
           type="bar"
-          color="#ea580c"
+          color="#E11D48"
         >
         </dxi-series>
         <dxo-common-series-settings
@@ -141,7 +141,7 @@
           valueField="val"
           name="Tendance par Mois"
           type="bar"
-          color="#ea580c"
+          color="#A78BFA"
         >
         </dxi-series>
         <dxo-tooltip [enabled]="true"></dxo-tooltip>
@@ -150,7 +150,7 @@
 
     <div class="col-span-6 rounded-xl bg-white p-2  py-1">
       <dx-chart id="chart-by-agent" [dataSource]="perAgentDatasource" [rotated]="true">
-        <dxo-title text="Classement de agents">
+        <dxo-title text="Classement des commerciaux">
         </dxo-title>
         <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
         </dxo-legend>
@@ -163,7 +163,7 @@
           valueField="val"
           name="Nombre total des rendez vous"
           type="bar"
-          color="#ea580c"
+          color="#0F766E"
         >
         </dxi-series>
         <dxo-tooltip [enabled]="true"></dxo-tooltip>
@@ -171,7 +171,7 @@
     </div>
     <div class="col-span-6 rounded-xl bg-white p-2  py-1">
       <dx-chart id="chart-by-agent-this-month" [dataSource]="perAgentThisMonthDatasource" [rotated]="true" class="pb-4 mb-4"  >
-        <dxo-title text="Classement de agents ce Mois">
+        <dxo-title text="Nombre de RDV du mois par commercial">
         </dxo-title>
         <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
         </dxo-legend>
