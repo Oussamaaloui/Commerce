@@ -19,7 +19,8 @@ const routes: Routes = [
     path:'logout',
     component: LogoutComponent
   },
-  { path: 'rdv', loadChildren: () => import('./modules/rendez-vous/rendez-vous.module').then(m => m.RendezVousModule), canActivate: [AuthGuard] },
+  //{ path: 'rdv', loadChildren: () => import('./modules/rendez-vous/rendez-vous.module').then(m => m.RendezVousModule), canActivate: [AuthGuard] },
+  { path: 'app', loadChildren: () => import('./modules/application/application.module').then(m => m.ApplicationModule), canActivate: [AuthGuard] },
   {
     path: 'administration',
     loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule),
@@ -27,7 +28,7 @@ const routes: Routes = [
   },
   {
     path:'**',
-    redirectTo: 'rdv'
+    redirectTo: 'app'
   }
 ];
 

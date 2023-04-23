@@ -1,5 +1,6 @@
 ﻿using Commerce.Api.Data;
 using Commerce.Api.Entities;
+using Commerce.Api.Extensions;
 using Commerce.Api.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,10 @@ namespace Commerce.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
-            return Ok(await _context.Entreprises.ToListAsync());
+            var entreprises = await _context.Entreprises.ToListAsync(cancellationToken);
+            return Ok(entreprises.ToViewModels());
         }
 
         [HttpGet("{id}")]
@@ -35,7 +37,7 @@ namespace Commerce.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(entreprise);
+            return Ok(entreprise.ToViewModel());
         }
 
         [HttpDelete("{id}")]

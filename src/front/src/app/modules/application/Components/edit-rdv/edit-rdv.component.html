@@ -1,0 +1,314 @@
+<form>
+  <dx-validation-group #rdvGroup>
+    <div class="pb-6 space-y-6">
+      <div class="grid gap-4 sm:grid-cols-12">
+        <div class="sm:col-span-12">
+          <dx-text-box
+            label="Titre"
+            labelMode="floating"
+            [(value)]="currentRdv.titre"
+            [maxLength]="100"
+          >
+            <dx-validator>
+              <dxi-validation-rule
+                type="required"
+                message="Titre du rendez-vous obligatoire"
+              >
+              </dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+        <div class="sm:col-span-12">
+          <dx-text-area
+            label="Description"
+            labelMode="floating"
+            [height]="90"
+            [(value)]="currentRdv.description"
+            [maxLength]="250"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Description du rendez-vous obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator>
+          </dx-text-area>
+        </div>
+        <div class="sm:col-span-2">
+          <dx-select-box
+            label="Type"
+            labelMode="floating"
+            [dataSource]="typeRendezVous"
+            displayExpr="display"
+            valueExpr="value"
+            [(value)]="currentRdv.typeRendezVous"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Type du rendez-vous obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator></dx-select-box>
+        </div>
+        <div class="sm:col-span-2">
+          <dx-select-box
+            label="Objet"
+            labelMode="floating"
+            [dataSource]="motif"
+            displayExpr="display"
+            valueExpr="value"
+            [(value)]="currentRdv.motif"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Motif du rendez-vous obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator></dx-select-box>
+        </div>
+        <div class="sm:col-span-4">
+          <div class="relative">
+            <dx-date-box
+              label="Début"
+              labelMode="floating"
+              class="w-full"
+              [(value)]="currentRdv.start"
+              type="datetime"
+            >
+            <dx-validator>
+              <dxi-validation-rule
+                type="required"
+                message="Date début du rendez-vous obligatoire"
+              >
+              </dxi-validation-rule>
+            </dx-validator>
+            </dx-date-box>
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <div class="relative">
+            <dx-date-box
+              class="w-full"
+              label="Fin"
+              labelMode="floating"
+              [(value)]="currentRdv.end"
+              type="datetime"
+            >
+            <dx-validator>
+              <dxi-validation-rule
+                type="required"
+                message="Date fin du rendez-vous obligatoire"
+              >
+              </dxi-validation-rule>
+            </dx-validator>
+            </dx-date-box>
+          </div>
+        </div>
+        <div class="sm:col-span-12 border-t border-b-0 border-gray-200"></div>
+
+        <div class="sm:col-span-6">
+          <h3
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Entreprise
+          </h3>
+        </div>
+        <div class="sm:col-span-6">
+          <h3
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Interlocuteur
+          </h3>
+        </div>
+        <div class="sm:col-span-4">
+          <dx-text-box
+            label="Nom"
+            labelMode="floating"
+            placeholder="Nom"
+            [(value)]="currentRdv.entreprise"
+            [maxLength]="50"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Nom de l'entreprise obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator></dx-text-box>
+        </div>
+        <div class="sm:col-span-2">
+          <dx-select-box
+            label="Ancien/Nouveau"
+            labelMode="floating"
+            [dataSource]="typeEntreprise"
+            displayExpr="display"
+            valueExpr="value"
+            [(value)]="currentRdv.typeEntreprise"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Type d'entreprise obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
+        </div>
+        <div class="sm:col-span-6">
+          <dx-text-box
+            placeholder="Nom"
+            label="Nom"
+            labelMode="floating"
+            [(value)]="currentRdv.interlocuteur"
+            [maxLength]="50"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Nom de l'interlocuteur obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+        </div>
+        <div class="sm:col-span-6">
+          <dx-text-area
+            label="Addresse"
+            labelMode="floating"
+            [(value)]="currentRdv.addresse"
+            [maxLength]="200"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Addresse de l'entreprise obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator>
+          </dx-text-area>
+        </div>
+        <div class="sm:col-span-6">
+          <dx-text-box
+            label="Email"
+            labelMode="floating"
+            placeholder="Email"
+            [maxLength]="75"
+            [(value)]="currentRdv.email"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Email de l'interlocuteur obligatoire"
+            >
+            </dxi-validation-rule>
+            <dxi-validation-rule
+              type="email"
+              message="Email invalid"
+            ></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+        </div>
+        <div class="sm:col-span-4">
+          <dx-text-box
+            label="Ville"
+            labelMode="floating"
+            placeholder="Ville"
+            [(value)]="currentRdv.ville"
+            [maxLength]="50"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Ville obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+        </div>
+        <div class="sm:col-span-2">
+          <dx-text-box
+            label="Code postal"
+            labelMode="floating"
+            placeholder="Code Postal"
+            mask="00000"
+            maskInvalidMessage="Code postal invalid! (5 chiffres)"
+            [(value)]="currentRdv.codePostal"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Code postal obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+        </div>
+        <div class="sm:col-span-4">
+          <dx-text-box
+            label="Téléphone"
+            labelMode="floating"
+            mask="+33 0 00 00 00 00"
+            maskInvalidMessage="Numéro de téléphone invalid."
+            [(value)]="currentRdv.numero"
+          >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="Téléphone obligatoire"
+            >
+            </dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer-->
+    <div
+      class="flex items-center justify-end pt-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
+    >
+      <button
+        type="button"
+        (click)="onSubmit()"
+        class="text-white flex gap-4 bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+      <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+        <svg
+        *ngIf="!loading"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5 fill-white"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"
+          /></svg
+        >
+        <span>{{ getSubmitButtonText() }}</span>
+      </button>
+      <button
+        type="button"
+        class="text-gray-500 flex gap-4 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+        (click)="close()"
+      >
+        <svg
+          aria-hidden="true"
+          class="w-5 h-5 fill-gray-500"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        <span>Annuler</span>
+      </button>
+    </div>
+  </dx-validation-group>
+</form>

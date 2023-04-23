@@ -1,0 +1,150 @@
+<app-nav-bar
+  (toggleDrawer)="toggleDrawer()"
+></app-nav-bar>
+<dx-drawer
+  openedStateMode="shrink"
+  position="left"
+  revealMode="slide"
+  template="template"
+  [(opened)]="isDrawerOpen"
+  height="calc(100vh - 60px)"
+  [closeOnOutsideClick]="false"
+>
+  <div  *dxTemplate="let data of 'template'" style="width: 250px" class="full-height">
+    <div class="h-full  py-4 px-4 overflow-y-auto dark:bg-gray-800 flex flex-col justify-between">
+      <div>
+        <ul class="space-y-2">
+          <li> <a
+            routerLink="rdv"
+            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-orange-200 dark:hover:bg-gray-700"
+          >
+            <svg
+              aria-hidden="true"
+              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="flex-1 ml-3 whitespace-nowrap">Rendez-vous</span>
+          </a></li>
+          <li><a
+            routerLink="entreprises"
+            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-orange-200 dark:hover:bg-gray-700"
+          >
+            <svg
+              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              fill="currentColor"
+              viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M8 2L8 6L4 6L4 48L15 48L15 39L19 39L19 48L30 48L30 6L26 6L26 2 Z M 10 10L12 10L12 12L10 12 Z M 14 10L16 10L16 12L14 12 Z M 18 10L20 10L20 12L18 12 Z M 22 10L24 10L24 12L22 12 Z M 32 14L32 18L34 18L34 20L32 20L32 22L34 22L34 24L32 24L32 26L34 26L34 28L32 28L32 30L34 30L34 32L32 32L32 34L34 34L34 36L32 36L32 38L34 38L34 40L32 40L32 42L34 42L34 44L32 44L32 48L46 48L46 14 Z M 10 15L12 15L12 19L10 19 Z M 14 15L16 15L16 19L14 19 Z M 18 15L20 15L20 19L18 19 Z M 22 15L24 15L24 19L22 19 Z M 36 18L38 18L38 20L36 20 Z M 40 18L42 18L42 20L40 20 Z M 10 21L12 21L12 25L10 25 Z M 14 21L16 21L16 25L14 25 Z M 18 21L20 21L20 25L18 25 Z M 22 21L24 21L24 25L22 25 Z M 36 22L38 22L38 24L36 24 Z M 40 22L42 22L42 24L40 24 Z M 36 26L38 26L38 28L36 28 Z M 40 26L42 26L42 28L40 28 Z M 10 27L12 27L12 31L10 31 Z M 14 27L16 27L16 31L14 31 Z M 18 27L20 27L20 31L18 31 Z M 22 27L24 27L24 31L22 31 Z M 36 30L38 30L38 32L36 32 Z M 40 30L42 30L42 32L40 32 Z M 10 33L12 33L12 37L10 37 Z M 14 33L16 33L16 37L14 37 Z M 18 33L20 33L20 37L18 37 Z M 22 33L24 33L24 37L22 37 Z M 36 34L38 34L38 36L36 36 Z M 40 34L42 34L42 36L40 36 Z M 36 38L38 38L38 40L36 40 Z M 40 38L42 38L42 40L40 40 Z M 10 39L12 39L12 44L10 44 Z M 22 39L24 39L24 44L22 44 Z M 36 42L38 42L38 44L36 44 Z M 40 42L42 42L42 44L40 44Z"/></svg>
+            <span class="flex-1 ml-3 whitespace-nowrap">Entreprises</span>
+          </a></li>
+          <li>
+            <a
+            routerLink="interlocuteurs"
+            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-orange-200 dark:hover:bg-gray-700"
+          >
+            <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                 viewBox="0 0 1024 1024"
+                 fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg"><path d="M748.6 612.8l52.6-50.8c-43.5-45.1-95.5-78.7-152.6-99.3 49.4-40.3 81.1-101.6 81.1-170.2 0-121-98.4-219.4-219.4-219.4s-219.4 98.4-219.4 219.4c0 69.1 32.1 130.8 82.1 171.1-153.7 56.6-263.6 204.5-263.6 377.7h73.1c0-181.5 147.7-329.1 329.1-329.1 90.2-0.1 174.4 35.7 237 100.6zM510.3 146.3c80.7 0 146.3 65.6 146.3 146.3S591 438.9 510.3 438.9 364 373.2 364 292.6s65.6-146.3 146.3-146.3zM692.7 679.2l160.9 160.9 58.9-219.8-219.8 58.9z m132.5 54.9l-26.5-26.5 36.3-9.7-9.8 36.2zM616.2 913.9L836 855 675.1 694.1l-58.9 219.8z m87.3-113.8l26.5 26.5-36.3 9.7 9.8-36.2z" fill="#0F1F3C" /></svg>
+            <span class="flex-1 ml-3 whitespace-nowrap">Interlocuteurs</span>
+          </a></li>
+        </ul>
+      </div>
+      <div class="border-t border-gray-400 pt-2">
+        <ul class="space-y-2">
+
+          <app-menu-item (itemClicked)="showChangeEmailDialog()" text="Changer mon email">
+            <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </app-menu-item>
+          <app-menu-item (itemClicked)="showChangePasswordDialog()" text="Changer mon mot de passe">
+            <svg
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#494c4e" fill-rule="evenodd"/>
+            </svg>
+
+          </app-menu-item>
+          <app-menu-item (itemClicked)="showChangeInfoDialog()" text="Changer mes informations">
+            <svg
+              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+              <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"/>
+              <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" stroke="#323232" stroke-width="2"/>
+              <path d="M6.16406 18.5C6.90074 16.5912 8.56373 16 12.0001 16C15.4661 16 17.128 16.5578 17.855 18.5" stroke="#323232" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </app-menu-item>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="content" class="bg-gray-200 " style="height: 100vh">
+    <router-outlet></router-outlet>
+  </div>
+</dx-drawer>
+<!-- Popups -->
+<dx-popup
+  height="auto"
+  width="500px"
+  [showTitle]="true"
+  title="Changer mon mot de passe"
+  [dragEnabled]="false"
+  [hideOnOutsideClick]="true"
+  [(visible)]="changePasswordDialogVisible"
+>
+  <div *dxTemplate="let data of 'content'">
+    <div class="popup-property-details">
+      <app-change-password
+        [openTrigger]="triggerOpen.asObservable()"
+        (cancel)="closeChangePasswordDialog()"
+      ></app-change-password>
+    </div>
+  </div>
+</dx-popup>
+
+<dx-popup
+  height="auto"
+  width="500px"
+  [showTitle]="true"
+  title="Changer mes informations"
+  [dragEnabled]="false"
+  [hideOnOutsideClick]="true"
+  [(visible)]="changeInfoDialogVisible"
+>
+  <div *dxTemplate="let data of 'content'">
+    <div class="popup-property-details">
+      <app-change-info
+        [openTrigger]="triggerChangeInfoOpen.asObservable()"
+        (cancel)="closeChangeInfoDialog()"></app-change-info>
+    </div>
+  </div>
+</dx-popup>
+
+<dx-popup
+  height="auto"
+  width="500px"
+  [showTitle]="true"
+  title="Changer mon email"
+  [dragEnabled]="false"
+  [hideOnOutsideClick]="true"
+  [(visible)]="changeEmailDialogVisible"
+>
+  <div *dxTemplate="let data of 'content'">
+    <div class="popup-property-details">
+      <app-change-email
+        [openTrigger]="triggerChangeEmailOpen.asObservable()"
+        (cancel)="closeChangeEmailDialog()">
+        ></app-change-email>
+    </div>
+  </div>
+</dx-popup>
