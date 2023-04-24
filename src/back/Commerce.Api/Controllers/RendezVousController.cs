@@ -80,20 +80,7 @@ namespace Commerce.Api.Controllers
                 TypeRendezVous = input.TypeRendezVous,
                 Start = input.Start,
                 End = input.End,
-                Entreprise = new()
-                {
-                    Nom = input.Entreprise,
-                    Addresse = input.Addresse,
-                    CodePostal = input.CodePostal,
-                    Ville = input.Ville,
-                    TypeEntreprise = input.TypeEntreprise,
-                },
-                Interlocuteur = new()
-                {
-                    Nom = input.Interlocuteur,
-                    Email = input.Email,
-                    Numero = input.Numero,
-                }
+                InterlocuteurId = input.Interlocuteur
             };
 
             _context.RendezVous.Add(rdv);
@@ -118,14 +105,7 @@ namespace Commerce.Api.Controllers
             rendezVous.TypeRendezVous = input.TypeRendezVous;
             rendezVous.Start = input.Start;
             rendezVous.End = input.End;
-            rendezVous.Entreprise.Nom = input.Entreprise;
-            rendezVous.Entreprise.Addresse = input.Addresse;
-            rendezVous.Entreprise.CodePostal = input.CodePostal;
-            rendezVous.Entreprise.Ville = input.Ville;
-            rendezVous.Entreprise.TypeEntreprise = input.TypeEntreprise;
-            rendezVous.Interlocuteur.Nom = input.Interlocuteur;
-            rendezVous.Interlocuteur.Numero = input.Numero;
-            rendezVous.Interlocuteur.Email = input.Email;
+            rendezVous.InterlocuteurId = input.Interlocuteur;
 
             _context.RendezVous.Update(rendezVous);
             var result = await _context.SaveChangesAsync();

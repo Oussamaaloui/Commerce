@@ -20,7 +20,8 @@ namespace Commerce.Api.Extensions
                 Email = interlocuteur.Email,
                 Nom = interlocuteur.Nom,
                 Numero = interlocuteur.Numero,
-                Entreprise = interlocuteur.Entreprise?.Nom ?? "Entreprise non assignée!"
+                Entreprise = interlocuteur.Entreprise?.Nom ?? "Entreprise non assignée!",
+                EntrepriseId = interlocuteur.EntrepriseId
             };
         }
     }

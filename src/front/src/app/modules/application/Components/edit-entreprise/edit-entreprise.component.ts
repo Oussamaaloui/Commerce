@@ -1,24 +1,24 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { map } from 'rxjs';
-import { RendezVous } from 'src/app/modules/rendez-vous/models/rendez-vous.model';
-import { RendezVousService } from 'src/app/modules/rendez-vous/services/rendez-vous.service';
 import ArrayStore from 'devextreme/data/array_store';
 import { DxValidationGroupComponent } from 'devextreme-angular';
+import {Entreprise} from "../../models/entreprise.model";
+import {EntrepriseService} from "../../services/entreprises.service";
 
 @Component({
-  selector: 'app-edit-rdv',
-  templateUrl: './edit-rdv.component.html',
-  styleUrls: ['./edit-rdv.component.css'],
+  selector: 'app-edit-entreprise',
+  templateUrl: './edit-entreprise.component.html',
+  styleUrls: ['./edit-entreprise.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditRdvComponent implements OnInit {
+export class EditEntrepriseComponent  {
   @Input() user : any;
-  @Input() currentRdv: RendezVous;
+  @Input() currentObj: Entreprise;
   @Input() mode : 'edit'|'create'|'view' = 'create';
   @Output() cancel : EventEmitter<any> = new EventEmitter();
   @Output() createdOrUpdated : EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('rdvGroup', {static: false}) rdvGroup: DxValidationGroupComponent;
+  @ViewChild('group', {static: false}) rdvGroup: DxValidationGroupComponent;
 
   rules: any;
 
@@ -32,11 +32,7 @@ export class EditRdvComponent implements OnInit {
     return 'Enregistrer';
   }
 
-  constructor(private rdvService: RendezVousService){
-  }
-
-  ngOnInit(): void {
-    console.log('editor init!')
+  constructor(private service: EntrepriseService){
   }
 
   close(){
@@ -48,16 +44,16 @@ export class EditRdvComponent implements OnInit {
       this.loading = true;
 
       if(this.rdvGroup.instance.validate().isValid){
-        if(this.mode == 'create' && this.currentRdv){
-          this.rdvService.create(this.currentRdv)
+        if(this.mode == 'create' && this.currentObj){
+          this.service.create(this.currentObj)
           .pipe(map(() => {}))
           .subscribe(() => {
             this.loading = false;
             this.createdOrUpdated.emit();
 
           })
-        }else if(this.mode == 'edit' && this.currentRdv){
-          this.rdvService.update(this.currentRdv)
+        }else if(this.mode == 'edit' && this.currentObj){
+          this.service.update(this.currentObj)
           .pipe(map(() => {}))
           .subscribe(() => {
             this.loading = false;
@@ -71,13 +67,6 @@ export class EditRdvComponent implements OnInit {
   }
 
   // Select box data sources:
-  typeRendezVous: any = new ArrayStore({
-    data: [
-      { value:'Physique', display: 'Physique'},
-      { value:'Visio', display: 'Visio'},
-    ],
-    key: 'value'
-  })
   typeEntreprise: any = new ArrayStore({
     data: [
       { value:'Ancien', display: 'Ancien'},
@@ -85,19 +74,4 @@ export class EditRdvComponent implements OnInit {
     ],
     key: 'value'
   })
-
-  motif: any = new ArrayStore({
-    data: [
-      { value:'Decouverte', display: 'Découverte'},
-      { value:'Negotiation', display: 'Négociation'},
-      { value:'Conclusion', display: 'Conclusion'},
-      { value:'Courtoisie', display: 'Courtoisie'},
-      { value:'VisiteChantier', display: 'Visite Chantier'},
-      { value:'JPO', display: 'JPO'},
-      { value:'AccompagnementClient', display: 'Accompagnement Client'},
-      { value:'BureauEtudeArchitechte', display: "Bureau d'études / Architechte"},
-    ],
-    key: 'value'
-  })
-
 }

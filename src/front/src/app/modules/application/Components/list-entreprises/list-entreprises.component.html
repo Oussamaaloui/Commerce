@@ -1,4 +1,4 @@
-<section class="bg-gray-200 dark:bg-gray-900 pt-4 px-2">
+<section class="bg-gray-100 dark:bg-gray-900 pt-4">
   <div class="flex flex-col px-6 py-8 mx-auto lg:py-0" >
     <div class="w-full flex justify-between">
       <h1 class="text-gray-700 text-2xl flex items-center">
@@ -10,6 +10,7 @@
 
       </span> Liste des entreprises</h1>
       <button
+        (click)="openModalInMode('create')"
         class=" flex items-center gap-3 bg-orange-500 hover:bg-orange-400 cursor-pointer px-6 py-2 text-sm font-medium text-white border border-gray-200 rounded-md focus:z-10 focus:ring-2 focus:ring-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
       >
         <svg
@@ -36,11 +37,10 @@
         Créer
       </button>
     </div>
-  </div>
+
 
   <div
-    class="w-full pr-6"
-    id="content"
+    class="w-full"
   >
   <dx-data-grid
     class=" mt-4 p-4 bg-white rounded-lg"
@@ -75,6 +75,7 @@
       caption="Code Postal"
       [width]="200"
       dataField="codePostal"
+      alignment="right"
     ></dxi-column>
     <dxi-column
       caption="Action"
@@ -84,7 +85,13 @@
     ></dxi-column>
     <div *dxTemplate="let data of 'actionsTemplate'">
       <div class="w-full flex justify-center">
-        <button class="rounded-full"
+        <button class="rounded-full cursor-pointer"
+                (click)="editEntreprise(data.data.id)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
+        </button>
+        <button class="rounded-full cursor-pointer"
+                (click)="deleteEntreprise(data.data.id)"
         >
           <svg class="w-6 h-6" viewBox="0 0 1024 1024" fill="#000000"   version="1.1" xmlns="http://www.w3.org/2000/svg">
             <path d="M512 897.6c-108 0-209.6-42.4-285.6-118.4-76-76-118.4-177.6-118.4-285.6 0-108 42.4-209.6 118.4-285.6 76-76 177.6-118.4 285.6-118.4 108 0 209.6 42.4 285.6 118.4 157.6 157.6 157.6 413.6 0 571.2-76 76-177.6 118.4-285.6 118.4z m0-760c-95.2 0-184.8 36.8-252 104-67.2 67.2-104 156.8-104 252s36.8 184.8 104 252c67.2 67.2 156.8 104 252 104 95.2 0 184.8-36.8 252-104 139.2-139.2 139.2-364.8 0-504-67.2-67.2-156.8-104-252-104z"
@@ -95,4 +102,26 @@
     </div>
   </dx-data-grid>
   </div>
+  </div>
 </section>
+
+<!-- Edit entreprise -->
+<dx-popup
+  height="auto"
+  [showTitle]="true"
+  title="Entreprise"
+  [dragEnabled]="false"
+  [hideOnOutsideClick]="true"
+  [(visible)]="popupVisible"
+>
+  <div *dxTemplate="let data of 'content'">
+    <div class="popup-property-details">
+      <app-edit-entreprise
+        [mode]="modalMode"
+        [currentObj]="currentEntreprise"
+        (cancel)="cancelCreateOrUpdate()"
+        (createdOrUpdated)="createdOrUpdateEvent()"
+      ></app-edit-entreprise>
+    </div>
+  </div>
+</dx-popup>

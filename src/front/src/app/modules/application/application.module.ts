@@ -11,6 +11,8 @@ import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
 import {CustomDateFormatter} from "../../helpers/custom-date.formatter";
 import { ListEntreprisesComponent } from './Components/list-entreprises/list-entreprises.component';
 import { ListInterlocuteursComponent } from './Components/list-interlocuteurs/list-interlocuteurs.component';
+import {EditEntrepriseComponent} from "./Components/edit-entreprise/edit-entreprise.component";
+import {EditInterlocuteurComponent} from "./Components/edit-interlocuteur/edit-interlocuteur.component";
 
 
 
@@ -21,7 +23,9 @@ import { ListInterlocuteursComponent } from './Components/list-interlocuteurs/li
     ListRdvComponent,
     EditRdvComponent,
     ListEntreprisesComponent,
-    ListInterlocuteursComponent
+    ListInterlocuteursComponent,
+    EditEntrepriseComponent,
+    EditInterlocuteurComponent
   ],
   imports: [
     CommonModule,

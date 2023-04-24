@@ -3,7 +3,7 @@
       <div class="flex flex-wrap justify-between items-center">
         <div class="w-full grid grid-cols-3">
           <div class="pl-8 flex items-center">
-            <div class=" mr-4 p-2 rounded-lg hover:bg-gray-200 cursor-pointer" (click)="notifyToggleDrawer()"> 
+            <div class=" mr-4 p-2 rounded-lg hover:bg-gray-200 cursor-pointer" (click)="notifyToggleDrawer()">
             <svg class="w-8 h-8 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
               <path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
@@ -17,48 +17,48 @@
           <div class="flex justify-center items-center">
             <img src="assets/img/Logo1.png" class="h-8" alt="" />
           </div>
-  
-          <div class="flex justify-end items-center pr-4 lg:order-2"> 
+
+          <div class="flex justify-end items-center pr-4 lg:order-2">
             <div class="flex justify-end items-center lg:order-2">
-              <a
-                (mouseenter)="toggleDefault()"
-                (mouseleave)="toggleDefault()"
-                (click)="showChangePasswordDialog()"
-                id="change-password-link"
-                class="text-white items-center flex gap-2 bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-              >
-                <svg
-                  fill="#FFFFFF"
-                  class="h-6 w-6"
-                  version="1.1"
-                  id="Layer_1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  viewBox="0 0 470 470"
-                  xml:space="preserve"
-                >
-                  <g>
-                    <path
-                      d="M162.5,139.546V102.5c0-39.977,32.523-72.5,72.5-72.5s72.5,32.523,72.5,72.5v37.046c0.164,0.069,0.329,0.132,0.493,0.201
-          c10.347,4.376,20.196,9.637,29.507,15.724V102.5C337.5,45.981,291.519,0,235,0S132.5,45.981,132.5,102.5v52.971
-          c9.311-6.086,19.161-11.347,29.507-15.724C162.171,139.678,162.336,139.615,162.5,139.546z"
-                    />
-                    <path
-                      d="M235,155c-86.985,0-157.5,70.515-157.5,157.5S148.015,470,235,470s157.5-70.515,157.5-157.5S321.985,155,235,155z
-           M222.552,367.034l-58.808-58.808l21.213-21.213l37.595,37.594l56.034-56.034l21.213,21.213L222.552,367.034z"
-                    />
-                  </g>
-                </svg>
-              </a>
-              <dx-tooltip
-                target="#change-password-link"
-                [(visible)]="defaultVisible"
-                [hideOnOutsideClick]="false"
-              >
-                <div *dxTemplate="let data = data; of: 'content'">
-                  Changer mot de passe
-                </div>
-              </dx-tooltip>
+<!--              <a-->
+<!--                (mouseenter)="toggleDefault()"-->
+<!--                (mouseleave)="toggleDefault()"-->
+<!--                (click)="showChangePasswordDialog()"-->
+<!--                id="change-password-link"-->
+<!--                class="text-white items-center flex gap-2 bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"-->
+<!--              >-->
+<!--                <svg-->
+<!--                  fill="#FFFFFF"-->
+<!--                  class="h-6 w-6"-->
+<!--                  version="1.1"-->
+<!--                  id="Layer_1"-->
+<!--                  xmlns="http://www.w3.org/2000/svg"-->
+<!--                  xmlns:xlink="http://www.w3.org/1999/xlink"-->
+<!--                  viewBox="0 0 470 470"-->
+<!--                  xml:space="preserve"-->
+<!--                >-->
+<!--                  <g>-->
+<!--                    <path-->
+<!--                      d="M162.5,139.546V102.5c0-39.977,32.523-72.5,72.5-72.5s72.5,32.523,72.5,72.5v37.046c0.164,0.069,0.329,0.132,0.493,0.201-->
+<!--          c10.347,4.376,20.196,9.637,29.507,15.724V102.5C337.5,45.981,291.519,0,235,0S132.5,45.981,132.5,102.5v52.971-->
+<!--          c9.311-6.086,19.161-11.347,29.507-15.724C162.171,139.678,162.336,139.615,162.5,139.546z"-->
+<!--                    />-->
+<!--                    <path-->
+<!--                      d="M235,155c-86.985,0-157.5,70.515-157.5,157.5S148.015,470,235,470s157.5-70.515,157.5-157.5S321.985,155,235,155z-->
+<!--           M222.552,367.034l-58.808-58.808l21.213-21.213l37.595,37.594l56.034-56.034l21.213,21.213L222.552,367.034z"-->
+<!--                    />-->
+<!--                  </g>-->
+<!--                </svg>-->
+<!--              </a>-->
+<!--              <dx-tooltip-->
+<!--                target="#change-password-link"-->
+<!--                [(visible)]="defaultVisible"-->
+<!--                [hideOnOutsideClick]="false"-->
+<!--              >-->
+<!--                <div *dxTemplate="let data = data; of: 'content'">-->
+<!--                  Changer mot de passe-->
+<!--                </div>-->
+<!--              </dx-tooltip>-->
               <a
                 routerLink="/logout"
                 class="text-white items-center flex gap-2 bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
@@ -104,7 +104,7 @@
       </div>
     </nav>
   </header>
-  
+
   <dx-popup
     height="auto"
     width="500px"
@@ -123,4 +123,4 @@
       </div>
     </div>
   </dx-popup>
-  
+

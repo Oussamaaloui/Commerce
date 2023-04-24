@@ -20,7 +20,8 @@ namespace Commerce.Api.Extensions
                 Nom = entreprise.Nom,
                 Addresse = entreprise.Addresse,
                 CodePostal = entreprise.CodePostal,
-                Ville = entreprise.Ville
+                Ville = entreprise.Ville,
+                Type = entreprise.TypeEntreprise
             };
         }
     }

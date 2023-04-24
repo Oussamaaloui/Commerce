@@ -35,7 +35,7 @@
           </dx-validator>
           </dx-text-area>
         </div>
-        <div class="sm:col-span-2">
+        <div class="sm:col-span-3">
           <dx-select-box
             label="Type"
             labelMode="floating"
@@ -52,7 +52,7 @@
             </dxi-validation-rule>
           </dx-validator></dx-select-box>
         </div>
-        <div class="sm:col-span-2">
+        <div class="sm:col-span-3">
           <dx-select-box
             label="Objet"
             labelMode="floating"
@@ -69,7 +69,7 @@
             </dxi-validation-rule>
           </dx-validator></dx-select-box>
         </div>
-        <div class="sm:col-span-4">
+        <div class="sm:col-span-3">
           <div class="relative">
             <dx-date-box
               label="Début"
@@ -88,8 +88,7 @@
             </dx-date-box>
           </div>
         </div>
-
-        <div class="sm:col-span-4">
+        <div class="sm:col-span-3">
           <div class="relative">
             <dx-date-box
               class="w-full"
@@ -111,160 +110,29 @@
         <div class="sm:col-span-12 border-t border-b-0 border-gray-200"></div>
 
         <div class="sm:col-span-6">
-          <h3
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Entreprise
-          </h3>
+            <dx-select-box
+              label="Entreprise"
+              labelMode="floating"
+              [items]="entreprises"
+              displayExpr="nom"
+              valueExpr="id"
+              [(value)]="currentRdv.entrepriseId"
+              [searchEnabled]="true"
+              (onValueChanged)="onEntrepriseChanged($event)"
+            ></dx-select-box>
         </div>
         <div class="sm:col-span-6">
-          <h3
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Interlocuteur
-          </h3>
+            <dx-select-box
+              label="Interlocuteur"
+              labelMode="floating"
+              [items]="interlocuteurs"
+              displayExpr="nom"
+              valueExpr="id"
+              [(value)]="currentRdv.interlocuteurId"
+              [searchEnabled]="true"
+            ></dx-select-box>
         </div>
-        <div class="sm:col-span-4">
-          <dx-text-box
-            label="Nom"
-            labelMode="floating"
-            placeholder="Nom"
-            [(value)]="currentRdv.entreprise"
-            [maxLength]="50"
-          >
-          <dx-validator>
-            <dxi-validation-rule
-              type="required"
-              message="Nom de l'entreprise obligatoire"
-            >
-            </dxi-validation-rule>
-          </dx-validator></dx-text-box>
         </div>
-        <div class="sm:col-span-2">
-          <dx-select-box
-            label="Ancien/Nouveau"
-            labelMode="floating"
-            [dataSource]="typeEntreprise"
-            displayExpr="display"
-            valueExpr="value"
-            [(value)]="currentRdv.typeEntreprise"
-          >
-          <dx-validator>
-            <dxi-validation-rule
-              type="required"
-              message="Type d'entreprise obligatoire"
-            >
-            </dxi-validation-rule>
-          </dx-validator>
-        </dx-select-box>
-        </div>
-        <div class="sm:col-span-6">
-          <dx-text-box
-            placeholder="Nom"
-            label="Nom"
-            labelMode="floating"
-            [(value)]="currentRdv.interlocuteur"
-            [maxLength]="50"
-          >
-          <dx-validator>
-            <dxi-validation-rule
-              type="required"
-              message="Nom de l'interlocuteur obligatoire"
-            >
-            </dxi-validation-rule>
-          </dx-validator>
-        </dx-text-box>
-        </div>
-        <div class="sm:col-span-6">
-          <dx-text-area
-            label="Addresse"
-            labelMode="floating"
-            [(value)]="currentRdv.addresse"
-            [maxLength]="200"
-          >
-          <dx-validator>
-            <dxi-validation-rule
-              type="required"
-              message="Addresse de l'entreprise obligatoire"
-            >
-            </dxi-validation-rule>
-          </dx-validator>
-          </dx-text-area>
-        </div>
-        <div class="sm:col-span-6">
-          <dx-text-box
-            label="Email"
-            labelMode="floating"
-            placeholder="Email"
-            [maxLength]="75"
-            [(value)]="currentRdv.email"
-          >
-          <dx-validator>
-            <dxi-validation-rule
-              type="required"
-              message="Email de l'interlocuteur obligatoire"
-            >
-            </dxi-validation-rule>
-            <dxi-validation-rule
-              type="email"
-              message="Email invalid"
-            ></dxi-validation-rule>
-          </dx-validator>
-        </dx-text-box>
-        </div>
-        <div class="sm:col-span-4">
-          <dx-text-box
-            label="Ville"
-            labelMode="floating"
-            placeholder="Ville"
-            [(value)]="currentRdv.ville"
-            [maxLength]="50"
-          >
-          <dx-validator>
-            <dxi-validation-rule
-              type="required"
-              message="Ville obligatoire"
-            >
-            </dxi-validation-rule>
-          </dx-validator>
-        </dx-text-box>
-        </div>
-        <div class="sm:col-span-2">
-          <dx-text-box
-            label="Code postal"
-            labelMode="floating"
-            placeholder="Code Postal"
-            mask="00000"
-            maskInvalidMessage="Code postal invalid! (5 chiffres)"
-            [(value)]="currentRdv.codePostal"
-          >
-          <dx-validator>
-            <dxi-validation-rule
-              type="required"
-              message="Code postal obligatoire"
-            >
-            </dxi-validation-rule>
-          </dx-validator>
-        </dx-text-box>
-        </div>
-        <div class="sm:col-span-4">
-          <dx-text-box
-            label="Téléphone"
-            labelMode="floating"
-            mask="+33 0 00 00 00 00"
-            maskInvalidMessage="Numéro de téléphone invalid."
-            [(value)]="currentRdv.numero"
-          >
-          <dx-validator>
-            <dxi-validation-rule
-              type="required"
-              message="Téléphone obligatoire"
-            >
-            </dxi-validation-rule>
-          </dx-validator>
-        </dx-text-box>
-        </div>
-      </div>
     </div>
 
     <!-- footer-->

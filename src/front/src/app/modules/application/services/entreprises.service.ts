@@ -18,7 +18,7 @@ export class EntrepriseService {
     return this.http.post<any>(`${API_URL}/${entreprise.id}`, entreprise)
   }
 
-  delete(id: string){
+  delete(id: number){
     return this.http.delete<any>(`${API_URL}/${id}`)
   }
 
@@ -26,7 +26,7 @@ export class EntrepriseService {
     return this.http.get<Entreprise[]>(API_URL)
   }
 
-  getById(id: string): Observable<Entreprise>{
+  getById(id: number): Observable<Entreprise>{
     return this.http.get<Entreprise>(`${API_URL}/${id}`)
   }
 }

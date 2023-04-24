@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { map } from 'rxjs';
-import { RendezVous } from 'src/app/modules/rendez-vous/models/rendez-vous.model';
-import { RendezVousService } from 'src/app/modules/rendez-vous/services/rendez-vous.service';
 import ArrayStore from 'devextreme/data/array_store';
 import { DxValidationGroupComponent } from 'devextreme-angular';
+import {Entreprise} from "../../models/entreprise.model";
+import {RendezVous} from "../../models/rendez-vous.model";
+import {RendezVousService} from "../../services/rendez-vous.service";
+import {Interlocuteur} from "../../models/interlocuteur.model";
+import {InterlocuteurService} from "../../services/interlocuteur.service";
 
 @Component({
   selector: 'app-edit-rdv',
@@ -17,9 +20,11 @@ export class EditRdvComponent implements OnInit {
   @Input() mode : 'edit'|'create'|'view' = 'create';
   @Output() cancel : EventEmitter<any> = new EventEmitter();
   @Output() createdOrUpdated : EventEmitter<any> = new EventEmitter();
+  @Input() entreprises: Entreprise[];
 
   @ViewChild('rdvGroup', {static: false}) rdvGroup: DxValidationGroupComponent;
 
+  @Input() interlocuteurs : Interlocuteur[];
   rules: any;
 
   submitted: boolean = false;
@@ -32,7 +37,16 @@ export class EditRdvComponent implements OnInit {
     return 'Enregistrer';
   }
 
-  constructor(private rdvService: RendezVousService){
+  constructor(private rdvService: RendezVousService,
+              private interlocuteursService: InterlocuteurService){
+  }
+
+  onEntrepriseChanged(event: any){
+    let entrepriseId = event.value;
+    this.interlocuteurs = [];
+
+    this.interlocuteursService.getByEntreprise(entrepriseId)
+      .subscribe((data) => this.interlocuteurs = data);
   }
 
   ngOnInit(): void {

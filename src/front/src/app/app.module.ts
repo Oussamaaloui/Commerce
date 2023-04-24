@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

@@ -66,7 +66,7 @@ namespace Commerce.Api.Controllers
 
 
             var result = await queryable.AsNoTracking()
-                .GroupBy(r => r.Entreprise.TypeEntreprise)
+                .GroupBy(r => r.Interlocuteur.Entreprise.TypeEntreprise)
                 .Select(g => new { key = g.Key, val = g.Count() })
                 .ToListAsync();
 

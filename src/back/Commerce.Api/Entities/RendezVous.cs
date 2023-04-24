@@ -1,5 +1,6 @@
 ﻿using Commerce.Api.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Commerce.Api.Entities
 {
@@ -11,7 +12,9 @@ namespace Commerce.Api.Entities
         public string Titre { get; set; } = string.Empty;
         [MaxLength(250)]
         public string Description { get; set; } = string.Empty;
-        public virtual Entreprise Entreprise { get; set; } = new();
+        //public virtual Entreprise Entreprise { get; set; } = new();
+        [ForeignKey(nameof(Interlocuteur))]
+        public int InterlocuteurId { get; set; }
         public virtual Interlocuteur Interlocuteur { get; set; } = new();
         public TypeRendezVous TypeRendezVous { get; set; }
         public MotifRendezVous Motif { get; set; }

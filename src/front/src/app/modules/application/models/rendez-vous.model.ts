@@ -6,21 +6,15 @@ export interface RendezVous {
     id: string;
     titre: string;
     description: string;
-    entreprise: string;
-    addresse: string;
-    ville: string;
-    codePostal: string;
-    typeEntreprise: TypeEntreprise | undefined;
-    interlocuteur: string;
-    numero: string;
-    email: string;
     typeRendezVous: TypeRendezVous | undefined;
     motif: MotifRendezVous | undefined;
     start: string | number | Date,
     end: string | number | Date,
 
     user: string,
-    userId: string
+    userId: string,
+    interlocuteurId: number | null,
+    entrepriseId: number | null
 }
 
 

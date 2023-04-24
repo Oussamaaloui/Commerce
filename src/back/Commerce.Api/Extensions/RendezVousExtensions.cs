@@ -11,22 +11,16 @@ namespace Commerce.Api.Extensions
             return new RendezVousViewModel
             {
                 Id = input.Id,
-                Addresse = input.Entreprise.Addresse,
                 Titre = input.Titre,
                 Description = input.Description,
-                Ville = input.Entreprise.Ville,
-                Interlocuteur = input.Interlocuteur.Nom,
-                Numero = input.Interlocuteur.Numero,
-                CodePostal = input.Entreprise.CodePostal,
-                Email = input.Interlocuteur.Email,
-                Entreprise = input.Entreprise.Nom,
                 Motif = input.Motif,
-                TypeEntreprise = input.Entreprise.TypeEntreprise,
                 TypeRendezVous = input.TypeRendezVous,
                 Start = input.Start,
                 End= input.End,
                 User = $"{input.User.FirstName}, {input.User.LastName}",
-                UserId = input.UserId
+                UserId = input.UserId,
+                InterlocuteurId = input.InterlocuteurId,
+                EntrepriseId = input.Interlocuteur.EntrepriseId
             };
         }
 

@@ -25,6 +25,15 @@ namespace Commerce.Api.Controllers
             return Ok(interlocuteurs.ToViewModels());
         }
 
+        [HttpGet("by-entreprise/{id:int}")]
+        public async Task<IActionResult> GetByEntreprise(int id, CancellationToken cancellationToken)
+        {
+            var interlocuteurs = await _context.Interlocuteurs
+                .Where(i => i.EntrepriseId == id)
+                .ToListAsync(cancellationToken);
+            return Ok(interlocuteurs.ToViewModels());
+        }
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {

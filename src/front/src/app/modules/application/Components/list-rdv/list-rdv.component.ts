@@ -4,8 +4,12 @@ import {isSameDay, isSameMonth} from 'date-fns';
 import {map, Subject} from 'rxjs';
 import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView,} from 'angular-calendar';
 import {EventColor} from 'calendar-utils';
-import {RendezVous} from 'src/app/modules/rendez-vous/models/rendez-vous.model';
-import {RendezVousService} from 'src/app/modules/rendez-vous/services/rendez-vous.service';
+import {EntrepriseService} from "../../services/entreprises.service";
+import {Entreprise} from "../../models/entreprise.model";
+import {RendezVous} from "../../models/rendez-vous.model";
+import {RendezVousService} from "../../services/rendez-vous.service";
+import {InterlocuteurService} from "../../services/interlocuteur.service";
+import {Interlocuteur} from "../../models/interlocuteur.model";
 
 
 @Component({
@@ -120,8 +124,21 @@ export class ListRdvComponent implements OnInit {
   triggerChangeEmailOpen: Subject<void> = new Subject<void>();
 
   constructor(private authService: AuthenticationService,
-              private rdvService: RendezVousService) {
+              private rdvService: RendezVousService,
+              private interlocuteurService: InterlocuteurService,
+              private entrepriseService: EntrepriseService) {
     this.currentRdv = this.initNewRdv();
+  }
+
+  entreprises: Entreprise[];
+  interlocteurs: Interlocuteur[];
+  loadEntreprises(){
+    this.entrepriseService.getAll()
+      .subscribe(
+        (result) => {
+          this.entreprises = result
+        }
+      );
   }
 
   toggleDrawer() {
@@ -133,20 +150,14 @@ export class ListRdvComponent implements OnInit {
       id: '',
       titre: '',
       description: '',
-      entreprise: '',
-      addresse: '',
-      ville: '',
-      codePostal: '',
-      typeEntreprise: undefined,
-      interlocuteur: '',
-      numero: '',
-      email: '',
       typeRendezVous: undefined,
       motif: undefined,
       start: new Date(),
       end: new Date(),
       user: '',
-      userId: ''
+      userId: '',
+      interlocuteurId: null,
+      entrepriseId: null
     }
   }
 
@@ -155,6 +166,7 @@ export class ListRdvComponent implements OnInit {
     this.userName = `${this.authService.currentUserValue?.firstName}, ${this.authService.currentUserValue?.lastName}`;
     this.loadRendezVous();
     this.scrollToView();
+    this.loadEntreprises();
   }
 
   scrollToView() {
@@ -284,6 +296,15 @@ export class ListRdvComponent implements OnInit {
       .subscribe(rdv => {
         this.currentRdv = rdv;
         console.log(this.currentRdv);
+
+        if(rdv.interlocuteurId){
+          this.interlocuteurService.getById(rdv.interlocuteurId)
+            .subscribe((data) => {
+              this.interlocteurs = [];
+              this.interlocteurs.push(data);
+            })
+        }
+
         this.openModalInMode('edit');
       })
   }

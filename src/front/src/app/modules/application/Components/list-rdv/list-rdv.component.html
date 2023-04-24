@@ -1,5 +1,5 @@
 
-    <section class="bg-gray-200 dark:bg-gray-900">
+    <section class="bg-gray-100 dark:bg-gray-900">
       <div class="flex flex-col px-6 py-8 mx-auto lg:py-0" >
         <!-- Calendar-->
         <!-- <div class="flex w-full justify-between items-center mb-4 mt-4"> -->
@@ -64,6 +64,7 @@
 
             <dx-popup
               height="auto"
+              width="900"
               [showTitle]="true"
               title="Rendez vous"
               [dragEnabled]="false"
@@ -73,6 +74,8 @@
               <div *dxTemplate="let data of 'content'">
                 <div class="popup-property-details">
                   <app-edit-rdv
+                    [entreprises]="entreprises"
+                    [interlocuteurs]="interlocteurs"
                     [mode]="modalMode"
                     [currentRdv]="currentRdv"
                     (cancel)="cancelCreateOrUpdate()"
