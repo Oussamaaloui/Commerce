@@ -13,5 +13,6 @@ namespace Commerce.Api.Models.Requests
         [MaxLength(5)]
         public string CodePostal { get; set; } = string.Empty;
         public TypeEntreprise TypeEntreprise { get; set; }
+        public string? Reference { get; set; } = string.Empty;
     }
 }

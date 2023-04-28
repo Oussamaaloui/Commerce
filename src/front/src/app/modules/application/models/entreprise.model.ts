@@ -7,5 +7,6 @@ export interface Entreprise {
   ville: string;
   codePostal: string;
   type: TypeEntreprise;
+  reference: string;
 }
 

@@ -15,5 +15,7 @@ namespace Commerce.Api.Entities
         [MaxLength(5)]
         public string CodePostal { get; set; } = string.Empty;
         public TypeEntreprise TypeEntreprise { get; set; }
+        [MaxLength(100)]
+        public string? Reference { get; set; } = string.Empty;
     }
 }

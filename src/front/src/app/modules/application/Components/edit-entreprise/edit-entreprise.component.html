@@ -2,7 +2,7 @@
   <dx-validation-group #group>
     <div class="pb-6 space-y-6">
       <div class="grid gap-4 sm:grid-cols-4">
-          <div class="sm:col-span-3">
+          <div class="sm:col-span-2">
           <dx-text-box
             label="Nom"
             labelMode="floating"
@@ -17,6 +17,16 @@
             >
             </dxi-validation-rule>
           </dx-validator></dx-text-box>
+        </div>
+        <div class="sm:col-span-1">
+          <dx-text-box
+            label="Reférence"
+            labelMode="floating"
+            placeholder="Nom"
+            [(value)]="currentObj.reference"
+            [maxLength]="100"
+          >
+          </dx-text-box>
         </div>
         <div  class="sm:col-span-1">
           <dx-select-box

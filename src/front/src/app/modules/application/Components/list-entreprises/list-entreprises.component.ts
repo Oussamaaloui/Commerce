@@ -43,7 +43,8 @@ export class ListEntreprisesComponent implements OnInit {
       addresse: '',
       ville: '',
       codePostal: '',
-      type: TypeEntreprise.Nouveau
+      type: TypeEntreprise.Nouveau,
+      reference:''
     };
   }
   openModalInMode(mode: 'edit' | 'create' | 'view') {

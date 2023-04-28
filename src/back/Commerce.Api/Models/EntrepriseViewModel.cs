@@ -11,5 +11,6 @@ namespace Commerce.Api.Models
         public string Ville { get; set; } = string.Empty; 
         public string CodePostal { get; set; } = string.Empty;
         public TypeEntreprise Type { get; set; }
+        public string? Reference { get; set; } = string.Empty;
     }
 }

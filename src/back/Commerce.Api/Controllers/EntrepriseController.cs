@@ -66,6 +66,7 @@ namespace Commerce.Api.Controllers
                 CodePostal = request.CodePostal,
                 Ville = request.Ville,
                 TypeEntreprise = request.TypeEntreprise,
+                Reference = request.Reference
             };
 
             await _context.Entreprises.AddAsync(entreprise, cancellationToken);
@@ -90,6 +91,7 @@ namespace Commerce.Api.Controllers
             entreprise.Ville = request.Ville;
             entreprise.CodePostal = request.CodePostal;
             entreprise.TypeEntreprise = request.TypeEntreprise;
+            entreprise.Reference = request.Reference;
 
             await _context.SaveChangesAsync(cancellationToken);
 

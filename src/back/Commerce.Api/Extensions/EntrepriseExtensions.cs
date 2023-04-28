@@ -21,7 +21,8 @@ namespace Commerce.Api.Extensions
                 Addresse = entreprise.Addresse,
                 CodePostal = entreprise.CodePostal,
                 Ville = entreprise.Ville,
-                Type = entreprise.TypeEntreprise
+                Type = entreprise.TypeEntreprise,
+                Reference = entreprise.Reference
             };
         }
     }
